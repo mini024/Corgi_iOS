@@ -1,0 +1,22 @@
+//
+//  VariableTable.m
+//  Compis
+//
+//  Created by Jessica M Cavazos Erhard on 3/9/18.
+//  Copyright © 2018 Jessica M Cavazos Erhard. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "DataBridge.h"
+
+// Variables
+void (^addVariableBlock)(NSString *id, NSString *type);
+bool (^findVariableBlock)(NSString *value);
+
+// Functions
+void (^addFunctionBlock)(NSString *id, NSString *type);
+bool (^findFunctionBlock)(NSString *value);
+
+// Results
+void (^ParseTestSuccessBlock)(NSString *value);
+void (^ParseTestFailBlock)(NSString *msg);

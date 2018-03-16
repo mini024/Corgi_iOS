@@ -1,0 +1,160 @@
+%{
+
+#import "MessageBlocks.h"
+#define YYERROR_VERBOSE 1
+
+int yylex(void);
+void yyerror(char *s);
+
+extern FILE *yyin;
+extern int yylineno;
+%}
+
+%union
+{
+    float fval;
+    int ival;
+    char *strval;
+}
+
+%locations
+%error-verbose
+
+// Tokens
+%token <fval> FLOAT;
+%token <ival> INT;
+%token IF;
+%token ELSE;
+%token PRINT;
+%token <strval> TOK_ID;
+%token VAR;
+%token LFT_PAR;
+%token RGT_PAR;
+%token SEMICOLON;
+%token EQUAL;
+%token GTRTHAN;
+%token LESSTHAN;
+%token NOTEQUAL;
+%token LFT_BRA;
+%token RGT_BRA;
+%token COLON;
+%token STRING;
+%token PROGRAM;
+%token <strval> TIPO;
+
+%%
+
+result:
+programa
+;
+
+programa:
+PROGRAM TOK_ID COLON vars bloque { if (ParseTestSuccessBlock) ParseTestSuccessBlock(@"Success!"); }
+;
+
+vars:
+var
+| /*epsilon*/
+;
+
+var:
+VAR var2
+;
+
+var2:
+TOK_ID varID COLON TIPO SEMICOLON var2
+| /*epsilon*/
+;
+
+varID:
+',' TOK_ID varID
+| /*epsilon*/
+;
+
+constante:
+INT
+| FLOAT
+| TOK_ID
+;
+
+bloque:
+LFT_BRA bloque2 RGT_BRA
+;
+
+bloque2:
+estatuto bloque2 
+| /*epsilon*/
+;
+
+estatuto:
+asignacion
+| condicion
+| escritura
+;
+
+asignacion:
+TOK_ID EQUAL expresion SEMICOLON
+;
+
+escritura:
+PRINT LFT_PAR escritura3 RGT_PAR SEMICOLON
+;
+
+estritura2:
+',' expresion estritura2
+| /*epsilon*/
+;
+
+escritura3:
+STRING
+| expresion estritura2
+;
+
+condicion:
+IF LFT_PAR expresion RGT_PAR bloque condicion2 SEMICOLON
+;
+
+condicion2:
+ELSE bloque
+| /*epsilon*/
+;
+
+expresion:
+exp expresion2
+;
+
+expresion2:
+LESSTHAN exp
+| GTRTHAN exp
+| NOTEQUAL exp
+| /*epsilon*/
+;
+
+exp:
+termino exp2
+;
+
+exp2:
+'+' exp
+| '-' exp
+| /*epsilon*/
+;
+
+termino:
+factor termino2
+;
+
+termino2:
+'*' termino
+| '/' termino
+| /*epsilon*/
+;
+
+factor:
+LFT_PAR expresion RGT_PAR
+| '+' constante
+| '-' constante
+| constante
+;
+
+%%
