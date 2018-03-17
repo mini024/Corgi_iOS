@@ -15,6 +15,7 @@ extern int yylineno;
     float fval;
     int ival;
     char *strval;
+    bool bval;
 }
 
 %locations
@@ -28,7 +29,7 @@ extern int yylineno;
 %token IN;
 %token ELSE;
 %token WHILE;
-%token BOOLEAN;
+%token <bval> BOOLEAN;
 %token CASE_OR;
 %token CORGI;
 %token <strval> CORGIRUN;
@@ -48,7 +49,7 @@ extern int yylineno;
 %token LFT_BRA;
 %token RGT_BRA;
 %token COLON;
-%token STRING;
+%token <strval> STRING;
 %token WRITE;
 %token FUNC;
 %token ARROW;
@@ -62,8 +63,14 @@ extern int yylineno;
 %token EQ_EQ;
 %token AND_OP;
 %token OR_OP;
+%token <strval> SUM;
+%token <strval> SUBTRACTION;
+%token <strval> PRODUCT;
+%token <strval> DIVISION;
+%token <strval> POW;
+%token <strval> MOD;
 
-%type <strval> tipo
+%type <strval> tipo id
 
 %%
 
@@ -117,11 +124,11 @@ CORGIRUN LFT_PAR RGT_PAR {addFunctionBlock([NSString stringWithFormat:@"%s", $1]
 ;
 
 constante:
-INT
-| FLOAT
+INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
+| FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
 | id
-| STRING
-| BOOLEAN
+| STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
+| BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
 ;
 
 bloque:
@@ -215,45 +222,45 @@ AND_OP expresion
 ;
 
 expresion:
-exp expresion2
+exp {checkNextOperatorBlock(@"relational");} expresion2
 ;
 
 expresion2:
-LOW_OP exp
-| GRT_OP exp
-| NOT_EQ exp
-| LOW_EQ exp
-| GRT_EQ exp
-| EQ_EQ exp
+LOW_OP {addOperatorToStackBlock(@"<");} exp
+| GRT_OP {addOperatorToStackBlock(@">");} exp
+| NOT_EQ {addOperatorToStackBlock(@"!=");} exp
+| LOW_EQ {addOperatorToStackBlock(@"<=");} exp
+| GRT_EQ {addOperatorToStackBlock(@">=");} exp
+| EQ_EQ {addOperatorToStackBlock(@"==");} exp
 | /*epsilon*/
 ;
 
 exp:
-termino exp2
+termino {checkNextOperatorBlock(@"exp");} exp2
 ;
 
 exp2:
-'+' exp
-| '-' exp
+SUM {addOperatorToStackBlock(@"+");} exp
+| SUBTRACTION {addOperatorToStackBlock(@"-");} exp
 | /*epsilon*/
 ;
 
 termino:
-factor termino2
+factor {checkNextOperatorBlock(@"term");} termino2
 ;
 
 termino2:
-'*' termino
-| '/' termino
-| '%' termino
-| '^' termino
+PRODUCT {addOperatorToStackBlock(@"*");} termino
+| DIVISION {addOperatorToStackBlock(@"/");} termino
+| POW {addOperatorToStackBlock(@"^");} termino
+| MOD {addOperatorToStackBlock(@"%");} termino
 | /*epsilon*/
 ;
 
 factor:
-LFT_PAR expresion RGT_PAR
-| '+' constante
-| '-' constante
+LFT_PAR {addOperatorToStackBlock(@"(");} expresion RGT_PAR {deleteParentesisFromStackBlock();}
+| SUM constante
+| SUBTRACTION constante
 | constante
 ;
 

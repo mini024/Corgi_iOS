@@ -27,6 +27,13 @@ extern bool (^findFunctionBlock)(NSString *value);
 extern void (^ParseTestSuccessBlock)(NSString *value);
 extern void (^ParseTestFailBlock)(NSString *msg);
 
+// Operations
+extern void (^addIdToStackBlock)(NSString *id, NSString *type);
+extern void (^addOperatorToStackBlock)(NSString *name);
+extern void (^checkNextOperatorBlock)(NSString *typeOp);
+extern void (^deleteParentesisFromStackBlock)();
+
+
 // Added some extras to suppress warnings...
 #ifndef FLEXINT_H
 

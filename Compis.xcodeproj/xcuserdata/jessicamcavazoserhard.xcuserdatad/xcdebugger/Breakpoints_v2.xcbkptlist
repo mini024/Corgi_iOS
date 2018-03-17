@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Compis/ViewController.m"
-            timestampString = "542563641.93603"
+            filePath = "Compis/AritmeticExpresions.swift"
+            timestampString = "542947635.770299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-parseTextView:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Compis/ViewController.m"
-            timestampString = "542563641.93612"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "-parseTextView:"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "generateQuadruple()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

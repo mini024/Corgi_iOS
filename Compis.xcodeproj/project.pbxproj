@@ -21,7 +21,9 @@
 		1A3EA3282034FF9800EC10CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3EA3262034FF9800EC10CE /* CoreGraphics.framework */; };
 		1A3EA3292034FF9800EC10CE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3EA3272034FF9800EC10CE /* Foundation.framework */; };
 		1A6A267E20532E8100C8E9FF /* DataBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A267D20532E8100C8E9FF /* DataBridge.m */; };
-		1A6A2681205335DE00C8E9FF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A2680205335DE00C8E9FF /* Helper.swift */; };
+		1A6A2681205335DE00C8E9FF /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A2680205335DE00C8E9FF /* Functions.swift */; };
+		1A8DD39B205C68EF00F6070E /* AritmeticExpresions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */; };
+		1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8DD39C205C6D9E00F6070E /* OperationTable.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +69,9 @@
 		1A6A267C20532E1200C8E9FF /* DataBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataBridge.h; sourceTree = "<group>"; };
 		1A6A267D20532E8100C8E9FF /* DataBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataBridge.m; sourceTree = "<group>"; };
 		1A6A267F205335DE00C8E9FF /* Compis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Compis-Bridging-Header.h"; sourceTree = "<group>"; };
-		1A6A2680205335DE00C8E9FF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		1A6A2680205335DE00C8E9FF /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AritmeticExpresions.swift; sourceTree = "<group>"; };
+		1A8DD39C205C6D9E00F6070E /* OperationTable.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OperationTable.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +131,9 @@
 				1A3EA2C52034FA4900EC10CE /* AppDelegate.m */,
 				1A3EA2C72034FA4900EC10CE /* ViewController.h */,
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
-				1A6A2680205335DE00C8E9FF /* Helper.swift */,
+				1A6A2680205335DE00C8E9FF /* Functions.swift */,
+				1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */,
+				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
 				1A3EA2CD2034FA4900EC10CE /* Assets.xcassets */,
 				1A3EA2CF2034FA4900EC10CE /* LaunchScreen.storyboard */,
@@ -288,6 +294,7 @@
 				1A3EA2D12034FA4900EC10CE /* LaunchScreen.storyboard in Resources */,
 				1A3EA2CE2034FA4900EC10CE /* Assets.xcassets in Resources */,
 				1A3EA2CC2034FA4900EC10CE /* Main.storyboard in Resources */,
+				1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,9 +322,10 @@
 				1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */,
 				1A3EA3202034FB5500EC10CE /* parser.ym in Sources */,
 				1A6A267E20532E8100C8E9FF /* DataBridge.m in Sources */,
-				1A6A2681205335DE00C8E9FF /* Helper.swift in Sources */,
+				1A6A2681205335DE00C8E9FF /* Functions.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,
 				1A3EA2D42034FA4900EC10CE /* main.m in Sources */,
+				1A8DD39B205C68EF00F6070E /* AritmeticExpresions.swift in Sources */,
 				1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

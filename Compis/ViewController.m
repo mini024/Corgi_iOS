@@ -21,12 +21,10 @@
 @synthesize textView;
 @synthesize corgiWeb;
 
-Helper *helper;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    textView.text = @"corgi test ; var a : Int; var x : Float; var array : Int[20]; func one(param:Int)-> Bool{ array = [1,2,3,4]; for param in 0...3 by 1 { array[1] = param; x = 5; } return true;} corgiRun() { var name: String; case { ((a+5)* 3)>c: x=2; | c>a: x=4; | else: x=3;} write((a+5)); read(x);}";
+    textView.text = @"corgi test ;corgiRun() {  a = 5 + 6; }";
     
     [corgiWeb loadHTMLString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     
@@ -45,7 +43,6 @@ Helper *helper;
 - (IBAction)parseTextView:(id)sender
 {
     YY_BUFFER_STATE buf;
-    helper = [[Helper alloc]init];
     _failed = false;
     _errors = @"";
     
@@ -65,21 +62,46 @@ Helper *helper;
     };
     
     addVariableBlock = ^(NSString *name, NSString *type) {
-        [helper addVariable:name type: type];
-        [helper printTable];
+        [Helper.singleton addVariable:name type: type];
     };
     
     addFunctionBlock = ^(NSString *name, NSString *type) {
-        [helper addFunction:name type: type];
-        [helper printTable];
+        [Helper.singleton addFunction:name type: type];
     };
     
     findFunctionBlock = ^(NSString *value) {
-        return [helper functionExists:value];
+        return [Helper.singleton functionExists:value];
     };
     
     findVariableBlock = ^(NSString *value) {
-        return [helper variableExists:value];
+        return [Helper.singleton variableExists:value];
+    };
+    
+    addIdToStackBlock = ^(NSString *name, NSString *type) {
+        [Helper.singleton pushId:name type:type];
+    };
+    
+    addOperatorToStackBlock = ^(NSString *val) {
+        [Helper.singleton pushOperator:val];
+    };
+    
+    checkNextOperatorBlock = ^(NSString *type) {
+        NSString *nextOperator = [Helper.singleton getNextOp];
+        bool isNextExp = [nextOperator isEqual: @"+"] || [nextOperator  isEqual: @"-"];
+        bool isNextTerm = [nextOperator isEqual: @"/"] || [nextOperator  isEqual: @"*"] || [nextOperator  isEqual: @"^"] || [nextOperator  isEqual: @"%"];
+         bool isNextRelation = [nextOperator isEqual: @"<"] || [nextOperator  isEqual: @">"] || [nextOperator  isEqual: @"<="] || [nextOperator  isEqual: @">="] || [nextOperator  isEqual: @"!="] || [nextOperator  isEqual: @"=="];
+        
+        if ([type isEqual: @"exp"] && isNextExp) {
+            [Helper.singleton generateQuadruple];
+        } else if ([type  isEqual: @"term"] && isNextTerm) {
+            [Helper.singleton generateQuadruple];
+        } else if ([type  isEqual: @"relational"] && isNextRelation) {
+            [Helper.singleton generateQuadruple];
+        }
+    };
+    
+    deleteParentesisFromStackBlock = ^() {
+        [Helper.singleton popPar];
     };
     
     yyparse();

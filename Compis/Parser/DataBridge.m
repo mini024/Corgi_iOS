@@ -20,3 +20,9 @@ bool (^findFunctionBlock)(NSString *value);
 // Results
 void (^ParseTestSuccessBlock)(NSString *value);
 void (^ParseTestFailBlock)(NSString *msg);
+
+// Operations
+void (^addIdToStackBlock)(NSString *id, NSString *type);
+void (^addOperatorToStackBlock)(NSString *name);
+void (^checkNextOperatorBlock)(NSString *typeOp);
+void (^deleteParentesisFromStackBlock)();

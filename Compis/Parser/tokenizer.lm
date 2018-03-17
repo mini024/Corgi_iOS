@@ -49,6 +49,13 @@ Int|Float|Bool|String {yylval.strval= strdup(yytext); return TYPE;}
 \[ {return SLFT_BRA;}
 \] {return SRGT_BRA;}
 \-\> { return ARROW;}
+\+ {return SUM;}
+\- {return SUBTRACTION;}
+\/ {return DIVISION;}
+\* {return PRODUCT;}
+\% {return MOD;}
+\^ {return POW;}
+
 [ \t]   ;
 \n   {}
 .   {return  yytext[0];}

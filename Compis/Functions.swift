@@ -19,6 +19,7 @@ enum Type: Int {
     case String = 2
     case Bool = 3
     case Int = 4
+    case ERROR = 999
 }
 
 struct Symbol {
@@ -31,11 +32,30 @@ struct Function {
     var varTable = [String: Symbol]()
 }
 
+// Function & Variable Tables
 @objc class Helper: NSObject{
+    static let singleton = Helper()
+    // Operations
+    var operationTable:NSDictionary?
+    var operators:[Operator] = []
+    var idTypes:[Type] = []
+    var idValues:[Any] = []
+    
+    // Quadruple
+    var quadruples: [Quadruple] = []
+    var temporalVariables: [Any] = []
+    var indexTempVars = 0
+    
+    //Function
     var funcTable = [String:Function]()
     var currentFunc: String = "global"
     
-    override init() {}
+    override init() {
+        //Get operation table
+        if let path = Bundle.main.path(forResource: "OperationTable", ofType: "plist") {
+            operationTable = NSDictionary(contentsOfFile: path)
+        }
+    }
     
     func addFunction(_ id: String, type: String) {
         if type == "Corgi" || type == "corgiRun" {
