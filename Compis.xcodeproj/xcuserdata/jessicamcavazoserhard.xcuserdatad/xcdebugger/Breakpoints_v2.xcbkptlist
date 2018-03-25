@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
             endingLineNumber = "121"
-            landmarkName = "generateAssignationQuadruple()"
+            landmarkName = "generateQuadruple()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
             endingLineNumber = "123"
-            landmarkName = "generateAssignationQuadruple()"
+            landmarkName = "generateQuadruple()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -98,7 +98,7 @@
         } else if ([type  isEqual: @"relational"] && isNextRelation) {
             return [Helper.singleton generateQuadruple];
         } else if ([type  isEqual: @"assignation"] && isNextAssignation) {
-            return [Helper.singleton generateAssignationQuadruple];
+            return [Helper.singleton generateQuadruple];
         }
         
         return YES;
@@ -113,7 +113,7 @@
     yy_delete_buffer(buf);
 }
 - (IBAction)addCode:(id)sender {
-    textView.text = @"corgi test ;corgiRun() {  var a: Int; a = 5 + 6; }";
+    textView.text = @"corgi test ;corgiRun() {  a = 5 + 6; }";
 }
 
 @end

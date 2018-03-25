@@ -121,7 +121,6 @@ extension Helper {
         quadruples.append(Quadruple(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: 1))
         
         return true
-        
     }
     
     // Punto 7
