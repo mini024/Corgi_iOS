@@ -46,7 +46,6 @@
     _failed = false;
     _errors = @"";
     
-    
     buf = yy_scan_string([self.textView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
     ParseTestSuccessBlock = ^(NSString *value) {
@@ -89,15 +88,20 @@
         NSString *nextOperator = [Helper.singleton getNextOp];
         bool isNextExp = [nextOperator isEqual: @"+"] || [nextOperator  isEqual: @"-"];
         bool isNextTerm = [nextOperator isEqual: @"/"] || [nextOperator  isEqual: @"*"] || [nextOperator  isEqual: @"^"] || [nextOperator  isEqual: @"%"];
-         bool isNextRelation = [nextOperator isEqual: @"<"] || [nextOperator  isEqual: @">"] || [nextOperator  isEqual: @"<="] || [nextOperator  isEqual: @">="] || [nextOperator  isEqual: @"!="] || [nextOperator  isEqual: @"=="];
+        bool isNextRelation = [nextOperator isEqual: @"<"] || [nextOperator  isEqual: @">"] || [nextOperator  isEqual: @"<="] || [nextOperator  isEqual: @">="] || [nextOperator  isEqual: @"!="] || [nextOperator  isEqual: @"=="];
+        bool isNextAssignation = [nextOperator isEqual: @"="];
         
         if ([type isEqual: @"exp"] && isNextExp) {
-            [Helper.singleton generateQuadruple];
+            return [Helper.singleton generateQuadruple];
         } else if ([type  isEqual: @"term"] && isNextTerm) {
-            [Helper.singleton generateQuadruple];
+            return [Helper.singleton generateQuadruple];
         } else if ([type  isEqual: @"relational"] && isNextRelation) {
-            [Helper.singleton generateQuadruple];
+            return [Helper.singleton generateQuadruple];
+        } else if ([type  isEqual: @"assignation"] && isNextAssignation) {
+            return [Helper.singleton generateAssignationQuadruple];
         }
+        
+        return YES;
     };
     
     deleteParentesisFromStackBlock = ^() {
@@ -107,6 +111,9 @@
     yyparse();
     
     yy_delete_buffer(buf);
+}
+- (IBAction)addCode:(id)sender {
+    textView.text = @"corgi test ;corgiRun() {  var a: Int; a = 5 + 6; }";
 }
 
 @end

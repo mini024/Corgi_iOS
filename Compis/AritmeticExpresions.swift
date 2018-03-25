@@ -24,6 +24,7 @@ enum Operator: Int, CustomStringConvertible{
     case And = 12
     case Or = 13
     case Par = 14
+    case EqualSign = 15
     
     var description: String {
         switch self {
@@ -55,6 +56,8 @@ enum Operator: Int, CustomStringConvertible{
             return "&&"
         case .Or:
             return "||"
+        case .EqualSign:
+            return "="
         case .Par:
             return "("
         }
@@ -62,10 +65,17 @@ enum Operator: Int, CustomStringConvertible{
 }
 
 struct Quadruple {
-    var leftOperand : Any
-    var rightOperand : Any
+    var leftOperand : Any?
+    var rightOperand : Any?
     var oper: Operator
     var resultVar: Int // Indice de variable temporal
+}
+
+struct QuadrupleDir {
+    var leftOperand : Int?
+    var rightOperand : Int?
+    var oper: Operator
+    var resultVar: Int
 }
 
 // Aritmetic Expresions - Semantic Cube, Quadruples.
@@ -83,7 +93,7 @@ extension Helper {
     }
     
     // Punto 4 y 5
-    func generateQuadruple(){
+    func generateQuadruple() -> Bool {
         let rightType = idTypes.popLast()
         let leftType = idTypes.popLast()
         let rightOperand = idValues.popLast()
@@ -94,12 +104,24 @@ extension Helper {
         let resultType = Type(rawValue: operArray[(leftType?.rawValue)!][(rightType?.rawValue)!])
         guard resultType != .ERROR else {
             print("Error No possible ")
-            return
+            return false
         }
         
         quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand!, oper: oper!, resultVar: indexTempVars))
         indexTempVars += 1;
         print(quadruples)
+        return true
+    }
+    
+    func generateAssignationQuadruple() -> Bool {
+        let oper = operators.popLast()
+        let variableOperand = idValues.popLast()
+        let temporalVariable = indexTempVars
+        
+        quadruples.append(Quadruple(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: 1))
+        
+        return true
+        
     }
     
     // Punto 7
@@ -145,6 +167,8 @@ extension Helper {
             return Operator.And
         case "&&":
             return Operator.Or
+        case "=":
+            return Operator.EqualSign
         default:
             return Operator.Par
         }

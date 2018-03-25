@@ -20,18 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rJI-uG-Ocm">
-                                <rect key="frame" x="9" y="47" width="356" height="299"/>
+                                <rect key="frame" x="9" y="47" width="357" height="299"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONr-BC-HHm">
-                                <rect key="frame" x="164" y="20" width="46" height="30"/>
-                                <state key="normal" title="Parse"/>
-                                <connections>
-                                    <action selector="parseTextView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pF4-dh-NMd"/>
-                                </connections>
-                            </button>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYo-it-HIp">
                                 <rect key="frame" x="0.0" y="345" width="375" height="322"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -39,18 +32,34 @@
                                     <constraint firstAttribute="width" secondItem="fYo-it-HIp" secondAttribute="height" multiplier="375:322" id="jRc-Ww-W9k"/>
                                 </constraints>
                             </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONr-BC-HHm">
+                                <rect key="frame" x="116" y="20" width="46" height="30"/>
+                                <state key="normal" title="Parse"/>
+                                <connections>
+                                    <action selector="parseTextView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pF4-dh-NMd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="923-4Y-uIW">
+                                <rect key="frame" x="213" y="18.5" width="46" height="22"/>
+                                <connections>
+                                    <action selector="addCode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yTG-9p-Mct"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="rJI-uG-Ocm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="27" id="4St-cg-4R4"/>
                             <constraint firstItem="rJI-uG-Ocm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="9" id="4fP-W1-j0Z"/>
-                            <constraint firstItem="ONr-BC-HHm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LUF-G5-HI2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="923-4Y-uIW" secondAttribute="trailing" constant="116" id="JUn-va-Fbd"/>
+                            <constraint firstItem="ONr-BC-HHm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-48.5" id="LUF-G5-HI2"/>
+                            <constraint firstItem="923-4Y-uIW" firstAttribute="leading" secondItem="ONr-BC-HHm" secondAttribute="trailing" constant="51" id="XfI-gG-POl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rJI-uG-Ocm" secondAttribute="bottom" constant="321" id="Zmm-YV-Umd"/>
                             <constraint firstItem="fYo-it-HIp" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dys-5n-csn"/>
                             <constraint firstItem="ONr-BC-HHm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ihK-33-NaK"/>
-                            <constraint firstItem="ONr-BC-HHm" firstAttribute="centerX" secondItem="rJI-uG-Ocm" secondAttribute="centerX" id="lQk-6U-dpN"/>
+                            <constraint firstItem="923-4Y-uIW" firstAttribute="baseline" secondItem="ONr-BC-HHm" secondAttribute="baseline" id="jjN-eQ-ex6"/>
+                            <constraint firstItem="ONr-BC-HHm" firstAttribute="centerX" secondItem="rJI-uG-Ocm" secondAttribute="centerX" constant="-48.5" id="lQk-6U-dpN"/>
                             <constraint firstItem="fYo-it-HIp" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ljf-le-nuK"/>
-                            <constraint firstItem="ONr-BC-HHm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="164" id="uCu-w1-ido"/>
+                            <constraint firstItem="ONr-BC-HHm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="116" id="uCu-w1-ido"/>
                             <constraint firstItem="fYo-it-HIp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xMl-ai-6bK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

@@ -30,8 +30,8 @@ extern void (^ParseTestFailBlock)(NSString *msg);
 // Operations
 extern void (^addIdToStackBlock)(NSString *id, NSString *type);
 extern void (^addOperatorToStackBlock)(NSString *name);
-extern void (^checkNextOperatorBlock)(NSString *typeOp);
-extern void (^deleteParentesisFromStackBlock)();
+extern bool (^checkNextOperatorBlock)(NSString *typeOp);
+extern void (^deleteParentesisFromStackBlock)(void);
 
 
 // Added some extras to suppress warnings...
@@ -40,7 +40,7 @@ extern void (^deleteParentesisFromStackBlock)();
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 YY_BUFFER_STATE  yy_scan_string(const char *s);
 
-int yyparse();
+int yyparse(void);
 void yy_delete_buffer(YY_BUFFER_STATE buf);
 
 #endif

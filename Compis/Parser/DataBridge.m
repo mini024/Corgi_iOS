@@ -24,5 +24,5 @@ void (^ParseTestFailBlock)(NSString *msg);
 // Operations
 void (^addIdToStackBlock)(NSString *id, NSString *type);
 void (^addOperatorToStackBlock)(NSString *name);
-void (^checkNextOperatorBlock)(NSString *typeOp);
-void (^deleteParentesisFromStackBlock)();
+bool (^checkNextOperatorBlock)(NSString *typeOp);
+void (^deleteParentesisFromStackBlock)(void);

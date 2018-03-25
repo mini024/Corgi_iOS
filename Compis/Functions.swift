@@ -86,7 +86,10 @@ struct Function {
     func variableExists(_ id: String) -> Bool{
         if funcTable[currentFunc]?.varTable[id] != nil {
             return true
+        } else if funcTable["global"]?.varTable[id] != nil {
+            return true
         }
+        
         return false
     }
     
