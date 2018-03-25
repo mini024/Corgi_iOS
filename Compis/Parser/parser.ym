@@ -149,7 +149,13 @@ asignacion
 ;
 
 id:
-ID index
+ID index {
+    if (findVariableBlock([NSString stringWithFormat:@"%s", $1])) {
+        addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist \n", $1]);
+    }
+}
 ;
 
 index:
@@ -158,12 +164,15 @@ SLFT_BRA INT SRGT_BRA
 ;
 
 asignacion:
-id EQUAL asignation SEMICOLON
+id EQUAL {addOperatorToStackBlock(@"=");} asignation SEMICOLON
 ;
 
 asignation:
 SLFT_BRA constante asignations SRGT_BRA
-| expresion;
+| expresion {
+    if (!checkNextOperatorBlock(@"assignation"))
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+}
 ;
 
 asignations:
@@ -222,7 +231,10 @@ AND_OP expresion
 ;
 
 expresion:
-exp {checkNextOperatorBlock(@"relational");} expresion2
+exp {
+    if (!checkNextOperatorBlock(@"relational"))
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+    } expresion2
 ;
 
 expresion2:
@@ -236,7 +248,10 @@ LOW_OP {addOperatorToStackBlock(@"<");} exp
 ;
 
 exp:
-termino {checkNextOperatorBlock(@"exp");} exp2
+termino {
+    if (!checkNextOperatorBlock(@"exp"))
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+} exp2
 ;
 
 exp2:
@@ -246,7 +261,10 @@ SUM {addOperatorToStackBlock(@"+");} exp
 ;
 
 termino:
-factor {checkNextOperatorBlock(@"term");} termino2
+factor {
+    if (!checkNextOperatorBlock(@"term"))
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+} termino2
 ;
 
 termino2:

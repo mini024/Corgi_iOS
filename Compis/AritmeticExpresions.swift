@@ -83,7 +83,7 @@ extension Helper {
     }
     
     // Punto 4 y 5
-    func generateQuadruple(){
+    func generateQuadruple() -> Bool {
         let rightType = idTypes.popLast()
         let leftType = idTypes.popLast()
         let rightOperand = idValues.popLast()
@@ -94,12 +94,13 @@ extension Helper {
         let resultType = Type(rawValue: operArray[(leftType?.rawValue)!][(rightType?.rawValue)!])
         guard resultType != .ERROR else {
             print("Error No possible ")
-            return
+            return false
         }
         
         quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand!, oper: oper!, resultVar: indexTempVars))
         indexTempVars += 1;
         print(quadruples)
+        return true
     }
     
     // Punto 7
