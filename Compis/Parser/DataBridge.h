@@ -16,11 +16,10 @@
  */
 
 // Variables
-extern void (^addVariableBlock)(NSString *id, NSString *type);
+extern void (^addVariableBlock)(NSString *id, NSString *type, int *parameter);
 extern bool (^findVariableBlock)(NSString *value);
 
 // Parameters
-extern void (^addParameterBlock)(NSString *id, NSString *type);
 extern bool (^findParameterBlock)(NSString *value);
 
 

@@ -74,7 +74,7 @@ struct Function {
         }
     }
     
-    func addVariable(_ id: String, type:String) {
+    func addVariable(_ id: String, type:String, parameter:Bool) {
         var scope: Scope = .global
         var address = 0
         if currentFunc != "Corgi" {
@@ -108,44 +108,11 @@ struct Function {
             }
         }
         
-        funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
-    }
-    
-    func addParameter(_ id: String, type:String) {
-        var scope: Scope = .global
-        var address = 0
-        if currentFunc != "Corgi" {
-            scope = .local
+        if parameter {
+            funcTable[currentFunc]?.parameters[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
+        } else {
+            funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
         }
-        
-        switch type {
-        case "Int":
-            if scope == .global {
-                virtualMemory.globalMemory.setInt(value: nil)
-                address = virtualMemory.globalMemory.intStartAddress
-            } else {
-                virtualMemory.localMemory.setInt(value: nil)
-                address = virtualMemory.localMemory.intStartAddress
-            }
-        case "Float":
-            if scope == .global {
-                virtualMemory.globalMemory.setFloat(value: nil)
-                address = virtualMemory.globalMemory.floatStartAddress
-            } else {
-                virtualMemory.localMemory.setFloat(value: nil)
-                address = virtualMemory.localMemory.floatStartAddress
-            }
-        default:
-            if scope == .global {
-                virtualMemory.globalMemory.setString(value: nil)
-                address = virtualMemory.globalMemory.stringStartAddress
-            } else {
-                virtualMemory.localMemory.setString(value: nil)
-                address = virtualMemory.localMemory.stringStartAddress
-            }
-        }
-        
-        funcTable[currentFunc]?.parameters[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
     }
     
     func functionExists(_ id: String) -> Bool{

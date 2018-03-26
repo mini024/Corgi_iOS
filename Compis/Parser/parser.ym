@@ -92,7 +92,7 @@ function functions
 function:
 FUNC ID LFT_PAR ID COLON tipo {
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $4])) {
-        addParameterBlock([NSString stringWithFormat:@"%s", $4],[NSString stringWithFormat:@"%s", $6]);
+        addVariableBlock([NSString stringWithFormat:@"%s", $4],[NSString stringWithFormat:@"%s", $6], true);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $4]);
     }
@@ -108,7 +108,7 @@ FUNC ID LFT_PAR ID COLON tipo {
 parameters:
 ',' ID COLON tipo {
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $2])) {
-        addParameterBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4]);
+        addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], true);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
     }
@@ -124,7 +124,7 @@ var vars
 var:
 VAR ID COLON tipo SEMICOLON {
     if (!findVariableBlock([NSString stringWithFormat:@"%s", $2])) {
-        addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4]);
+        addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], false);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
     }

@@ -60,16 +60,12 @@
         textView.text = _errors;
     };
     
-    addVariableBlock = ^(NSString *name, NSString *type) {
-        [Helper.singleton addVariable:name type: type];
+    addVariableBlock = ^(NSString *name, NSString *type, int *parameter) {
+        [Helper.singleton addVariable:name type: type parameter: parameter];
     };
     
     addFunctionBlock = ^(NSString *name, NSString *type) {
         [Helper.singleton addFunction:name type: type];
-    };
-    
-    addParameterBlock = ^(NSString *name, NSString *type) {
-        [Helper.singleton addParameter:name type: type];
     };
     
     findFunctionBlock = ^(NSString *value) {

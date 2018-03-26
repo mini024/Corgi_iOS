@@ -10,7 +10,7 @@
 #import "DataBridge.h"
 
 // Variables
-void (^addVariableBlock)(NSString *id, NSString *type);
+void (^addVariableBlock)(NSString *id, NSString *type, int *parameter);
 bool (^findVariableBlock)(NSString *value);
 
 // Parameters
