@@ -13,6 +13,10 @@
 void (^addVariableBlock)(NSString *id, NSString *type);
 bool (^findVariableBlock)(NSString *value);
 
+// Parameters
+void (^addParameterBlock)(NSString *id, NSString *type);
+bool (^findParameterBlock)(NSString *value);
+
 // Functions
 void (^addFunctionBlock)(NSString *id, NSString *type);
 bool (^findFunctionBlock)(NSString *value);

@@ -90,9 +90,15 @@ function functions
 ;
 
 function:
-FUNC ID LFT_PAR ID COLON tipo parameters RGT_PAR ARROW TYPE {
+FUNC ID LFT_PAR ID COLON tipo {
+    if (!findParameterBlock([NSString stringWithFormat:@"%s", $4])) {
+        addParameterBlock([NSString stringWithFormat:@"%s", $4],[NSString stringWithFormat:@"%s", $6]);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $4]);
+    }
+} parameters RGT_PAR ARROW TYPE {
     if (!findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
-        addFunctionBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $10]);
+        addFunctionBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $11]);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $2]);
     }
@@ -100,7 +106,13 @@ FUNC ID LFT_PAR ID COLON tipo parameters RGT_PAR ARROW TYPE {
 ;
 
 parameters:
-',' ID COLON tipo parameters
+',' ID COLON tipo {
+    if (!findParameterBlock([NSString stringWithFormat:@"%s", $2])) {
+        addParameterBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4]);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
+    }
+} parameters
 | /*epsilon*/
 ;
 
@@ -149,7 +161,8 @@ asignacion
 ;
 
 id:
-ID index {
+ID index
+{
     if (findVariableBlock([NSString stringWithFormat:@"%s", $1])) {
         addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");
     } else {

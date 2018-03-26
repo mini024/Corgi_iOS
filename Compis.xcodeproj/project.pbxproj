@@ -24,6 +24,7 @@
 		1A6A2681205335DE00C8E9FF /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A2680205335DE00C8E9FF /* Functions.swift */; };
 		1A8DD39B205C68EF00F6070E /* AritmeticExpresions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */; };
 		1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8DD39C205C6D9E00F6070E /* OperationTable.plist */; };
+		1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		1A6A2680205335DE00C8E9FF /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AritmeticExpresions.swift; sourceTree = "<group>"; };
 		1A8DD39C205C6D9E00F6070E /* OperationTable.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OperationTable.plist; sourceTree = "<group>"; };
+		1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
 				1A6A2680205335DE00C8E9FF /* Functions.swift */,
 				1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */,
+				1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */,
 				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
 				1A3EA2CD2034FA4900EC10CE /* Assets.xcassets */,
@@ -325,6 +328,7 @@
 				1A6A2681205335DE00C8E9FF /* Functions.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,
 				1A3EA2D42034FA4900EC10CE /* main.m in Sources */,
+				1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */,
 				1A8DD39B205C68EF00F6070E /* AritmeticExpresions.swift in Sources */,
 				1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */,
 			);

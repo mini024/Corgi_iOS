@@ -19,6 +19,11 @@
 extern void (^addVariableBlock)(NSString *id, NSString *type);
 extern bool (^findVariableBlock)(NSString *value);
 
+// Parameters
+extern void (^addParameterBlock)(NSString *id, NSString *type);
+extern bool (^findParameterBlock)(NSString *value);
+
+
 // Functions
 extern void (^addFunctionBlock)(NSString *id, NSString *type);
 extern bool (^findFunctionBlock)(NSString *value);

@@ -82,9 +82,37 @@ struct QuadrupleDir {
 extension Helper {
     
     // Punto 1
-    func pushId(_ name: String, type: String) {
-        idValues.append(name)
-        idTypes.append(stringToType(type: type))
+    func pushIdAddress(_ name: String, type: String) {
+        if variableExists(name) {
+            idAddresses.append(getVariableAddress(id: name))
+            idTypes.append(getVariableType(name))
+        } else {
+            switch type {
+            case "Int":
+                virtualMemory.constantsMemory.setInt(value: Int(name)!)
+                let address = virtualMemory.constantsMemory.floatStartAddress - 1
+                idAddresses.append(address)
+                idTypes.append(Type.Int)
+            case "Float":
+                virtualMemory.constantsMemory.setFloat(value: Float(name)!)
+                let address = virtualMemory.constantsMemory.stringStartAddress - 1
+                idAddresses.append(address)
+                idTypes.append(Type.Float)
+            case "String":
+                virtualMemory.constantsMemory.setString(value: name)
+                let address = virtualMemory.constantsMemory.boolStartAddress - 1
+                idAddresses.append(address)
+                idTypes.append(Type.String)
+            case "Bool":
+                virtualMemory.constantsMemory.setBool(value: Bool(name)!)
+                let address = virtualMemory.constantsMemory.boolMemory.count + virtualMemory.constantsMemory.boolStartAddress - 1
+                idAddresses.append(address)
+                idTypes.append(Type.Bool)
+            default:
+                // ERROR or Corgi
+                break
+            }
+        }
     }
     
     // Punto 2, 3 y 6
@@ -96,8 +124,8 @@ extension Helper {
     func generateQuadruple() -> Bool {
         let rightType = idTypes.popLast()
         let leftType = idTypes.popLast()
-        let rightOperand = idValues.popLast()
-        let leftOperand = idValues.popLast()
+        let rightOperand = idAddresses.popLast()
+        let leftOperand = idAddresses.popLast()
         let oper = operators.popLast()
         
         let operArray = operationTable!.value(forKey: (oper?.description)!) as! [[Int]]
@@ -107,18 +135,46 @@ extension Helper {
             return false
         }
         
-        quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand!, oper: oper!, resultVar: indexTempVars))
-        indexTempVars += 1;
-        print(quadruples)
+        var resultAddress = 0
+        
+        switch resultType! {
+        case .Int:
+            virtualMemory.temporalMemory.setInt(value: nil)
+            resultAddress = virtualMemory.temporalMemory.floatStartAddress - 1
+            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+        case .Float:
+            virtualMemory.temporalMemory.setFloat(value: nil)
+            resultAddress = virtualMemory.temporalMemory.stringStartAddress - 1
+            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+        case .String:
+            virtualMemory.temporalMemory.setString(value: nil)
+            resultAddress = virtualMemory.temporalMemory.boolStartAddress - 1
+            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+        case .Bool:
+            virtualMemory.temporalMemory.setBool(value: nil)
+            resultAddress = virtualMemory.temporalMemory.boolMemory.count + virtualMemory.temporalMemory.boolStartAddress - 1
+            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+        default:
+            return false
+        }
+        
+        idAddresses.append(resultAddress)
+        idTypes.append(resultType!)
+        print(quadruplesAddress)
         return true
     }
     
     func generateAssignationQuadruple() -> Bool {
         let oper = operators.popLast()
-        let variableOperand = idValues.popLast()
-        let temporalVariable = indexTempVars
+        let temporalType = idTypes.popLast()
+        let temporalVariable = idAddresses.popLast()
+        let resultVariable = idAddresses.popLast()
+        let resultType = idTypes.popLast()
+
         
-        quadruples.append(Quadruple(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: 1))
+        guard temporalType == resultType else { return false}
+        
+        quadruplesAddress.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
         
         return true
     }

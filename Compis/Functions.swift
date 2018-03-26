@@ -25,28 +25,35 @@ enum Type: Int {
 struct Symbol {
     var type: Type!
     var scope: Scope!
+    var address: Int!
 }
 
 struct Function {
     var returnType: Type!
-    var varTable = [String: Symbol]()
+    var variables = [String: Symbol]()
+    var parameters = [String: Symbol]()
+    var startAddress: Int // Quadruple index
 }
 
 // Function & Variable Tables
 @objc class Helper: NSObject{
     static let singleton = Helper()
+    // Virtual Memory
+    let virtualMemory = VirtualMemory()
+    
     // Operations
-    var operationTable:NSDictionary?
-    var operators:[Operator] = []
-    var idTypes:[Type] = []
-    var idValues:[Any] = []
+    var operationTable: NSDictionary?
+    var operators: [Operator] = []
+    var idTypes: [Type] = []
+    var idAddresses: [Int] = []
     
     // Quadruple
     var quadruples: [Quadruple] = []
+    var quadruplesAddress: [QuadrupleDir] = []
     var temporalVariables: [Any] = []
     var indexTempVars = 0
     
-    //Function
+    // Function
     var funcTable = [String:Function]()
     var currentFunc: String = "global"
     
@@ -60,20 +67,85 @@ struct Function {
     func addFunction(_ id: String, type: String) {
         if type == "Corgi" || type == "corgiRun" {
             currentFunc = type
-            funcTable[currentFunc] = Function(returnType: stringToType(type: type), varTable: [:])
+            funcTable[currentFunc] = Function(returnType: stringToType(type: type), variables: [:], parameters: [:], startAddress: quadruplesAddress.count - 1)
         } else {
-            funcTable[id] = Function(returnType: stringToType(type: type), varTable: [:])
+            funcTable[id] = Function(returnType: stringToType(type: type), variables: [:], parameters: [:], startAddress: quadruplesAddress.count - 1)
             currentFunc = id
         }
     }
     
     func addVariable(_ id: String, type:String) {
         var scope: Scope = .global
+        var address = 0
         if currentFunc != "Corgi" {
             scope = .local
         }
         
-        funcTable[currentFunc]?.varTable[id] = Symbol(type: stringToType(type: type), scope: scope)
+        switch type {
+        case "Int":
+            if scope == .global {
+                virtualMemory.globalMemory.setInt(value: nil)
+                address = virtualMemory.globalMemory.intStartAddress
+            } else {
+                virtualMemory.localMemory.setInt(value: nil)
+                address = virtualMemory.localMemory.intStartAddress
+            }
+        case "Float":
+            if scope == .global {
+                virtualMemory.globalMemory.setFloat(value: nil)
+                address = virtualMemory.globalMemory.floatStartAddress
+            } else {
+                virtualMemory.localMemory.setFloat(value: nil)
+                address = virtualMemory.localMemory.floatStartAddress
+            }
+        default:
+            if scope == .global {
+                virtualMemory.globalMemory.setString(value: nil)
+                address = virtualMemory.globalMemory.stringStartAddress
+            } else {
+                virtualMemory.localMemory.setString(value: nil)
+                address = virtualMemory.localMemory.stringStartAddress
+            }
+        }
+        
+        funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
+    }
+    
+    func addParameter(_ id: String, type:String) {
+        var scope: Scope = .global
+        var address = 0
+        if currentFunc != "Corgi" {
+            scope = .local
+        }
+        
+        switch type {
+        case "Int":
+            if scope == .global {
+                virtualMemory.globalMemory.setInt(value: nil)
+                address = virtualMemory.globalMemory.intStartAddress
+            } else {
+                virtualMemory.localMemory.setInt(value: nil)
+                address = virtualMemory.localMemory.intStartAddress
+            }
+        case "Float":
+            if scope == .global {
+                virtualMemory.globalMemory.setFloat(value: nil)
+                address = virtualMemory.globalMemory.floatStartAddress
+            } else {
+                virtualMemory.localMemory.setFloat(value: nil)
+                address = virtualMemory.localMemory.floatStartAddress
+            }
+        default:
+            if scope == .global {
+                virtualMemory.globalMemory.setString(value: nil)
+                address = virtualMemory.globalMemory.stringStartAddress
+            } else {
+                virtualMemory.localMemory.setString(value: nil)
+                address = virtualMemory.localMemory.stringStartAddress
+            }
+        }
+        
+        funcTable[currentFunc]?.parameters[id] = Symbol(type: stringToType(type: type), scope: scope, address: address)
     }
     
     func functionExists(_ id: String) -> Bool{
@@ -83,10 +155,42 @@ struct Function {
         return false
     }
     
-    func variableExists(_ id: String) -> Bool{
-        if funcTable[currentFunc]?.varTable[id] != nil {
+    func variableExists(_ id: String) -> Bool {
+        if funcTable[currentFunc]?.variables[id] != nil {
             return true
-        } else if funcTable["global"]?.varTable[id] != nil {
+        } else if funcTable["Corgi"]?.variables[id] != nil {
+            return true
+        }
+        
+        return false
+    }
+    
+    func getVariableType(_ id:String) -> Type {
+        if funcTable[currentFunc]?.variables[id] != nil {
+            return (funcTable[currentFunc]?.variables[id]?.type)!
+        } else if funcTable["Corgi"]?.variables[id] != nil {
+            return (funcTable["Corgi"]?.variables[id]?.type)!
+        }
+        
+        return Type.ERROR
+    }
+    
+    func getVariableAddress( id: String) -> Int {
+        if let variable = funcTable[currentFunc]?.variables[id] {
+            return variable.address
+        }
+        
+        if let variable = funcTable["Corgi"]?.variables[id] {
+            return variable.address
+        }
+        
+        return 0
+    }
+    
+    func parameterExists(_ id: String) -> Bool{
+        if funcTable[currentFunc]?.parameters[id] != nil {
+            return true
+        } else if funcTable["global"]?.variables[id] != nil {
             return true
         }
         

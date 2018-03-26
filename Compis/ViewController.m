@@ -68,6 +68,10 @@
         [Helper.singleton addFunction:name type: type];
     };
     
+    addParameterBlock = ^(NSString *name, NSString *type) {
+        [Helper.singleton addParameter:name type: type];
+    };
+    
     findFunctionBlock = ^(NSString *value) {
         return [Helper.singleton functionExists:value];
     };
@@ -76,8 +80,12 @@
         return [Helper.singleton variableExists:value];
     };
     
+    findParameterBlock = ^(NSString *value) {
+        return [Helper.singleton parameterExists:value];
+    };
+    
     addIdToStackBlock = ^(NSString *name, NSString *type) {
-        [Helper.singleton pushId:name type:type];
+        [Helper.singleton pushIdAddress:name type:type];
     };
     
     addOperatorToStackBlock = ^(NSString *val) {
@@ -98,7 +106,7 @@
         } else if ([type  isEqual: @"relational"] && isNextRelation) {
             return [Helper.singleton generateQuadruple];
         } else if ([type  isEqual: @"assignation"] && isNextAssignation) {
-            return [Helper.singleton generateQuadruple];
+            return [Helper.singleton generateAssignationQuadruple];
         }
         
         return YES;
@@ -113,7 +121,7 @@
     yy_delete_buffer(buf);
 }
 - (IBAction)addCode:(id)sender {
-    textView.text = @"corgi test ;corgiRun() {  a = 5 + 6; }";
+    textView.text = @"corgi test ; var a : Int; var x : Float; var array : Int[20]; func one(param:Int)-> Bool{ array = [1,2,3,4]; for param in 0...3 by 1 { array[1] = param; x = 5; } return true;} corgiRun() { var name: String; case { ((a+5)* 3)>c: x=2; | c>a: x=4; | else: x=3;} write((a+5)); read(x);}";
 }
 
 @end
