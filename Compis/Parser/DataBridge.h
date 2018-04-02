@@ -37,6 +37,11 @@ extern void (^addOperatorToStackBlock)(NSString *name);
 extern bool (^checkNextOperatorBlock)(NSString *typeOp);
 extern void (^deleteParentesisFromStackBlock)(void);
 
+// COND, WHILE, FOR Queadruples
+extern void (^generateGOTOFquadrupleBlock)(void);
+extern void (^generateGOTOquadrupleBlock)(void);
+extern void (^fillEndquadrupleBlock)(void);
+
 
 // Added some extras to suppress warnings...
 #ifndef FLEXINT_H

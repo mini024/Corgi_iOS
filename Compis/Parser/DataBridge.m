@@ -30,3 +30,8 @@ void (^addIdToStackBlock)(NSString *id, NSString *type);
 void (^addOperatorToStackBlock)(NSString *name);
 bool (^checkNextOperatorBlock)(NSString *typeOp);
 void (^deleteParentesisFromStackBlock)(void);
+
+// COND, WHILE, FOR Queadruples
+void (^generateGOTOFquadrupleBlock)(void);
+void (^generateGOTOquadrupleBlock)(void);
+void (^fillEndquadrupleBlock)(void);

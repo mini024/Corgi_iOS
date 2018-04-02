@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0514203220688A1C00BE8CE6 /* Conditional-ControlExpresions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0514203120688A1C00BE8CE6 /* Conditional-ControlExpresions.swift */; };
 		1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3EA2C52034FA4900EC10CE /* AppDelegate.m */; };
 		1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3EA2C82034FA4900EC10CE /* ViewController.m */; };
 		1A3EA2CC2034FA4900EC10CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A3EA2CA2034FA4900EC10CE /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0514203120688A1C00BE8CE6 /* Conditional-ControlExpresions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conditional-ControlExpresions.swift"; sourceTree = "<group>"; };
 		1A3EA2C12034FA4900EC10CE /* Compis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3EA2C42034FA4900EC10CE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1A3EA2C52034FA4900EC10CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
 				1A6A2680205335DE00C8E9FF /* Functions.swift */,
 				1A8DD39A205C68EF00F6070E /* AritmeticExpresions.swift */,
+				0514203120688A1C00BE8CE6 /* Conditional-ControlExpresions.swift */,
 				1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */,
 				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
@@ -328,6 +331,7 @@
 				1A6A2681205335DE00C8E9FF /* Functions.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,
 				1A3EA2D42034FA4900EC10CE /* main.m in Sources */,
+				0514203220688A1C00BE8CE6 /* Conditional-ControlExpresions.swift in Sources */,
 				1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */,
 				1A8DD39B205C68EF00F6070E /* AritmeticExpresions.swift in Sources */,
 				1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */,

@@ -112,6 +112,20 @@
         [Helper.singleton popPar];
     };
     
+    generateGOTOFquadrupleBlock = ^() {
+        [Helper.singleton generateGOTOFquadruple];
+    };
+    
+    generateGOTOquadrupleBlock = ^() {
+        [Helper.singleton generateGOTOquadruple];
+    };
+    
+    fillEndquadrupleBlock = ^() {
+        [Helper.singleton fillEndquadruple];
+    };
+    
+    
+    
     yyparse();
     
     yy_delete_buffer(buf);

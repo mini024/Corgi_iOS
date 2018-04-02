@@ -48,7 +48,7 @@ struct Function {
     var idAddresses: [Int] = []
     
     // Quadruple
-    var quadruples: [Quadruple] = []
+    var pendingQuadruples: [Int] = [] // jumps stack
     var quadruplesAddress: [QuadrupleDir] = []
     var temporalVariables: [Any] = []
     var indexTempVars = 0

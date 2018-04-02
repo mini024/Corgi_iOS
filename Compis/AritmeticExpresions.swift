@@ -25,6 +25,8 @@ enum Operator: Int, CustomStringConvertible{
     case Or = 13
     case Par = 14
     case EqualSign = 15
+    case GOTOF = 16
+    case GOTO = 17
     
     var description: String {
         switch self {
@@ -60,6 +62,10 @@ enum Operator: Int, CustomStringConvertible{
             return "="
         case .Par:
             return "("
+        case .GOTOF:
+            return "GOTOF"
+        case .GOTO:
+            return "GOTO"
         }
     }
 }
@@ -158,8 +164,9 @@ extension Helper {
             return false
         }
         
-        idAddresses.append(resultAddress)
-        idTypes.append(resultType!)
+        idAddresses.append(resultAddress) // push temporal variable to operands stack
+        idTypes.append(resultType!) // push temporal variable type to types stack
+        print("Cuadruplo normal")
         print(quadruplesAddress)
         return true
     }
@@ -175,7 +182,8 @@ extension Helper {
         guard temporalType == resultType else { return false}
         
         quadruplesAddress.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
-        
+        print("Cuadruplo Asignacion")
+        print(quadruplesAddress)
         return true
     }
     

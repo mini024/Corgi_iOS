@@ -207,7 +207,7 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 ;
 
 condicion:
-CASE LFT_BRA expresion COLON estatuto conditionAux RGT_BRA
+CASE LFT_BRA expresion {generateGOTOFquadrupleBlock();} COLON estatuto conditionAux RGT_BRA {fillEndquadrupleBlock();}
 ;
 
 conditionAux:
@@ -216,11 +216,11 @@ CASE_OR condicion2
 ;
 
 condicion2:
-expresion COLON estatuto conditionAux
+expresion {generateGOTOFquadrupleBlock();} COLON estatuto conditionAux
 | conditionElse
 
 conditionElse:
-ELSE COLON estatuto
+ELSE {generateGOTOquadrupleBlock();} COLON estatuto
 | /*epsilon*/
 ;
 
