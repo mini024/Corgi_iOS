@@ -1,0 +1,40 @@
+// ASIGNATIONS
+
+corgi test;
+var a : Int;
+var b : Int;
+var c : Int;
+corgiRun() {
+a = 2;
+b = 3;
+c = 1;
+}
+
+// CONDITIONAL
+corgi test;
+var a : Int;
+var b : Int;
+var c : Int;
+corgiRun() {
+a = 2;
+b = 3;
+c = 1;
+  case {
+    a>b: write(“hola”)
+    |a>c: write(“adios”)
+    |else: write(“else”)
+  }
+}
+
+// READ - write
+
+corgi test;
+var a : Int;
+var b : Int;
+var c : Int;
+corgiRun() {
+a = 2;
+b = 3;
+write(a+b);
+c = 1;
+}
