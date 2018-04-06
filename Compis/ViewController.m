@@ -45,6 +45,7 @@
     YY_BUFFER_STATE buf;
     _failed = false;
     _errors = @"";
+    [Helper.singleton clear];
     
     buf = yy_scan_string([self.textView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
@@ -58,6 +59,7 @@
         self.failed = true;
         _errors = [_errors stringByAppendingString:msg];
         textView.text = _errors;
+        
     };
     
     addVariableBlock = ^(NSString *name, NSString *type, int *parameter) {
@@ -89,20 +91,27 @@
     };
     
     checkNextOperatorBlock = ^(NSString *type) {
+        if (_failed) {
+            return YES;
+        }
+        
         NSString *nextOperator = [Helper.singleton getNextOp];
         bool isNextExp = [nextOperator isEqual: @"+"] || [nextOperator  isEqual: @"-"];
         bool isNextTerm = [nextOperator isEqual: @"/"] || [nextOperator  isEqual: @"*"] || [nextOperator  isEqual: @"^"] || [nextOperator  isEqual: @"%"];
         bool isNextRelation = [nextOperator isEqual: @"<"] || [nextOperator  isEqual: @">"] || [nextOperator  isEqual: @"<="] || [nextOperator  isEqual: @">="] || [nextOperator  isEqual: @"!="] || [nextOperator  isEqual: @"=="];
         bool isNextAssignation = [nextOperator isEqual: @"="];
+        bool isNextLogical = [nextOperator isEqual: @"&&"] || [nextOperator isEqual: @"||"];
         
         if ([type isEqual: @"exp"] && isNextExp) {
             return [Helper.singleton generateQuadruple];
-        } else if ([type  isEqual: @"term"] && isNextTerm) {
+        } else if ([type isEqual: @"term"] && isNextTerm) {
             return [Helper.singleton generateQuadruple];
-        } else if ([type  isEqual: @"relational"] && isNextRelation) {
+        } else if ([type isEqual: @"relational"] && isNextRelation) {
             return [Helper.singleton generateQuadruple];
-        } else if ([type  isEqual: @"assignation"] && isNextAssignation) {
+        } else if ([type isEqual: @"assignation"] && isNextAssignation) {
             return [Helper.singleton generateAssignationQuadruple];
+        } else if ([type isEqual: @"logical"] && isNextLogical) {
+            return [Helper.singleton generateQuadruple];
         }
         
         return YES;
@@ -124,14 +133,12 @@
         [Helper.singleton fillEndquadruple];
     };
     
-    
-    
     yyparse();
     
     yy_delete_buffer(buf);
 }
 - (IBAction)addCode:(id)sender {
-    textView.text = @"corgi test ; var a : Int; var x : Float; var array : Int[20]; func one(param:Int)-> Bool{ array = [1,2,3,4]; for param in 0...3 by 1 { array[1] = param; x = 5; } return true;} corgiRun() { var name: String; case { ((a+5)* 3)>c: x=2; | c>a: x=4; | else: x=3;} write((a+5)); read(x);}";
+    textView.text = @"corgi test ; var a : Int; var x : Float; func one(param:Int)-> Bool{ return true;} corgiRun() { var name: String; var s: Bool; s = a > x; write((a+5)); read(x);}";
 }
 
 @end

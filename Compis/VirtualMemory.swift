@@ -18,7 +18,6 @@ class VirtualMemory {
     var localMemory = Memory(value: LOCAL_START_ADDRESS)
     var temporalMemory = Memory(value: TEMPORAL_START_ADDRESS)
     var constantsMemory = Memory(value: CONSTANTS_START_ADDRESS)
-    
 }
 
 class Memory {
