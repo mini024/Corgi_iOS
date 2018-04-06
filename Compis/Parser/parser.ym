@@ -177,12 +177,14 @@ SLFT_BRA INT SRGT_BRA
 ;
 
 asignacion:
-id EQUAL {addOperatorToStackBlock(@"=");} asignation SEMICOLON
+id EQUAL {
+    addOperatorToStackBlock(@"=");
+} asignation SEMICOLON
 ;
 
 asignation:
 SLFT_BRA constante asignations SRGT_BRA
-| expresion {
+| Megaexpresion {
     if (!checkNextOperatorBlock(@"assignation"))
     ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
 }
@@ -207,7 +209,11 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 ;
 
 condicion:
-CASE LFT_BRA expresion {generateGOTOFquadrupleBlock();} COLON estatuto conditionAux RGT_BRA {fillEndquadrupleBlock();}
+CASE LFT_BRA expresion {
+    generateGOTOFquadrupleBlock();
+} COLON estatuto conditionAux RGT_BRA {
+    fillEndquadrupleBlock();
+}
 ;
 
 conditionAux:
@@ -216,11 +222,15 @@ CASE_OR condicion2
 ;
 
 condicion2:
-expresion {generateGOTOFquadrupleBlock();} COLON estatuto conditionAux
+expresion {
+    generateGOTOFquadrupleBlock();
+} COLON estatuto conditionAux
 | conditionElse
 
 conditionElse:
-ELSE {generateGOTOquadrupleBlock();} COLON estatuto
+ELSE {
+    generateGOTOquadrupleBlock();
+} COLON estatuto
 | /*epsilon*/
 ;
 
@@ -230,16 +240,22 @@ FOR ID IN INT FOR_RANGE INT BY INT LFT_BRA estatutos RGT_BRA
 ;
 
 return:
-RETURN exp SEMICOLON
+RETURN Megaexpresion SEMICOLON
 ;
 
 Megaexpresion:
-expresion Superexpresion
+expresion {
+    if (!checkNextOperatorBlock(@"logical"))
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+} Superexpresion {
+    if (!checkNextOperatorBlock(@"logical"))
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+}
 ;
 
 Superexpresion:
-AND_OP expresion
-| OR_OP expresion
+AND_OP {addOperatorToStackBlock(@"&&");} expresion
+| OR_OP {addOperatorToStackBlock(@"||");} expresion
 | /*epsilon*/
 ;
 
@@ -247,11 +263,14 @@ expresion:
 exp {
     if (!checkNextOperatorBlock(@"relational"))
         ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
-    } expresion2
+} expresion2 {
+    if (!checkNextOperatorBlock(@"relational"))
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types \n"]);
+}
 ;
 
 expresion2:
-LOW_OP {addOperatorToStackBlock(@"<");} exp
+LOW_OP {addOperatorToStackBlock(@"<");} exp 
 | GRT_OP {addOperatorToStackBlock(@">");} exp
 | NOT_EQ {addOperatorToStackBlock(@"!=");} exp
 | LOW_EQ {addOperatorToStackBlock(@"<=");} exp
@@ -268,7 +287,7 @@ termino {
 ;
 
 exp2:
-SUM {addOperatorToStackBlock(@"+");} exp
+SUM { addOperatorToStackBlock(@"+"); } exp
 | SUBTRACTION {addOperatorToStackBlock(@"-");} exp
 | /*epsilon*/
 ;

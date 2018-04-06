@@ -70,6 +70,19 @@ enum Operator: Int, CustomStringConvertible{
     }
 }
 
+extension String {
+    func toBool() -> Bool? {
+        switch self {
+        case "True", "true", "yes", "1":
+            return true
+        case "False", "false", "no", "0":
+            return false
+        default:
+            return nil
+        }
+    }
+}
+
 struct Quadruple {
     var leftOperand : Any?
     var rightOperand : Any?
@@ -110,7 +123,7 @@ extension Helper {
                 idAddresses.append(address)
                 idTypes.append(Type.String)
             case "Bool":
-                virtualMemory.constantsMemory.setBool(value: Bool(name)!)
+                virtualMemory.constantsMemory.setBool(value: name.toBool())
                 let address = virtualMemory.constantsMemory.boolMemory.count + virtualMemory.constantsMemory.boolStartAddress - 1
                 idAddresses.append(address)
                 idTypes.append(Type.Bool)

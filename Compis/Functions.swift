@@ -37,7 +37,7 @@ struct Function {
 
 // Function & Variable Tables
 @objc class Helper: NSObject{
-    static let singleton = Helper()
+    static var singleton = Helper()
     // Virtual Memory
     let virtualMemory = VirtualMemory()
     
@@ -62,6 +62,10 @@ struct Function {
         if let path = Bundle.main.path(forResource: "OperationTable", ofType: "plist") {
             operationTable = NSDictionary(contentsOfFile: path)
         }
+    }
+    
+    func clear() {
+        Helper.singleton = Helper()
     }
     
     func addFunction(_ id: String, type: String) {
