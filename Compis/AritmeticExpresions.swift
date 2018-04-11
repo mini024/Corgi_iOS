@@ -27,6 +27,8 @@ enum Operator: Int, CustomStringConvertible{
     case EqualSign = 15
     case GOTOF = 16
     case GOTO = 17
+    case WRITE = 18
+    case READ = 19
     
     var description: String {
         switch self {
@@ -66,6 +68,10 @@ enum Operator: Int, CustomStringConvertible{
             return "GOTOF"
         case .GOTO:
             return "GOTO"
+        case .WRITE:
+            return "WRITE"
+        case .READ:
+            return "Read"
         }
     }
 }
@@ -191,12 +197,10 @@ extension Helper {
         let resultVariable = idAddresses.popLast()
         let resultType = idTypes.popLast()
 
-        
         guard temporalType == resultType else { return false}
         
         quadruplesAddress.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
-        print("Cuadruplo Asignacion")
-        print(quadruplesAddress)
+        printQuadruples()
         return true
     }
     
@@ -241,7 +245,7 @@ extension Helper {
             return Operator.Equal
         case "&&":
             return Operator.And
-        case "&&":
+        case "||":
             return Operator.Or
         case "=":
             return Operator.EqualSign

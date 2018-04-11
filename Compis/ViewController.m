@@ -129,16 +129,39 @@
         [Helper.singleton generateGOTOquadruple];
     };
     
+    generateLoopConditionQuadruplesBlock = ^(NSString *id, int min, int max, int by) {
+        [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
+    };
+    
     fillEndquadrupleBlock = ^() {
         [Helper.singleton fillEndquadruple];
+    };
+    
+    generateWritequadrupleBlock = ^(NSString *id) {
+        [Helper.singleton generateWriteQuadruple:id];
     };
     
     yyparse();
     
     yy_delete_buffer(buf);
 }
-- (IBAction)addCode:(id)sender {
+
+- (IBAction)Test1:(id)sender {
     textView.text = @"corgi test ; var a : Int; var x : Float; func one(param:Int)-> Bool{ return true;} corgiRun() { var name: String; var s: Bool; s = a > x; write((a+5)); read(x);}";
 }
+
+- (IBAction)Test2:(id)sender {
+    textView.text = @"corgi test;var a : Int;corgiRun() {a = 0; for a in 0...10 by 1 {write(\"Hello\");}}";
+}
+
+- (IBAction)Test3:(id)sender {
+    textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
+}
+
+- (IBAction)Test4:(id)sender {
+    textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
+}
+
+
 
 @end

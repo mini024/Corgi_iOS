@@ -22,7 +22,6 @@ extern bool (^findVariableBlock)(NSString *value);
 // Parameters
 extern bool (^findParameterBlock)(NSString *value);
 
-
 // Functions
 extern void (^addFunctionBlock)(NSString *id, NSString *type);
 extern bool (^findFunctionBlock)(NSString *value);
@@ -41,6 +40,11 @@ extern void (^deleteParentesisFromStackBlock)(void);
 extern void (^generateGOTOFquadrupleBlock)(void);
 extern void (^generateGOTOquadrupleBlock)(void);
 extern void (^fillEndquadrupleBlock)(void);
+extern void (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
+
+// Write and Read Quadruples
+extern void (^generateWritequadrupleBlock)(NSString *id);
+extern void (^generateReadquadrupleBlock)(NSString *id);
 
 
 // Added some extras to suppress warnings...

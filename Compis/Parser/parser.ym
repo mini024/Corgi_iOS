@@ -196,11 +196,15 @@ asignations:
 ;
 
 write:
-WRITE LFT_PAR expresion writeAux RGT_PAR SEMICOLON
+WRITE LFT_PAR expresion {
+    generateWritequadrupleBlock([NSString stringWithFormat:@"Hello\n"]);
+} writeAux RGT_PAR SEMICOLON
 ;
 
 writeAux:
-',' expresion writeAux
+',' expresion {
+    generateWritequadrupleBlock([NSString stringWithFormat:@"Hello\n"]);
+} writeAux
 | /*epsilon*/
 ;
 
@@ -211,7 +215,9 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 condicion:
 CASE LFT_BRA expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto conditionAux RGT_BRA {
+} COLON estatuto {
+    generateGOTOquadrupleBlock();
+} conditionAux RGT_BRA {
     fillEndquadrupleBlock();
 }
 ;
@@ -224,8 +230,11 @@ CASE_OR condicion2
 condicion2:
 expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto conditionAux
+} COLON estatuto {
+    generateGOTOquadrupleBlock();
+} conditionAux
 | conditionElse
+;
 
 conditionElse:
 ELSE {
@@ -235,7 +244,9 @@ ELSE {
 ;
 
 loop:
-FOR ID IN INT FOR_RANGE INT BY INT LFT_BRA estatutos RGT_BRA
+FOR ID IN INT FOR_RANGE INT BY INT {
+    generateLoopConditionQuadruplesBlock([NSString stringWithFormat:@"%s", $2], $4, $6, $8);
+} LFT_BRA estatutos RGT_BRA
 | WHILE LFT_PAR expresion RGT_PAR LFT_BRA estatutos RGT_BRA
 ;
 

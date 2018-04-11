@@ -14,6 +14,7 @@ void yyerror(char *s);
 for {return FOR;}
 in {return IN;}
 by {return BY;}
+else {return ELSE;}
 while {return WHILE;}
 write {return WRITE;}
 read {return READ;}
