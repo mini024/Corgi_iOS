@@ -8,65 +8,8 @@
 
 import UIKit
 
-enum  Scope {
-    case global
-    case local
-}
-
-enum Type: Int {
-    case Corgi = 0
-    case Float = 1
-    case String = 2
-    case Bool = 3
-    case Int = 4
-    case ERROR = 999
-}
-
-struct Symbol {
-    var type: Type!
-    var scope: Scope!
-    var address: Int!
-}
-
-struct Function {
-    var returnType: Type!
-    var variables = [String: Symbol]()
-    var parameters = [String: Symbol]()
-    var startAddress: Int // Quadruple index
-}
-
 // Function & Variable Tables
-@objc class Helper: NSObject{
-    static var singleton = Helper()
-    // Virtual Memory
-    let virtualMemory = VirtualMemory()
-    
-    // Operations
-    var operationTable: NSDictionary?
-    var operators: [Operator] = []
-    var idTypes: [Type] = []
-    var idAddresses: [Int] = []
-    
-    // Quadruple
-    var pendingQuadruples: [Int] = [] // jumps stack
-    var quadruplesAddress: [QuadrupleDir] = []
-    var temporalVariables: [Any] = []
-    var indexTempVars = 0
-    
-    // Function
-    var funcTable = [String:Function]()
-    var currentFunc: String = "global"
-    
-    override init() {
-        //Get operation table
-        if let path = Bundle.main.path(forResource: "OperationTable", ofType: "plist") {
-            operationTable = NSDictionary(contentsOfFile: path)
-        }
-    }
-    
-    func clear() {
-        Helper.singleton = Helper()
-    }
+extension Helper {
     
     func addFunction(_ id: String, type: String) {
         if type == "Corgi" || type == "corgiRun" {
@@ -88,27 +31,21 @@ struct Function {
         switch type {
         case "Int":
             if scope == .global {
-                virtualMemory.globalMemory.setInt(value: nil)
-                address = virtualMemory.globalMemory.intStartAddress
+                address = virtualMemory.globalMemory.setInt(value: nil)
             } else {
-                virtualMemory.localMemory.setInt(value: nil)
-                address = virtualMemory.localMemory.intStartAddress
+                address = virtualMemory.localMemory.setInt(value: nil)
             }
         case "Float":
             if scope == .global {
-                virtualMemory.globalMemory.setFloat(value: nil)
-                address = virtualMemory.globalMemory.floatStartAddress
+                address = virtualMemory.globalMemory.setFloat(value: nil)
             } else {
-                virtualMemory.localMemory.setFloat(value: nil)
-                address = virtualMemory.localMemory.floatStartAddress
+                address = virtualMemory.localMemory.setFloat(value: nil)
             }
         default:
             if scope == .global {
-                virtualMemory.globalMemory.setString(value: nil)
-                address = virtualMemory.globalMemory.stringStartAddress
+                address = virtualMemory.globalMemory.setString(value: nil)
             } else {
-                virtualMemory.localMemory.setString(value: nil)
-                address = virtualMemory.localMemory.stringStartAddress
+                address = virtualMemory.localMemory.setString(value: nil)
             }
         }
         
@@ -166,21 +103,6 @@ struct Function {
         }
         
         return false
-    }
-    
-    func stringToType(type: String) -> Type {
-        switch type {
-        case "String":
-            return .String
-        case "Int":
-            return .Int
-        case "Float":
-            return .Float
-        case "Bool":
-            return .Bool
-        default:
-            return .Corgi
-        }
     }
     
     func printTable() {

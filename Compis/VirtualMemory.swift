@@ -8,10 +8,10 @@
 
 import Foundation
 
-let GLOBAL_START_ADDRESS = 10000
-let LOCAL_START_ADDRESS = 11000
-let TEMPORAL_START_ADDRESS = 11500
-let CONSTANTS_START_ADDRESS = 12500
+let GLOBAL_START_ADDRESS = 100000
+let LOCAL_START_ADDRESS = 110000
+let TEMPORAL_START_ADDRESS = 120000
+let CONSTANTS_START_ADDRESS = 130000
 
 class VirtualMemory {
     var globalMemory = Memory(value: GLOBAL_START_ADDRESS)
@@ -20,15 +20,16 @@ class VirtualMemory {
     var constantsMemory = Memory(value: CONSTANTS_START_ADDRESS)
 }
 
+// TODO: Check how to generate addresses when not in order..
 class Memory {
     var intMemory: [Int?]! = []
-    var intStartAddress = -1
+    var intStartAddress = 0
     var floatMemory: [Float?]! = []
-    var floatStartAddress = 0
+    var floatStartAddress = 1000
     var stringMemory: [String?]! = []
-    var stringStartAddress = 1
+    var stringStartAddress = 2000
     var boolMemory: [Bool?]! = []
-    var boolStartAddress = 2
+    var boolStartAddress = 3000
     
     init(value: Int) {
         intStartAddress = value
@@ -37,36 +38,24 @@ class Memory {
         boolStartAddress += value
     }
     
-    func increaseStartAddress(by: Int) {
-        intStartAddress += 1
-        floatStartAddress += 1
-        stringStartAddress += 1
-        boolStartAddress += 1
-    }
-    
-    func setInt(value: Int?) {
-        floatStartAddress += 1
-        stringStartAddress += 1
-        boolStartAddress += 1
-        
+    func setInt(value: Int?) -> Int {
         intMemory.append(value)
+        return intStartAddress + intMemory.count - 1
     }
     
-    func setFloat(value: Float?) {
-        stringStartAddress += 1
-        boolStartAddress += 1
-        
+    func setFloat(value: Float?) -> Int {
         floatMemory.append(value)
+        return floatStartAddress + floatMemory.count - 1
     }
     
-    func setString(value: String?) {
-        boolStartAddress += 1
-        
+    func setString(value: String?) -> Int {
         stringMemory.append(value)
+        return stringStartAddress + stringMemory.count - 1
     }
     
-    func setBool(value: Bool?) {
+    func setBool(value: Bool?) -> Int {
         boolMemory.append(value)
+        return boolStartAddress + boolMemory.count - 1
     }
     
     func getMaxAddress() -> Int {

@@ -218,7 +218,7 @@ CASE LFT_BRA expresion {
 } COLON estatuto {
     generateGOTOquadrupleBlock();
 } conditionAux RGT_BRA {
-    fillEndquadrupleBlock();
+    fillEndConditionQuadrupleBlock();
 }
 ;
 
@@ -230,23 +230,40 @@ CASE_OR condicion2
 condicion2:
 expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto {
-    generateGOTOquadrupleBlock();
-} conditionAux
+} COLON estatuto conditionAux
 | conditionElse
 ;
 
 conditionElse:
 ELSE {
     generateGOTOquadrupleBlock();
-} COLON estatuto
+} COLON estatuto {
+    fillEndConditionQuadrupleBlock();
+}
 | /*epsilon*/
 ;
 
 loop:
-FOR ID IN INT FOR_RANGE INT BY INT {
-    generateLoopConditionQuadruplesBlock([NSString stringWithFormat:@"%s", $2], $4, $6, $8);
-} LFT_BRA estatutos RGT_BRA
+FOR ID {
+    if (findVariableBlock([NSString stringWithFormat:@"%s", $2])) {
+        addIdToStackBlock([NSString stringWithFormat:@"%s", $2], @"Variable");
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist \n", $2]);
+    }
+} IN INT {
+    addIdToStackBlock([NSString stringWithFormat:@"%d", $5], @"Int");
+} FOR_RANGE INT {
+    addIdToStackBlock([NSString stringWithFormat:@"%d", $8], @"Int");
+} BY INT {
+    generateLoopConditionQuadruplesBlock([NSString stringWithFormat:@"%s", $2], $5, $8, $11);
+    generateGOTOFquadrupleBlock();
+    addIdToStackBlock([NSString stringWithFormat:@"%d", $11], @"Int");
+} LFT_BRA estatutos {
+    generateByQuadrupleBlock();
+} RGT_BRA {
+    generateGOTOquadrupleBlock();
+    fillEndLoopQuadrupleBlock();
+}
 | WHILE LFT_PAR expresion RGT_PAR LFT_BRA estatutos RGT_BRA
 ;
 

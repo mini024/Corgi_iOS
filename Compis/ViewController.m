@@ -133,8 +133,16 @@
         [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
     };
     
-    fillEndquadrupleBlock = ^() {
-        [Helper.singleton fillEndquadruple];
+    generateByQuadrupleBlock = ^() {
+        [Helper.singleton generateByQuadruple];
+    };
+    
+    fillEndConditionQuadrupleBlock = ^() {
+        [Helper.singleton fillEndConditionQuadruple];
+    };
+    
+    fillEndLoopQuadrupleBlock = ^() {
+        [Helper.singleton fillEndLoopQuadruple];
     };
     
     generateWritequadrupleBlock = ^(NSString *id) {

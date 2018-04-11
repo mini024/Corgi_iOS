@@ -34,8 +34,10 @@ void (^deleteParentesisFromStackBlock)(void);
 // COND, WHILE, FOR Quadruples
 void (^generateGOTOFquadrupleBlock)(void);
 void (^generateGOTOquadrupleBlock)(void);
-void (^fillEndquadrupleBlock)(void);
+void (^fillEndConditionQuadrupleBlock)(void);
+void (^fillEndLoopQuadrupleBlock)(void);
 void (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
+void (^generateByQuadrupleBlock)();
 
 // Write and Read Quadruples
 void (^generateWritequadrupleBlock)(NSString *id);
