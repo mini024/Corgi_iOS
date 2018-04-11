@@ -9,6 +9,8 @@
 import UIKit
 
 // Function & Variable Tables
+
+
 extension Helper {
     
     func addFunction(_ id: String, type: String) {

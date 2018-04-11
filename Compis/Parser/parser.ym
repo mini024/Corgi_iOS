@@ -215,9 +215,7 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 condicion:
 CASE LFT_BRA expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto {
-    generateGOTOquadrupleBlock();
-} conditionAux RGT_BRA {
+} COLON estatuto conditionAux RGT_BRA {
     fillEndConditionQuadrupleBlock();
 }
 ;

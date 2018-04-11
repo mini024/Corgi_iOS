@@ -165,7 +165,7 @@
 - (IBAction)Test3:(id)sender {
     textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
 }
-
+    
 - (IBAction)Test4:(id)sender {
     textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
 }
