@@ -20,7 +20,6 @@ class VirtualMemory {
     var constantsMemory = Memory(value: CONSTANTS_START_ADDRESS)
 }
 
-// TODO: Check how to generate addresses when not in order..
 class Memory {
     var intMemory: [Int?]! = []
     var intStartAddress = 0

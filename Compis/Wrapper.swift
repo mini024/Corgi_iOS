@@ -19,6 +19,7 @@ import UIKit
     var operators: [Operator] = []
     var idTypes: [Type] = []
     var idAddresses: [Int] = []
+    var callingFunction: [String] = []
     
     // Quadruple
     var pendingQuadruples: [Int] = [] // jumps stack
@@ -103,6 +104,8 @@ import UIKit
             return .Float
         case "Bool":
             return .Bool
+        case "Variable":
+            return .Int
         default:
             return .Corgi
         }

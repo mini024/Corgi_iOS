@@ -10,7 +10,7 @@
 #import "DataBridge.h"
 
 // Variables
-void (^addVariableBlock)(NSString *id, NSString *type, int *parameter);
+void (^addVariableBlock)(NSString *id, NSString *type, int parameter);
 bool (^findVariableBlock)(NSString *value);
 
 // Parameters
@@ -18,7 +18,9 @@ void (^addParameterBlock)(NSString *id, NSString *type);
 bool (^findParameterBlock)(NSString *value);
 
 // Functions
-void (^addFunctionBlock)(NSString *id, NSString *type);
+void (^addCorgiFunctionBlock)(NSString *id, NSString *type);
+void (^addFunctionWithIdBlock)(NSString *id);
+void (^addFunctionReturnTypeBlock)(NSString *id, NSString *type);
 bool (^findFunctionBlock)(NSString *value);
 
 // Results
@@ -37,8 +39,15 @@ void (^generateGOTOquadrupleBlock)(void);
 void (^fillEndConditionQuadrupleBlock)(void);
 void (^fillEndLoopQuadrupleBlock)(void);
 void (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
-void (^generateByQuadrupleBlock)();
+void (^generateByQuadrupleBlock)(void);
 
 // Write and Read Quadruples
 void (^generateWritequadrupleBlock)(NSString *id);
 void (^generateReadquadrupleBlock)(NSString *id);
+
+// Function Quadruples
+void (^generateERAQuadrupleBlock)(NSString *id);
+void (^generateEndOfFunctionQuadrupleBlock)(void);
+void (^generateEndOfProgramQuadrupleBlock)(void);
+void (^generateGoSubQuadrupleBlock)(NSString * id);
+bool (^generateParameterQuadrupleBlock)(NSString * id);

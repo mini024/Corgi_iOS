@@ -25,7 +25,7 @@ corgiRun {return CORGIRUN;}
 var {return VAR;}
 func { return FUNC;}
 case {return CASE;}
-Int|Float|Bool|String {yylval.strval= strdup(yytext); return TYPE;}
+Int|Float|Bool|String|void {yylval.strval= strdup(yytext); return TYPE;}
 [a-zA-Z][a-zA-Z0-9]* {yylval.strval= strdup(yytext); return ID;}
 \( {return LFT_PAR;}
 \) {return RGT_PAR;}

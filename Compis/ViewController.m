@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    textView.text = @"corgi test ;corgiRun() {  a = 5 + 6; }";
+    textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
     
     [corgiWeb loadHTMLString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     
@@ -62,12 +62,20 @@
         
     };
     
-    addVariableBlock = ^(NSString *name, NSString *type, int *parameter) {
+    addVariableBlock = ^(NSString *name, NSString *type, int parameter) {
         [Helper.singleton addVariable:name type: type parameter: parameter];
     };
     
-    addFunctionBlock = ^(NSString *name, NSString *type) {
-        [Helper.singleton addFunction:name type: type];
+    addCorgiFunctionBlock = ^(NSString *name, NSString *type) {
+        [Helper.singleton addCorgiFunctionBlock:name type:type];
+    };
+    
+    addFunctionWithIdBlock = ^(NSString *name) {
+        [Helper.singleton addFunctionWith:name];
+    };
+    
+    addFunctionReturnTypeBlock = ^(NSString *name, NSString *type) {
+        [Helper.singleton addFunctionReturnType:name type: type];
     };
     
     findFunctionBlock = ^(NSString *value) {
@@ -145,8 +153,28 @@
         [Helper.singleton fillEndLoopQuadruple];
     };
     
-    generateWritequadrupleBlock = ^(NSString *id) {
-        [Helper.singleton generateWriteQuadruple:id];
+    generateWritequadrupleBlock = ^(NSString *name) {
+        [Helper.singleton generateWriteQuadruple:name];
+    };
+    
+    generateERAQuadrupleBlock = ^(NSString *name) {
+        [Helper.singleton generateERAQuadruple:name];
+    };
+    
+    generateEndOfFunctionQuadrupleBlock = ^() {
+        [Helper.singleton generateEndOfFunctionQuadruple];
+    };
+    
+    generateEndOfProgramQuadrupleBlock = ^() {
+        [Helper.singleton generateEndOfProgramQuadruple];
+    };
+    
+    generateGoSubQuadrupleBlock = ^(NSString *name) {
+        [Helper.singleton generateGoSubQuadruple];
+    };
+    
+    generateParameterQuadrupleBlock = ^(NSString *name) {
+        return [Helper.singleton generateParameterQuadruple];
     };
     
     yyparse();
@@ -167,7 +195,7 @@
 }
     
 - (IBAction)Test4:(id)sender {
-    textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
+    textView.text = @"corgi test; var i: Int; var j: Int; func uno(a:Int) -> void {var n : Int; n = a * 2; case { n < a+4 : uno(a+1);| else : write(i);}return;} func dos(b:Int) -> Int {b = b * i + j;return (b*2);} corgiRun() { i = 2; j = i * 2 - 1; uno(j); i = i + dos(i+j);;}";
 }
 
 

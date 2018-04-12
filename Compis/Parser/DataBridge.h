@@ -16,14 +16,16 @@
  */
 
 // Variables
-extern void (^addVariableBlock)(NSString *id, NSString *type, int *parameter);
+extern void (^addVariableBlock)(NSString *id, NSString *type, int parameter);
 extern bool (^findVariableBlock)(NSString *value);
 
 // Parameters
 extern bool (^findParameterBlock)(NSString *value);
 
 // Functions
-extern void (^addFunctionBlock)(NSString *id, NSString *type);
+extern void (^addCorgiFunctionBlock)(NSString *id, NSString *type);
+extern void (^addFunctionWithIdBlock)(NSString *id);
+extern void (^addFunctionReturnTypeBlock)(NSString *id, NSString *type);
 extern bool (^findFunctionBlock)(NSString *value);
 
 // Results
@@ -48,6 +50,12 @@ extern void (^generateByQuadrupleBlock)(void);
 extern void (^generateWritequadrupleBlock)(NSString *id);
 extern void (^generateReadquadrupleBlock)(NSString *id);
 
+// Function Quadruples
+extern void (^generateERAQuadrupleBlock)(NSString *id);
+extern void (^generateEndOfFunctionQuadrupleBlock)(void);
+extern void (^generateEndOfProgramQuadrupleBlock)(void);
+extern void (^generateGoSubQuadrupleBlock)(NSString * id);
+extern bool (^generateParameterQuadrupleBlock)(NSString * id);
 
 // Added some extras to suppress warnings...
 #ifndef FLEXINT_H

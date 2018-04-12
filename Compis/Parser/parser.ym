@@ -76,11 +76,15 @@ extern int yylineno;
 
 program:
 CORGI ID SEMICOLON {
+    // Create Corgi program function
     if (!findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
-        addFunctionBlock([NSString stringWithFormat:@"%s", $2],@"Corgi");
+        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $2], @"Corgi");
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $2]);
     }
+    
+    // Create goTo -> CorgiRun Quadruple
+    generateGOTOquadrupleBlock();
 } vars functions corgirun { if (ParseTestSuccessBlock) ParseTestSuccessBlock(@"Success");}
 ;
 
@@ -90,23 +94,36 @@ function functions
 ;
 
 function:
-FUNC ID LFT_PAR ID COLON tipo {
-    if (!findParameterBlock([NSString stringWithFormat:@"%s", $4])) {
-        addVariableBlock([NSString stringWithFormat:@"%s", $4],[NSString stringWithFormat:@"%s", $6], true);
-    } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $4]);
-    }
-} parameters RGT_PAR ARROW TYPE {
+FUNC ID {
+    // Create Function with id
     if (!findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
-        addFunctionBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $11]);
+        addFunctionWithIdBlock([NSString stringWithFormat:@"%s", $2]);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $2]);
     }
-} bloque
+} LFT_PAR ID COLON tipo {
+    // Store parameter
+    if (!findParameterBlock([NSString stringWithFormat:@"%s", $5])) {
+        addVariableBlock([NSString stringWithFormat:@"%s", $5],[NSString stringWithFormat:@"%s", $7], true);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $5]);
+    }
+} parameters RGT_PAR ARROW TYPE {
+    // Add return type to function
+    if (findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
+        addFunctionReturnTypeBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $12]);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Function \"%s\" doesn't exist \n", $2]);
+    }
+} bloque {
+    // EndFunc quadruple
+    generateEndOfFunctionQuadrupleBlock();
+}
 ;
 
 parameters:
 ',' ID COLON tipo {
+    // Store parameter
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $2])) {
         addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], true);
     } else {
@@ -132,19 +149,52 @@ VAR ID COLON tipo SEMICOLON {
 ;
 
 corgirun:
-CORGIRUN LFT_PAR RGT_PAR {addFunctionBlock([NSString stringWithFormat:@"%s", $1],@"corgiRun");} LFT_BRA vars estatutos RGT_BRA
+CORGIRUN LFT_PAR RGT_PAR {
+    if (!findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
+        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun");
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $1]);
+    }
+} LFT_BRA vars estatutos RGT_BRA {
+    // End quadruple
+    generateEndOfProgramQuadrupleBlock();
+}
 ;
 
 constante:
 INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
 | FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
-| id
+| id // { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");}
 | STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
 | BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
 ;
 
 bloque:
 LFT_BRA vars estatutos return RGT_BRA
+;
+
+llamada:
+ID {
+    if (findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
+        // Generate ERA with id
+        generateERAQuadrupleBlock([NSString stringWithFormat:@"%s", $1]);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong value type in parameter \"%s\"", $1]);
+    }
+} LFT_PAR Megaexpresion {
+    // Send param/ save param quadruple
+    if (!generateParameterQuadrupleBlock(@"parametro")) {
+         ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type \"%s\" doesn't exist \n", $1]);
+    }
+} llamadaParametros RGT_PAR SEMICOLON {
+    //GoSub quadruple
+    generateGoSubQuadrupleBlock(@"llamada");
+}
+;
+
+llamadaParametros:
+',' Megaexpresion llamadaParametros
+| /*epsilon*/
 ;
 
 estatutos:
@@ -158,21 +208,31 @@ asignacion
 | loop
 | write
 | read
+| llamada
 ;
 
 id:
-ID index
-{
+ID {
     if (findVariableBlock([NSString stringWithFormat:@"%s", $1])) {
         addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");
+    } else if (findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
+        // Generate ERA with id
+        generateERAQuadrupleBlock([NSString stringWithFormat:@"%s", $1]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist \n", $1]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable/Function with id \"%s\" doesn't exist \n", $1]);
     }
-}
+} idAux
 ;
 
-index:
+idAux:
 SLFT_BRA INT SRGT_BRA
+| LFT_PAR Megaexpresion {
+    // Send param/ save param quadruple
+    generateParameterQuadrupleBlock(@"parametro");
+} llamadaParametros RGT_PAR {
+    //GoSub quadruple
+    generateGoSubQuadrupleBlock(@"llamada");
+}
 | /*epsilon*/
 ;
 
@@ -266,7 +326,12 @@ FOR ID {
 ;
 
 return:
-RETURN Megaexpresion SEMICOLON
+RETURN returnAux
+;
+
+returnAux:
+Megaexpresion SEMICOLON
+| SEMICOLON
 ;
 
 Megaexpresion:

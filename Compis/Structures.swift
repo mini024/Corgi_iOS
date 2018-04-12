@@ -43,6 +43,12 @@ enum Operator: Int, CustomStringConvertible{
     case GOTO = 17
     case WRITE = 18
     case READ = 19
+    case ERA = 20
+    case GOSUB = 21
+    case PARAM = 22
+    case ENDFUNC = 23
+    case END = 24
+    case RETURN = 25
     
     var description: String {
         switch self {
@@ -86,6 +92,18 @@ enum Operator: Int, CustomStringConvertible{
             return "WRITE"
         case .READ:
             return "Read"
+        case .ERA:
+            return "ERA"
+        case .GOSUB:
+            return "GOSUB"
+        case .END:
+            return "END"
+        case .ENDFUNC:
+            return "ENDFUNC"
+        case .PARAM:
+            return "PARAM"
+        case .RETURN:
+            return "RETURN"
         }
     }
 }
@@ -94,6 +112,7 @@ struct Symbol {
     var type: Type!
     var scope: Scope!
     var address: Int!
+    var index: Int!
 }
 
 struct Function {
@@ -101,13 +120,27 @@ struct Function {
     var variables = [String: Symbol]()
     var parameters = [String: Symbol]()
     var startAddress: Int // Quadruple index
+    var currentParameter = 0
+    
+    init(type: Type, address: Int) {
+        returnType = type
+        startAddress = address
+        variables = [:]
+        parameters = [:]
+    }
+    
+    init(address:Int) {
+        startAddress = address
+        variables = [:]
+        parameters = [:]
+    }
 }
 
 struct QuadrupleDir {
     var leftOperand : Int?
     var rightOperand : Int?
     var oper: Operator
-    var resultVar: Int
+    var resultVar: Int?
 }
 
 extension String {
