@@ -164,7 +164,7 @@ CORGIRUN LFT_PAR RGT_PAR {
 constante:
 INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
 | FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
-| id // { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");}
+| id
 | STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
 | BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
 ;

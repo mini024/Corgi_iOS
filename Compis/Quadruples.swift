@@ -13,7 +13,7 @@ extension Helper {
     
     // Punto 1
     func pushIdAddress(_ name: String, type: String) {
-        if variableExists(name) {
+        if variableExists(name) && type != "Function" {
             idAddresses.append(getVariableAddress(id: name))
             idTypes.append(getVariableType(name))
         } else {
@@ -35,11 +35,6 @@ extension Helper {
                 let address = virtualMemory.constantsMemory.setBool(value: name.toBool())
                 idAddresses.append(address)
                 idTypes.append(Type.Bool)
-            case "Variable":
-                let address = getVariableAddress(id: name)
-                idAddresses.append(address)
-                let type = getVariableType(name)
-                idTypes.append(type)
             default:
                 // ERROR or Corgi
                 break
@@ -126,7 +121,7 @@ extension Helper {
         // Step 2 pjumps.push(cont-1)
         let pendingIndex = quadruplesAddress.count
         
-        pendingQuadruples.append(pendingIndex)
+        pendingQuadruples.append(pendingIndex - 1)
     }
     
     func generateGOTOquadruple() {
@@ -205,18 +200,25 @@ extension Helper {
     
     func generateEndOfProgramQuadruple() {
         quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
+        let firstGoTo = pendingQuadruples.popLast()
+        let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
+        quadruplesAddress[firstGoTo!].resultVar = corgiRunQuadruple
     }
     
     func generateGoSubQuadruple() {
-        funcTable[currentFunc]?.currentParameter = 0
+        let functionName = callingFunction.popLast()
+        let functionAddress = getFunctionStartAddressWith(id: functionName!)
+        
+        quadruplesAddress.append(QuadrupleDir(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
+        funcTable[functionName!]?.currentParameter = 0
     }
     
     func generateParameterQuadruple() -> Bool {
         let argumentAddress = idAddresses.popLast()
         let argumentType = idTypes.popLast()
-        let functionName = callingFunction.popLast()
-        let parameterIndex = funcTable[functionName!]?.currentParameter
-        let parameterTuple = getParameterTypeAndAddressWith(index: parameterIndex!, function: functionName!)
+        let functionName = callingFunction[callingFunction.count - 1]
+        let parameterIndex = funcTable[functionName]?.currentParameter
+        let parameterTuple = getParameterTypeAndAddressWith(index: parameterIndex!, function: functionName)
         
         guard parameterTuple.0 != .ERROR else {
             print("No parameter on index")

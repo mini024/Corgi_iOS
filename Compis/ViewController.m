@@ -195,7 +195,7 @@
 }
     
 - (IBAction)Test4:(id)sender {
-    textView.text = @"corgi test; var i: Int; var j: Int; func uno(a:Int) -> void {var n : Int; n = a * 2; case { n < a+4 : uno(a+1);| else : write(i);}return;} func dos(b:Int) -> Int {b = b * i + j;return (b*2);} corgiRun() { i = 2; j = i * 2 - 1; uno(j); i = i + dos(i+j);;}";
+    textView.text = @"corgi test; var i: Int; var j: Int; func uno(a:Int) -> void {var n : Int; n = a * 2; case { n < a+4 : uno(a+1);} write(i); return;} func dos(b:Int) -> Int {b = b * i + j;return (b*2);} corgiRun() { i = 2; j = i * 2 - 1; uno(j); i = dos(i+j);}";
 }
 
 
