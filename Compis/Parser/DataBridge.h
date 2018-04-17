@@ -19,6 +19,9 @@
 extern void (^addVariableBlock)(NSString *id, NSString *type, int parameter);
 extern bool (^findVariableBlock)(NSString *value);
 
+// Arrays
+extern void (^addArrayVariableBlock)(NSString *id, NSString *type, int size);
+
 // Parameters
 extern bool (^findParameterBlock)(NSString *value);
 

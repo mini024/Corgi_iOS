@@ -23,7 +23,7 @@ import UIKit
     
     // Quadruple
     var pendingQuadruples: [Int] = [] // jumps stack
-    var quadruplesAddress: [QuadrupleDir] = []
+    var quadruples: [QuadrupleDir] = []
     var temporalVariables: [Any] = []
     var indexTempVars = 0
     
@@ -44,7 +44,7 @@ import UIKit
     
     func printQuadruples() {
         var index = 1;
-        for quadruple in quadruplesAddress {
+        for quadruple in quadruples {
             print(String(index), terminator:" ")
             print(quadruple)
             index += 1

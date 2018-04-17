@@ -73,16 +73,16 @@ extension Helper {
         switch resultType! {
         case .Int:
             resultAddress =  virtualMemory.temporalMemory.setInt(value: nil)
-            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Float:
             resultAddress = virtualMemory.temporalMemory.setFloat(value: nil)
-            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .String:
             resultAddress = virtualMemory.temporalMemory.setString(value: nil)
-            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Bool:
             resultAddress = virtualMemory.temporalMemory.setBool(value: nil)
-            quadruplesAddress.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         default:
             return false
         }
@@ -104,7 +104,7 @@ extension Helper {
             return false
         }
         
-        quadruplesAddress.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
+        quadruples.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
         printQuadruples()
         return true
     }
@@ -116,10 +116,10 @@ extension Helper {
         // Step 2 generate GOTOF quad
         let oper = Operator.GOTOF
         let nextQuadruple = 99999
-        quadruplesAddress.append(QuadrupleDir(leftOperand: temporalVariableAddress, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
+        quadruples.append(QuadrupleDir(leftOperand: temporalVariableAddress, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Step 2 pjumps.push(cont-1)
-        let pendingIndex = quadruplesAddress.count
+        let pendingIndex = quadruples.count
         
         pendingQuadruples.append(pendingIndex - 1)
     }
@@ -128,16 +128,16 @@ extension Helper {
         // Generate GOTO Quadruple
         let oper = Operator.GOTO
         let nextQuadruple = 99999
-        quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Check if there is pending quadruples -> end of case condition
         if let end = pendingQuadruples.popLast() {
             // Fill goTo addresses in other quadruple
-            quadruplesAddress[end].resultVar = quadruplesAddress.count + 1
+            quadruples[end].resultVar = quadruples.count + 1
         }
         
         // Add index to pending quadruples to fill later.
-        let pendingIndex = quadruplesAddress.count
+        let pendingIndex = quadruples.count
         pendingQuadruples.append(pendingIndex)
     }
     
@@ -145,7 +145,7 @@ extension Helper {
         let variableAddress = getVariableAddress(id: id)
         
         if variableAddress != 0 {
-            quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
+            quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
             return
         }
         
@@ -153,7 +153,7 @@ extension Helper {
         let temporalAddress =  virtualMemory.temporalMemory.setString(value: id)
         
         // Create quadruple with temoral value
-        quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: temporalAddress))
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: temporalAddress))
         
     }
     
@@ -162,17 +162,17 @@ extension Helper {
         let minAddress = idAddresses[idAddresses.count - 2]
         let variableAddress = idAddresses[idAddresses.count - 3]
         
-        pendingQuadruples.append(quadruplesAddress.count + 1)
+        pendingQuadruples.append(quadruples.count + 1)
         
         // Conditional Quadruple
         let lessThanMaxAddress = virtualMemory.temporalMemory.setBool(value: nil)
-        quadruplesAddress.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 10)!, resultVar: lessThanMaxAddress))
+        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 10)!, resultVar: lessThanMaxAddress))
         
         let greaterThanMinAddress = virtualMemory.temporalMemory.setBool(value: nil)
-        quadruplesAddress.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
+        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
         
         let conditionAddress = virtualMemory.temporalMemory.setBool(value: nil)
-        quadruplesAddress.append(QuadrupleDir(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
+        quadruples.append(QuadrupleDir(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
         
         // Push temporal with result to address stack
         idAddresses.append(conditionAddress)
@@ -182,7 +182,7 @@ extension Helper {
         let byAddress = idAddresses[idAddresses.count - 1]
         let variableAddress = idAddresses[idAddresses.count - 4]
         
-        quadruplesAddress.append(QuadrupleDir(leftOperand: byAddress, rightOperand: variableAddress, oper: Operator(rawValue: 0)!, resultVar: variableAddress))
+        quadruples.append(QuadrupleDir(leftOperand: byAddress, rightOperand: variableAddress, oper: Operator(rawValue: 0)!, resultVar: variableAddress))
     }
     
     func generateERAQuadruple(_ name: String) {
@@ -190,26 +190,30 @@ extension Helper {
         
         guard functionStartQuadruple > 0 else {print("Error No function declared" + name); return}
         
-        quadruplesAddress.append(QuadrupleDir(leftOperand: functionStartQuadruple, rightOperand: nil, oper: Operator(rawValue: 20)!, resultVar: nil))
+        quadruples.append(QuadrupleDir(leftOperand: functionStartQuadruple, rightOperand: nil, oper: Operator(rawValue: 20)!, resultVar: nil))
         callingFunction.append(name)
     }
     
     func generateEndOfFunctionQuadruple() {
-        quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
+        funcTable[currentFunc]?.memory = virtualMemory.localMemory
+        virtualMemory.localMemory = Memory()
+        printQuadruples()
     }
     
     func generateEndOfProgramQuadruple() {
-        quadruplesAddress.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
-        let firstGoTo = pendingQuadruples.popLast()
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
         let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
-        quadruplesAddress[firstGoTo!].resultVar = corgiRunQuadruple
+        quadruples[0].resultVar = corgiRunQuadruple!
+        printQuadruples()
+        virtualMemory.run(quadruples: quadruples)
     }
     
     func generateGoSubQuadruple() {
         let functionName = callingFunction.popLast()
-        let functionAddress = getFunctionStartAddressWith(id: functionName!)
+        let functionAddress: Int = getFunctionStartAddressWith(id: functionName!)
         
-        quadruplesAddress.append(QuadrupleDir(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
+        quadruples.append(QuadrupleDir(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
         funcTable[functionName!]?.currentParameter = 0
     }
     
@@ -233,7 +237,7 @@ extension Helper {
             return false
         }
         
-        quadruplesAddress.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterID))
+        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterID))
         
         funcTable[currentFunc]?.currentParameter += 1
         
@@ -245,7 +249,7 @@ extension Helper {
         let end = pendingQuadruples.popLast()
         
         if let next = pendingQuadruples.popLast() {
-            quadruplesAddress[end!].resultVar = next
+            quadruples[end!].resultVar = next
         }
         
         printQuadruples()
@@ -255,8 +259,8 @@ extension Helper {
         // Step 2 end = pjumps.pop()
         let end = pendingQuadruples.popLast()
         
-        let nextQuadruple = quadruplesAddress.count + 1
-        quadruplesAddress[end!].resultVar = nextQuadruple
+        let nextQuadruple = quadruples.count + 1
+        quadruples[end!].resultVar = nextQuadruple
         
         printQuadruples()
     }

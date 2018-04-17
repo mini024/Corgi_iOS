@@ -13,11 +13,11 @@ extension Helper {
     
     func addCorgiFunctionBlock(_ id: String, type: String) {
         currentFunc = type
-        funcTable[currentFunc] = Function(type: stringToType(type: type), address: quadruplesAddress.count)
+        funcTable[currentFunc] = Function(type: stringToType(type: type), address: quadruples.count)
     }
     
     func addFunctionWith(_ id: String) {
-        funcTable[id] = Function(address: quadruplesAddress.count)
+        funcTable[id] = Function(address: quadruples.count)
         currentFunc = id
     }
     
@@ -65,6 +65,11 @@ extension Helper {
         } else {
             funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address, index: nil)
         }
+    }
+    
+    func addArrayVariable(_ id: String, type: String, size:Int) {
+        //addVariable(id, type: type, parameter: false)
+        //funcTable[currentFunc]?.variables[id]
     }
     
     func functionExists(_ id: String) -> Bool{

@@ -121,6 +121,7 @@ struct Function {
     var parameters = [String: Symbol]()
     var startAddress: Int // Quadruple index
     var currentParameter = 0
+    var memory: Memory!
     
     init(type: Type, address: Int) {
         returnType = type

@@ -13,6 +13,9 @@
 void (^addVariableBlock)(NSString *id, NSString *type, int parameter);
 bool (^findVariableBlock)(NSString *value);
 
+// Arrays
+void (^addArrayVariableBlock)(NSString *id, NSString *type, int size);
+
 // Parameters
 void (^addParameterBlock)(NSString *id, NSString *type);
 bool (^findParameterBlock)(NSString *value);

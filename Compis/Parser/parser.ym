@@ -71,9 +71,10 @@ extern int yylineno;
 %token <strval> MOD;
 
 %type <strval> tipo id
+%type <ival> tipoAux
 
 %%
-
+// MARK: Program
 program:
 CORGI ID SEMICOLON {
     // Create Corgi program function
@@ -88,6 +89,22 @@ CORGI ID SEMICOLON {
 } vars functions corgirun { if (ParseTestSuccessBlock) ParseTestSuccessBlock(@"Success");}
 ;
 
+// MARK: Main Function
+corgirun:
+CORGIRUN LFT_PAR RGT_PAR {
+    if (!findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
+        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun");
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $1]);
+    }
+} LFT_BRA vars estatutos RGT_BRA {
+    // EndFunc quadruple
+    generateEndOfFunctionQuadrupleBlock();
+    generateEndOfProgramQuadrupleBlock();
+}
+;
+
+// MARK: Functions
 functions:
 function functions
 | /*epsilon*/
@@ -121,6 +138,15 @@ FUNC ID {
 }
 ;
 
+return:
+RETURN returnAux
+;
+
+returnAux:
+Megaexpresion SEMICOLON
+| SEMICOLON
+;
+
 parameters:
 ',' ID COLON tipo {
     // Store parameter
@@ -131,42 +157,6 @@ parameters:
     }
 } parameters
 | /*epsilon*/
-;
-
-vars:
-var vars
-| /*epsilon*/
-;
-
-var:
-VAR ID COLON tipo SEMICOLON {
-    if (!findVariableBlock([NSString stringWithFormat:@"%s", $2])) {
-        addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], false);
-    } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
-    }
-}
-;
-
-corgirun:
-CORGIRUN LFT_PAR RGT_PAR {
-    if (!findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
-        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun");
-    } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $1]);
-    }
-} LFT_BRA vars estatutos RGT_BRA {
-    // End quadruple
-    generateEndOfProgramQuadrupleBlock();
-}
-;
-
-constante:
-INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
-| FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
-| id
-| STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
-| BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
 ;
 
 bloque:
@@ -184,7 +174,7 @@ ID {
 } LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
     if (!generateParameterQuadrupleBlock(@"parametro")) {
-         ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type \"%s\" doesn't exist \n", $1]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type \"%s\" doesn't exist \n", $1]);
     }
 } llamadaParametros RGT_PAR SEMICOLON {
     //GoSub quadruple
@@ -197,18 +187,22 @@ llamadaParametros:
 | /*epsilon*/
 ;
 
-estatutos:
-estatuto estatutos
+// MARK: Variables
+vars:
+var vars
 | /*epsilon*/
 ;
 
-estatuto:
-asignacion
-| condicion
-| loop
-| write
-| read
-| llamada
+var:
+VAR ID COLON TYPE tipoAux SEMICOLON {
+    if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 == 0) {
+        addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], false);
+    } else if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 > 0) {
+        addArrayVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], $5);
+    } else {
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
+    }
+}
 ;
 
 id:
@@ -255,6 +249,40 @@ asignations:
 | /*epsilon*/
 ;
 
+tipo:
+TYPE tipoAux {$$ = $1;}
+;
+
+tipoAux:
+SLFT_BRA INT SRGT_BRA {
+    $$ = $2;
+}
+| /*epsilon*/ { $$ = 0;}
+;
+
+constante:
+INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
+| FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
+| id
+| STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
+| BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
+;
+
+estatutos:
+estatuto estatutos
+| /*epsilon*/
+;
+
+estatuto:
+asignacion
+| condicion
+| loop
+| write
+| read
+| llamada
+;
+
+// MARK: I/O Functions
 write:
 WRITE LFT_PAR expresion {
     generateWritequadrupleBlock([NSString stringWithFormat:@"Hello\n"]);
@@ -272,6 +300,7 @@ read:
 READ LFT_PAR id RGT_PAR SEMICOLON
 ;
 
+// MARK: Conditionals
 condicion:
 CASE LFT_BRA expresion {
     generateGOTOFquadrupleBlock();
@@ -301,6 +330,7 @@ ELSE {
 | /*epsilon*/
 ;
 
+// MARK: Loops
 loop:
 FOR ID {
     if (findVariableBlock([NSString stringWithFormat:@"%s", $2])) {
@@ -325,15 +355,7 @@ FOR ID {
 | WHILE LFT_PAR expresion RGT_PAR LFT_BRA estatutos RGT_BRA
 ;
 
-return:
-RETURN returnAux
-;
-
-returnAux:
-Megaexpresion SEMICOLON
-| SEMICOLON
-;
-
+// MARK: Expresions
 Megaexpresion:
 expresion {
     if (!checkNextOperatorBlock(@"logical"))
@@ -403,15 +425,6 @@ LFT_PAR {addOperatorToStackBlock(@"(");} expresion RGT_PAR {deleteParentesisFrom
 | SUM constante
 | SUBTRACTION constante
 | constante
-;
-
-tipo:
-TYPE tipoAux {$$ = $1;}
-;
-
-tipoAux:
-SLFT_BRA INT SRGT_BRA
-| /*epsilon*/
 ;
 
 %%

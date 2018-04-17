@@ -66,6 +66,10 @@
         [Helper.singleton addVariable:name type: type parameter: parameter];
     };
     
+    addArrayVariableBlock = ^(NSString *name, NSString *type, int size) {
+        [Helper.singleton addArrayVariable:name type:type size:size];
+    };
+    
     addCorgiFunctionBlock = ^(NSString *name, NSString *type) {
         [Helper.singleton addCorgiFunctionBlock:name type:type];
     };
@@ -183,11 +187,11 @@
 }
 
 - (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test ; var a : Int; var x : Float; func one(param:Int)-> Bool{ return true;} corgiRun() { var name: String; var s: Bool; s = a > x; write((a+5)); read(x);}";
+    textView.text = @"corgi test ; var a : Int; var x : Float; corgiRun() { a=0; x = a + 3.0;}";
 }
 
 - (IBAction)Test2:(id)sender {
-    textView.text = @"corgi test;var a : Int;corgiRun() {a = 0; for a in 0...10 by 1 {write(\"Hello\");}}";
+    textView.text = @"corgi test; var a : Int; corgiRun() {a = 0; for a in 0...10 by 1 {write(\"Hello\");}}";
 }
 
 - (IBAction)Test3:(id)sender {
