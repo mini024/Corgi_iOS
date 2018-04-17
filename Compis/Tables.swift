@@ -61,9 +61,9 @@ extension Helper {
         
         if parameter {
             let type = stringToType(type: type)
-            funcTable[currentFunc]?.parameters[id] = Symbol(type: type , scope: scope, address: address, index: funcTable[currentFunc]?.parameters.count)
+            funcTable[currentFunc]?.parameters[id] = Symbol(type: type , scope: scope, address: address, index: funcTable[currentFunc]?.parameters.count, arrSize: nil)
         } else {
-            funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address, index: nil)
+            funcTable[currentFunc]?.variables[id] = Symbol(type: stringToType(type: type), scope: scope, address: address, index: nil, arrSize: nil)
         }
     }
     

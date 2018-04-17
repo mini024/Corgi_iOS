@@ -113,6 +113,7 @@ struct Symbol {
     var scope: Scope!
     var address: Int!
     var index: Int!
+    var arrSize: Int!
 }
 
 struct Function {
