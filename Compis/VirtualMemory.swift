@@ -18,7 +18,7 @@ class VirtualMemory {
     var localMemory = Memory(value: LOCAL_START_ADDRESS)
     var temporalMemory = Memory(value: TEMPORAL_START_ADDRESS)
     var constantsMemory = Memory(value: CONSTANTS_START_ADDRESS)
-    var functionMemory: [Memory] = []
+    var memoryStack: [Memory] = []
     
     func setValueIn(address: Int, result: Any) {
         if address < LOCAL_START_ADDRESS {
@@ -46,7 +46,10 @@ class VirtualMemory {
     }
     
     func run(quadruples: [QuadrupleDir]) {
-        for quadruple in quadruples {
+        var quadrupleNumber = 0
+        
+        while quadrupleNumber < quadruples.count{
+            let quadruple = quadruples[quadrupleNumber]
             switch quadruple.oper {
             case .Sum:
                 runAddition(leftAddress: quadruple.leftOperand!, rightAddress: quadruple.rightOperand!, resultAddress: quadruple.resultVar!)
@@ -90,16 +93,20 @@ class VirtualMemory {
             case .GOTOF:
                 break
             case .GOTO:
+                quadrupleNumber = quadruple.resultVar! - 1
                 break
             case .WRITE:
                 break
             case .READ:
                 break
             case .ERA:
+                runERA(functionAddress: quadruple.leftOperand!)
                 break
             case .GOSUB:
+                localMemory = memoryStack.popLast()!
                 break
             case .PARAM:
+                runParam(address: quadruple.resultVar!, valueAddress: quadruple.leftOperand!)
                 break
             case .ENDFUNC:
                 break
@@ -108,7 +115,41 @@ class VirtualMemory {
             case .RETURN:
                 break
             }
+            quadrupleNumber += 1;
         }
+    }
+    
+    func runParam(address:Int, valueAddress:Int) {
+        let valueTuple = getValueIn(address: valueAddress)
+        
+        if valueTuple.1 == .Int {
+            let value = valueTuple.0 as! Int
+            setValueIn(address: address, result: value)
+        } else if valueTuple.1 == .Float {
+            let value = valueTuple.0 as! Float
+            setValueIn(address: address, result: value)
+        } else if valueTuple.1 == .String {
+            let value = valueTuple.0 as! String
+            setValueIn(address: address, result: value)
+        } else if valueTuple.1 == .Bool {
+            let value = valueTuple.0 as! Bool
+            setValueIn(address: address, result: value)
+        } else {
+            print("ERROR - Wrong data type")
+        }
+        
+    }
+    
+    func runERA(functionAddress: Int) {
+        // Get function name from address
+        let functionName = Helper.singleton.getFunctionNameWith(address: functionAddress)
+        
+        guard functionName != "Error" else {print("Error no function with start address"); return}
+        
+        let functionMemory = Helper.singleton.funcTable[functionName]?.memory
+        
+        // Generate instance of memory & add to stack
+        memoryStack.append(functionMemory!)
     }
     
     func runAddition(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
@@ -292,6 +333,7 @@ class VirtualMemory {
     }
 }
 
+// MARK: Memory
 class Memory {
     var intMemory: [Int?]! = []
     var INT_START_ADDRESS = 0
@@ -336,18 +378,6 @@ class Memory {
         } else {
             // Bool
             return (boolMemory[address - BOOL_START_ADDRESS] as Any, Type.Bool)
-        }
-    }
-    
-    func getTypeForValueIn(address:Int) -> Type {
-        if address < FLOAT_START_ADDRESS {
-            return Type.Int
-        } else if address < STRING_START_ADDRESS {
-            return Type.Float
-        } else if address < BOOL_START_ADDRESS {
-            return Type.String
-        } else {
-            return Type.Bool
         }
     }
     

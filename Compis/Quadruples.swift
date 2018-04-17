@@ -206,6 +206,8 @@ extension Helper {
         let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
         quadruples[0].resultVar = corgiRunQuadruple!
         printQuadruples()
+        virtualMemory.memoryStack.append((funcTable["corgiRun"]?.memory)!)
+        virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
         virtualMemory.run(quadruples: quadruples)
     }
     
@@ -230,14 +232,14 @@ extension Helper {
         }
         
         let parameterType = parameterTuple.0
-        let parameterID = parameterTuple.1
+        let parameterAddress = parameterTuple.1
         
         guard argumentType == parameterType else {
             print("Error Wrong parameter type")
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterID))
+        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
         
         funcTable[currentFunc]?.currentParameter += 1
         

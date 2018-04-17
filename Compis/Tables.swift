@@ -89,6 +89,16 @@ extension Helper {
         return function!.startAddress
     }
     
+    func getFunctionNameWith(address: Int) -> String {
+        for function in funcTable {
+            if function.value.startAddress == address {
+                return function.key
+            }
+        }
+        
+        return "Error"
+    }
+    
     func variableExists(_ id: String) -> Bool {
         if funcTable[currentFunc]?.variables[id] != nil {
             return true

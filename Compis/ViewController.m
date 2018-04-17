@@ -187,7 +187,7 @@
 }
 
 - (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test ; var a : Int; var x : Float; corgiRun() { a=0; x = a + 3.0;}";
+    textView.text = @"corgi test ; var a : Int; var x : Float; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { a=0; dos(a); x=a + 3.0;}";
 }
 
 - (IBAction)Test2:(id)sender {
