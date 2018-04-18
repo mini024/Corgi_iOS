@@ -41,8 +41,8 @@ void (^generateGOTOFquadrupleBlock)(void);
 void (^generateGOTOquadrupleBlock)(void);
 void (^fillEndConditionQuadrupleBlock)(void);
 void (^fillEndLoopQuadrupleBlock)(void);
-void (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
-void (^generateByQuadrupleBlock)(void);
+bool (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
+bool (^generateByQuadrupleBlock)(void);
 
 // Write and Read Quadruples
 void (^generateWritequadrupleBlock)(NSString *id);
@@ -54,3 +54,4 @@ void (^generateEndOfFunctionQuadrupleBlock)(void);
 void (^generateEndOfProgramQuadrupleBlock)(void);
 void (^generateGoSubQuadrupleBlock)(NSString * id);
 bool (^generateParameterQuadrupleBlock)(NSString * id);
+bool (^generateReturnBlock)(void);

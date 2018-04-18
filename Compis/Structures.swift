@@ -19,6 +19,7 @@ enum Type: Int {
     case String = 2
     case Bool = 3
     case Int = 4
+    case Void = 5
     case ERROR = 999
 }
 
@@ -113,6 +114,7 @@ struct Symbol {
     var scope: Scope!
     var address: Int!
     var index: Int!
+    var arrSize: Int!
 }
 
 struct Function {

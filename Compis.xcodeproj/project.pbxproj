@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0514203220688A1C00BE8CE6 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0514203120688A1C00BE8CE6 /* Wrapper.swift */; };
+		058C878120868327009CF8AB /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C878020868327009CF8AB /* Memory.swift */; };
 		1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3EA2C52034FA4900EC10CE /* AppDelegate.m */; };
 		1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3EA2C82034FA4900EC10CE /* ViewController.m */; };
 		1A3EA2CC2034FA4900EC10CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A3EA2CA2034FA4900EC10CE /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		1A6A2681205335DE00C8E9FF /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A2680205335DE00C8E9FF /* Tables.swift */; };
 		1A8DD39B205C68EF00F6070E /* Quadruples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8DD39A205C68EF00F6070E /* Quadruples.swift */; };
 		1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8DD39C205C6D9E00F6070E /* OperationTable.plist */; };
+		1ABCE2542086CD4A0052D4E6 /* Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2532086CD4A0052D4E6 /* Execution.swift */; };
 		1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */; };
 		1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C2E9207EC27C00F53B2A /* Structures.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		0514203120688A1C00BE8CE6 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
+		058C878020868327009CF8AB /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		1A3EA2C12034FA4900EC10CE /* Compis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3EA2C42034FA4900EC10CE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1A3EA2C52034FA4900EC10CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		1A6A2680205335DE00C8E9FF /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		1A8DD39A205C68EF00F6070E /* Quadruples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadruples.swift; sourceTree = "<group>"; };
 		1A8DD39C205C6D9E00F6070E /* OperationTable.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OperationTable.plist; sourceTree = "<group>"; };
+		1ABCE2532086CD4A0052D4E6 /* Execution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Execution.swift; sourceTree = "<group>"; };
 		1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
 		1AE1C2E9207EC27C00F53B2A /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +146,8 @@
 				1A6A2680205335DE00C8E9FF /* Tables.swift */,
 				1A8DD39A205C68EF00F6070E /* Quadruples.swift */,
 				1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */,
+				1ABCE2532086CD4A0052D4E6 /* Execution.swift */,
+				058C878020868327009CF8AB /* Memory.swift */,
 				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
 				1A3EA2CD2034FA4900EC10CE /* Assets.xcassets */,
@@ -328,7 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058C878120868327009CF8AB /* Memory.swift in Sources */,
 				1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */,
+				1ABCE2542086CD4A0052D4E6 /* Execution.swift in Sources */,
 				1A3EA3202034FB5500EC10CE /* parser.ym in Sources */,
 				1A6A267E20532E8100C8E9FF /* DataBridge.m in Sources */,
 				1A6A2681205335DE00C8E9FF /* Tables.swift in Sources */,

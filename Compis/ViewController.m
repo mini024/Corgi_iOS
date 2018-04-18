@@ -142,11 +142,11 @@
     };
     
     generateLoopConditionQuadruplesBlock = ^(NSString *id, int min, int max, int by) {
-        [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
+        return [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
     };
     
     generateByQuadrupleBlock = ^() {
-        [Helper.singleton generateByQuadruple];
+        return [Helper.singleton generateByQuadruple];
     };
     
     fillEndConditionQuadrupleBlock = ^() {
@@ -170,7 +170,9 @@
     };
     
     generateEndOfProgramQuadrupleBlock = ^() {
-        [Helper.singleton generateEndOfProgramQuadruple];
+        if (!_failed) {
+            [Helper.singleton generateEndOfProgramQuadruple];
+        }
     };
     
     generateGoSubQuadrupleBlock = ^(NSString *name) {
@@ -181,13 +183,17 @@
         return [Helper.singleton generateParameterQuadruple];
     };
     
+    generateReturnBlock = ^() {
+        return [Helper.singleton generateReturnQuadruple];
+    };
+    
     yyparse();
     
     yy_delete_buffer(buf);
 }
 
 - (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test ; var a : Int; var x : Float; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { a=0; dos(a); x=a + 3.0;}";
+    textView.text = @"corgi test; var a : Int; var x : Float; func dos(b:Int) -> Int { b = b * i * j; return (b*2);} corgiRun() {a=0; dos(a); x= a + 3.0;}";
 }
 
 - (IBAction)Test2:(id)sender {

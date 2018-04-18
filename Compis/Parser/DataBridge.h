@@ -46,8 +46,8 @@ extern void (^generateGOTOFquadrupleBlock)(void);
 extern void (^generateGOTOquadrupleBlock)(void);
 extern void (^fillEndConditionQuadrupleBlock)(void);
 extern void (^fillEndLoopQuadrupleBlock)(void);
-extern void (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
-extern void (^generateByQuadrupleBlock)(void);
+extern bool (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
+extern bool (^generateByQuadrupleBlock)(void);
 
 // Write and Read Quadruples
 extern void (^generateWritequadrupleBlock)(NSString *id);
@@ -59,6 +59,7 @@ extern void (^generateEndOfFunctionQuadrupleBlock)(void);
 extern void (^generateEndOfProgramQuadrupleBlock)(void);
 extern void (^generateGoSubQuadrupleBlock)(NSString * id);
 extern bool (^generateParameterQuadrupleBlock)(NSString * id);
+extern bool (^generateReturnBlock)(void);
 
 // Added some extras to suppress warnings...
 #ifndef FLEXINT_H

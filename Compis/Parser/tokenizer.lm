@@ -20,8 +20,8 @@ write {return WRITE;}
 read {return READ;}
 return {return RETURN;}
 true|false {return BOOLEAN;}
-corgi {return CORGI;}
 corgiRun {return CORGIRUN;}
+corgi {return CORGI;}
 var {return VAR;}
 func { return FUNC;}
 case {return CASE;}
