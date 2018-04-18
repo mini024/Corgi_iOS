@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#import "Compis-Swift.h"
+#import "CorgiCode-Swift.h"
+#import "Program.h"
 
 #import "y.tab.h"
 #import "DataBridge.h"
@@ -20,18 +21,33 @@
 @implementation ViewController
 @synthesize textView;
 @synthesize corgiWeb;
+@synthesize selectedProgram;
+@synthesize selectedCode;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+    
+    if (selectedProgram.code != nil) {
+        textView.text = selectedCode;
+    } else {
+        textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+    }
     
     [corgiWeb loadHTMLString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     [corgiWeb loadData:data MIMEType:@"image/gif" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     [corgiWeb scalesPageToFit];
-    //[corgiWeb contentMode:UIViewContentModeScaleAspectFit];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (selectedProgram.code != nil) {
+        textView.text = selectedCode;
+    } else {
+        textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+    }
 }
 
 
@@ -193,19 +209,19 @@
 }
 
 - (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test; var a : Int; var x : Float; func dos(b:Int) -> Int { b = b * i * j; return (b*2);} corgiRun() {a=0; dos(a); x= a + 3.0;}";
+    textView.text = @"corgi test;\nvar a : Int;\nvar x : Float;\n\nfunc dos(b:Int) -> Int {\n\tb = b * i * j;\n\treturn (b*2);\n}\n\ncorgiRun() {\n\ta=0;\n\tdos(a);\n\tx= a + 3.0;\n}";
 }
 
 - (IBAction)Test2:(id)sender {
-    textView.text = @"corgi test; var a : Int; corgiRun() {a = 0; for a in 0...10 by 1 {write(\"Hello\");}}";
+    textView.text = @"corgi test;\nvar a : Int;\n\ncorgiRun() {\n\ta = 0;\n\tfor a in 0...10 by 1 {\n\twrite(\"Hello\");\n\t}\n}";
 }
 
 - (IBAction)Test3:(id)sender {
-    textView.text = @"corgi test;var a : Int;var b : Int;var c : Int;corgiRun() {a = 2;b = 3;c = 1;case {a>b: write(a);|a>c: write(b);|else: write(c);}}";
+    textView.text = selectedProgram.code;
 }
     
 - (IBAction)Test4:(id)sender {
-    textView.text = @"corgi test; var i: Int; var j: Int; func uno(a:Int) -> void {var n : Int; n = a * 2; case { n < a+4 : uno(a+1);} write(i); return;} func dos(b:Int) -> Int {b = b * i + j;return (b*2);} corgiRun() { i = 2; j = i * 2 - 1; uno(j); i = dos(i+j);}";
+    textView.text = @"corgi test;\nvar i: Int;\nvar j: Int;\n\nfunc uno(a:Int) -> void { \n\tvar n : Int; \n\tn = a * 2; \n\tcase {\n\t\tn < a+4 : uno(a+1); \n\t}\n\twrite(i);\n\treturn;\n}\n\nfunc dos(b:Int) -> Int {\n\tb = b * i + j; \n\treturn (b*2);\n}\n\ncorgiRun() { \n\ti = 2;\n\tj = i * 2 - 1;\n\tuno(j);\n\ti = dos(i+j);\n}\n";
 }
 
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Test Functions</key>
+	<string>corgi test;\r var i: Int;\n var j: Int;\n func uno(a:Int) -&gt; void { \n var n : Int; \n n = a * 2; \n case {  \n n &lt; a+4 : uno(a+1); \n}\n write(i);\n return;\n}\n func dos(b:Int) -&gt; Int {\nb = b * i + j; \nreturn (b*2);\n}\n corgiRun() { \ni = 2;\n j = i * 2 - 1;\n uno(j);\n i = dos(i+j);\n}\n</string>
+	<key>Test Case</key>
+	<string>corgi test;\nvar a : Int;\nvar b : Int;\nvar c : Int;\n\ncorgiRun() {\n\ta = 2;\n\tb = 3;\n\tc = 1;\n\tcase {\n\t\ta&gt;b: write(a);\n\t\t|a&gt;c: write(b);\n\t\t|else: write(c);\n\t}\n}</string>
+	<key>Test Loops</key>
+	<string>corgi test;\nvar a : Int;\n\ncorgiRun() {\n\ta = 0;\n\tfor a in 0...10 by 1 {\n\twrite(\&quot;Hello\&quot;);\n\t}\n}</string>
+	<key>Test</key>
+	<string>corgi test;\nvar a : Int;\nvar x : Float;\n\nfunc dos(b:Int) -&gt; Int {\n\tb = b * i * j;\n\treturn (b*2);\n}\n\ncorgiRun() {\n\ta=0;\n\tdos(a);\n\tx= a + 3.0;\n}</string>
+</dict>
+</plist>

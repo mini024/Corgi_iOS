@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Program.h"
 
 
 @interface ViewController : UIViewController
 
 @property (retain, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIWebView *corgiWeb;
+@property (weak, nonatomic) Program *selectedProgram;
+@property (weak, nonatomic) NSString *selectedCode;
 
 - (IBAction)parseTextView:(id)sender;
 
