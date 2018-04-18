@@ -60,6 +60,10 @@ extern void (^generateEndOfProgramQuadrupleBlock)(void);
 extern void (^generateGoSubQuadrupleBlock)(NSString * id);
 extern bool (^generateParameterQuadrupleBlock)(NSString * id);
 
+//Arrays
+extern bool (^checkIfArrayBlock)(void);
+extern void (^checkRangeforArrayExpresionBlock)(void);
+
 // Added some extras to suppress warnings...
 #ifndef FLEXINT_H
 

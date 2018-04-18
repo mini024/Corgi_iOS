@@ -70,7 +70,7 @@ extern int yylineno;
 %token <strval> POW;
 %token <strval> MOD;
 
-%type <strval> tipo id
+%type <strval> id
 %type <ival> tipoAux
 
 %%
@@ -118,7 +118,7 @@ FUNC ID {
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" \n", $2]);
     }
-} LFT_PAR ID COLON tipo {
+} LFT_PAR ID COLON TYPE {
     // Store parameter
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $5])) {
         addVariableBlock([NSString stringWithFormat:@"%s", $5],[NSString stringWithFormat:@"%s", $7], true);
@@ -148,7 +148,7 @@ Megaexpresion SEMICOLON
 ;
 
 parameters:
-',' ID COLON tipo {
+',' ID COLON TYPE {
     // Store parameter
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $2])) {
         addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], true);
@@ -197,7 +197,7 @@ var:
 VAR ID COLON TYPE tipoAux SEMICOLON {
     if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 == 0) {
         addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], false);
-    } else if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 > 0) {
+    } else if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 > 0) { // ARRAYS PARSING
         addArrayVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], $5);
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" \n", $2]);
@@ -219,7 +219,7 @@ ID {
 ;
 
 idAux:
-SLFT_BRA INT SRGT_BRA
+SLFT_BRA {checkIfArrayBlock();} Megaexpresion {checkRangeforArrayExpresionBlock();} SRGT_BRA //{resolveArrayExpresionBlock)();}
 | LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
     generateParameterQuadrupleBlock(@"parametro");
@@ -249,11 +249,8 @@ asignations:
 | /*epsilon*/
 ;
 
-tipo:
-TYPE tipoAux {$$ = $1;}
-;
 
-tipoAux:
+tipoAux: // ARRAYS
 SLFT_BRA INT SRGT_BRA {
     $$ = $2;
 }
@@ -429,4 +426,7 @@ LFT_PAR {addOperatorToStackBlock(@"(");} expresion RGT_PAR {deleteParentesisFrom
 
 %%
 
+;
+;
+;
 ;

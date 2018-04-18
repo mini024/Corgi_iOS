@@ -181,6 +181,14 @@
         return [Helper.singleton generateParameterQuadruple];
     };
     
+    checkIfArrayBlock = ^(){
+        return [Helper.singleton checkIfArray];
+    };
+    
+    checkRangeforArrayExpresionBlock = ^(){
+        return [Helper.singleton checkRangeforArrayExpresion];
+    };
+    
     yyparse();
     
     yy_delete_buffer(buf);

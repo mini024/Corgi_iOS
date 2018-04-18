@@ -83,13 +83,6 @@ extension String {
     }
 }
 
-struct Quadruple {
-    var leftOperand : Any?
-    var rightOperand : Any?
-    var oper: Operator
-    var resultVar: Int // Indice de variable temporal
-}
-
 struct QuadrupleDir {
     var leftOperand : Int?
     var rightOperand : Int?

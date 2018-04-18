@@ -54,3 +54,7 @@ void (^generateEndOfFunctionQuadrupleBlock)(void);
 void (^generateEndOfProgramQuadrupleBlock)(void);
 void (^generateGoSubQuadrupleBlock)(NSString * id);
 bool (^generateParameterQuadrupleBlock)(NSString * id);
+
+// Arrays
+bool (^checkIfArrayBlock)(void);
+void (^checkRangeforArrayExpresionBlock)(void);

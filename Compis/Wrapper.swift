@@ -20,6 +20,7 @@ import UIKit
     var idTypes: [Type] = []
     var idAddresses: [Int] = []
     var callingFunction: [String] = []
+    var pendingArray: [Int] = []
     
     // Quadruple
     var pendingQuadruples: [Int] = [] // jumps stack

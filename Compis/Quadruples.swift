@@ -178,6 +178,7 @@ extension Helper {
         idAddresses.append(conditionAddress)
     }
     
+    // Quadruple for for loops "by" increments
     func generateByQuadruple() {
         let byAddress = idAddresses[idAddresses.count - 1]
         let variableAddress = idAddresses[idAddresses.count - 4]
@@ -263,6 +264,37 @@ extension Helper {
         quadruples[end!].resultVar = nextQuadruple
         
         printQuadruples()
+    }
+    
+    func checkIfArray() -> Bool {
+        
+        let arrAddress = idAddresses.popLast()
+        let size = getArraySize(address: arrAddress!)
+        
+        if size > 0 {
+            pendingArray.append(arrAddress!)
+            return true
+        }
+        return false
+    }
+    
+    func checkRangeforArrayExpresion() -> Void {
+        
+        let size = idAddresses.popLast()
+        let arr = pendingArray[pendingArray.count-1]
+        let arrSize = getArraySize(address: arr)
+        
+        quadruples.append(QuadrupleDir(leftOperand: arrSize, rightOperand: 0, oper: .VER, resultVar: size))
+        
+    }
+    
+    func addSizeGaptoBaseAddress() -> Void {
+        
+        let arrBaseDir = pendingArray.popLast()
+        let gap = idAddresses.popLast()
+        
+        let targetArrayAddress = virtualMemory.temporalMemory.setInt(value: nil)
+        quadruples.append(QuadrupleDir(leftOperand: arrBaseDir!, rightOperand: gap, oper: .Sum, resultVar: targetArrayAddress))
     }
     
 }

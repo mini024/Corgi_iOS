@@ -107,6 +107,8 @@ class VirtualMemory {
                 break
             case .RETURN:
                 break
+            case .VER:
+                break
             }
         }
     }

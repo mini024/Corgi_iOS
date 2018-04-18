@@ -68,8 +68,9 @@ extension Helper {
     }
     
     func addArrayVariable(_ id: String, type: String, size:Int) {
-        //addVariable(id, type: type, parameter: false)
-        //funcTable[currentFunc]?.variables[id]
+        addVariable(id, type: type, parameter: false)
+        funcTable[currentFunc]?.variables[id]?.arrSize = size
+        
     }
     
     func functionExists(_ id: String) -> Bool{
@@ -149,7 +150,29 @@ extension Helper {
         return (Type.ERROR, -1)
     }
     
+    func getArraySize(address: Int) -> Int {
+        
+        if currentFunc != "Corgi"{
+            
+            for array in (funcTable[currentFunc]?.variables)! {
+                if array.value.index == address{
+                    return (array.value.arrSize)
+                }
+            }
+            
+        }else{
+            for array in (funcTable["Corgi"]?.variables)! {
+                if array.value.index == address{
+                    return (array.value.arrSize)
+                }
+            }
+        }
+        return -1
+    }
+    
     func printTable() {
         print(funcTable)
     }
+
 }
+
