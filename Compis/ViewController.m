@@ -34,6 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // Code Text View
     CGRect frame = CGRectMake(10, self.navigationController.navigationBar.bounds.size.height + 40, self.view.frame.size.width - 20, self.consoleTextView.frame.origin.y - self.navigationController.navigationBar.frame.size.height - 10);
     QEDTextView *codeTextView = [[QEDTextView alloc] initWithFrame:frame];
     codeTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -48,10 +49,12 @@
     }
     
     [self.view addSubview:codeTextView];
-    
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    consoleTextView.text = @"Console";
+    
     if (selectedProgram.code != nil) {
         codeTextView.text = selectedCode;
     } else {
@@ -65,8 +68,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)parseTextView:(id)sender
-{
+- (IBAction)parseTextView:(id)sender {
     YY_BUFFER_STATE buf;
     _failed = false;
     _errors = @"";
@@ -229,6 +231,18 @@
     yy_delete_buffer(buf);
 }
 
+// MARK: Text View Delegate
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.dissmisButton.enabled = YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.dissmisButton.enabled = NO;
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    [codeTextView resignFirstResponder];
+}
 
 @end

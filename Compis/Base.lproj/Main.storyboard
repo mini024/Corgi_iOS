@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Console" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ojv-ER-Wbd">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Console" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ojv-ER-Wbd">
                                 <rect key="frame" x="9" y="468" width="357" height="142"/>
                                 <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -39,7 +39,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="zrP-XO-h5x">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Dismiss" id="8Md-a0-K2M">
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="dismissKeyboard:" destination="BYZ-38-t0r" id="ukr-qW-eLr"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Parse" id="Cnj-VA-t80">
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="parseTextView:" destination="BYZ-38-t0r" id="nL6-o6-kgA"/>
                             </connections>
@@ -47,6 +54,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="consoleTextView" destination="Ojv-ER-Wbd" id="jMr-sF-9gS"/>
+                        <outlet property="dissmisButton" destination="8Md-a0-K2M" id="GK2-hi-BMr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
