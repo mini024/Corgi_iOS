@@ -58,9 +58,9 @@ Int|Float|Bool|String|void {yylval.strval= strdup(yytext); return TYPE;}
 \^ {return POW;}
 
 [ \t]   ;
-\n   {}
+\n   {addLineCounterBlock();}
 .   {return  yytext[0];}
-\".*\" {return STRING;}
+\".*\" {yylval.strval= strdup(yytext); return STRING;}
 
 %%
 

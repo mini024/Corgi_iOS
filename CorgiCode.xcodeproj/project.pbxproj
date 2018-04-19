@@ -27,6 +27,18 @@
 		1A8DD39B205C68EF00F6070E /* Quadruples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8DD39A205C68EF00F6070E /* Quadruples.swift */; };
 		1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8DD39C205C6D9E00F6070E /* OperationTable.plist */; };
 		1ABCE2542086CD4A0052D4E6 /* Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2532086CD4A0052D4E6 /* Execution.swift */; };
+		1ABCE25F2086FE5F0052D4E6 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE25E2086FE5F0052D4E6 /* CollectionViewController.m */; };
+		1ABCE262208701CA0052D4E6 /* ProgramCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE261208701CA0052D4E6 /* ProgramCollectionViewCell.m */; };
+		1ABCE265208702D60052D4E6 /* Program.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE264208702D60052D4E6 /* Program.m */; };
+		1ABCE2692087053C0052D4E6 /* TestPrograms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCE2682087053C0052D4E6 /* TestPrograms.plist */; };
+		1ABCE2822088FDC40052D4E6 /* CYRLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */; };
+		1ABCE2832088FDC40052D4E6 /* CYRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27A2088FDC30052D4E6 /* CYRToken.m */; };
+		1ABCE2842088FDC40052D4E6 /* CYRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */; };
+		1ABCE2852088FDC40052D4E6 /* CYRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */; };
+		1ABCE2862088FDC40052D4E6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCE2812088FDC30052D4E6 /* Info.plist */; };
+		1ABCE2882088FEB20052D4E6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCE2872088FEB10052D4E6 /* CoreText.framework */; };
+		1ABCE28B2088FF300052D4E6 /* QEDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28A2088FF300052D4E6 /* QEDTextView.m */; };
+		1ABCE28E2089021F0052D4E6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28D2089021F0052D4E6 /* MoreViewController.m */; };
 		1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */; };
 		1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C2E9207EC27C00F53B2A /* Structures.swift */; };
 /* End PBXBuildFile section */
@@ -51,7 +63,7 @@
 /* Begin PBXFileReference section */
 		0514203120688A1C00BE8CE6 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		058C878020868327009CF8AB /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
-		1A3EA2C12034FA4900EC10CE /* Compis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A3EA2C12034FA4900EC10CE /* CorgiCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorgiCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3EA2C42034FA4900EC10CE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1A3EA2C52034FA4900EC10CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1A3EA2C72034FA4900EC10CE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -61,10 +73,10 @@
 		1A3EA2D02034FA4900EC10CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A3EA2D22034FA4900EC10CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A3EA2D32034FA4900EC10CE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1A3EA2D92034FA4900EC10CE /* CompisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A3EA2D92034FA4900EC10CE /* CorgiCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CorgiCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3EA2DD2034FA4900EC10CE /* CompisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompisTests.m; sourceTree = "<group>"; };
 		1A3EA2DF2034FA4900EC10CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1A3EA2E42034FA4A00EC10CE /* CompisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A3EA2E42034FA4A00EC10CE /* CorgiCodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CorgiCodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3EA2E82034FA4A00EC10CE /* CompisUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompisUITests.m; sourceTree = "<group>"; };
 		1A3EA2EA2034FA4A00EC10CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A3EA31C2034FB5500EC10CE /* tokenizer.lm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = tokenizer.lm; sourceTree = "<group>"; };
@@ -80,6 +92,28 @@
 		1A8DD39A205C68EF00F6070E /* Quadruples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadruples.swift; sourceTree = "<group>"; };
 		1A8DD39C205C6D9E00F6070E /* OperationTable.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OperationTable.plist; sourceTree = "<group>"; };
 		1ABCE2532086CD4A0052D4E6 /* Execution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Execution.swift; sourceTree = "<group>"; };
+		1ABCE25D2086FE5F0052D4E6 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		1ABCE25E2086FE5F0052D4E6 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		1ABCE260208701CA0052D4E6 /* ProgramCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgramCollectionViewCell.h; sourceTree = "<group>"; };
+		1ABCE261208701CA0052D4E6 /* ProgramCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgramCollectionViewCell.m; sourceTree = "<group>"; };
+		1ABCE263208702D60052D4E6 /* Program.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
+		1ABCE264208702D60052D4E6 /* Program.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Program.m; sourceTree = "<group>"; };
+		1ABCE2682087053C0052D4E6 /* TestPrograms.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = TestPrograms.plist; path = Compis/TestPrograms.plist; sourceTree = SOURCE_ROOT; };
+		1ABCE2782088FDC30052D4E6 /* CYRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextView.h; sourceTree = "<group>"; };
+		1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRLayoutManager.m; sourceTree = "<group>"; };
+		1ABCE27A2088FDC30052D4E6 /* CYRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRToken.m; sourceTree = "<group>"; };
+		1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextStorage.m; sourceTree = "<group>"; };
+		1ABCE27C2088FDC30052D4E6 /* CYRTextViewKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextViewKit.h; sourceTree = "<group>"; };
+		1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextView.m; sourceTree = "<group>"; };
+		1ABCE27E2088FDC30052D4E6 /* CYRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRToken.h; sourceTree = "<group>"; };
+		1ABCE27F2088FDC30052D4E6 /* CYRLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRLayoutManager.h; sourceTree = "<group>"; };
+		1ABCE2802088FDC30052D4E6 /* CYRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextStorage.h; sourceTree = "<group>"; };
+		1ABCE2812088FDC30052D4E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ABCE2872088FEB10052D4E6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1ABCE2892088FF300052D4E6 /* QEDTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEDTextView.h; sourceTree = "<group>"; };
+		1ABCE28A2088FF300052D4E6 /* QEDTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEDTextView.m; sourceTree = "<group>"; };
+		1ABCE28C2089021F0052D4E6 /* MoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
+		1ABCE28D2089021F0052D4E6 /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
 		1AE1C2E9207EC27C00F53B2A /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCE2882088FEB20052D4E6 /* CoreText.framework in Frameworks */,
 				1A3EA3282034FF9800EC10CE /* CoreGraphics.framework in Frameworks */,
 				1A3EA3292034FF9800EC10CE /* Foundation.framework in Frameworks */,
 				1A3EA3252034FF7600EC10CE /* UIKit.framework in Frameworks */,
@@ -126,9 +161,9 @@
 		1A3EA2C22034FA4900EC10CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1A3EA2C12034FA4900EC10CE /* Compis.app */,
-				1A3EA2D92034FA4900EC10CE /* CompisTests.xctest */,
-				1A3EA2E42034FA4A00EC10CE /* CompisUITests.xctest */,
+				1A3EA2C12034FA4900EC10CE /* CorgiCode.app */,
+				1A3EA2D92034FA4900EC10CE /* CorgiCodeTests.xctest */,
+				1A3EA2E42034FA4A00EC10CE /* CorgiCodeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,12 +171,18 @@
 		1A3EA2C32034FA4900EC10CE /* Compis */ = {
 			isa = PBXGroup;
 			children = (
+				1ABCE2772088FDC30052D4E6 /* CRYTextViewKit */,
 				1A3EA3212034FB5C00EC10CE /* Parser */,
 				1ABCE2552086FBA80052D4E6 /* Compiler */,
+				1ABCE266208704CB0052D4E6 /* CollectionView */,
+				1ABCE267208704F70052D4E6 /* Objects */,
 				1A3EA2C42034FA4900EC10CE /* AppDelegate.h */,
 				1A3EA2C52034FA4900EC10CE /* AppDelegate.m */,
 				1A3EA2C72034FA4900EC10CE /* ViewController.h */,
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
+				1ABCE28C2089021F0052D4E6 /* MoreViewController.h */,
+				1ABCE28D2089021F0052D4E6 /* MoreViewController.m */,
+				1ABCE2682087053C0052D4E6 /* TestPrograms.plist */,
 				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
 				1A3EA2CD2034FA4900EC10CE /* Assets.xcassets */,
@@ -186,6 +227,7 @@
 		1A3EA3232034FF7500EC10CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1ABCE2872088FEB10052D4E6 /* CoreText.framework */,
 				1A3EA3262034FF9800EC10CE /* CoreGraphics.framework */,
 				1A3EA3272034FF9800EC10CE /* Foundation.framework */,
 				1A3EA3242034FF7500EC10CE /* UIKit.framework */,
@@ -207,12 +249,51 @@
 			path = Compiler;
 			sourceTree = "<group>";
 		};
+		1ABCE266208704CB0052D4E6 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				1ABCE25D2086FE5F0052D4E6 /* CollectionViewController.h */,
+				1ABCE25E2086FE5F0052D4E6 /* CollectionViewController.m */,
+				1ABCE260208701CA0052D4E6 /* ProgramCollectionViewCell.h */,
+				1ABCE261208701CA0052D4E6 /* ProgramCollectionViewCell.m */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		1ABCE267208704F70052D4E6 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				1ABCE263208702D60052D4E6 /* Program.h */,
+				1ABCE264208702D60052D4E6 /* Program.m */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		1ABCE2772088FDC30052D4E6 /* CRYTextViewKit */ = {
+			isa = PBXGroup;
+			children = (
+				1ABCE2892088FF300052D4E6 /* QEDTextView.h */,
+				1ABCE28A2088FF300052D4E6 /* QEDTextView.m */,
+				1ABCE27C2088FDC30052D4E6 /* CYRTextViewKit.h */,
+				1ABCE2782088FDC30052D4E6 /* CYRTextView.h */,
+				1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */,
+				1ABCE27A2088FDC30052D4E6 /* CYRToken.m */,
+				1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */,
+				1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */,
+				1ABCE27E2088FDC30052D4E6 /* CYRToken.h */,
+				1ABCE27F2088FDC30052D4E6 /* CYRLayoutManager.h */,
+				1ABCE2802088FDC30052D4E6 /* CYRTextStorage.h */,
+				1ABCE2812088FDC30052D4E6 /* Info.plist */,
+			);
+			path = CRYTextViewKit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1A3EA2C02034FA4900EC10CE /* Compis */ = {
+		1A3EA2C02034FA4900EC10CE /* CorgiCode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A3EA2ED2034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "Compis" */;
+			buildConfigurationList = 1A3EA2ED2034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCode" */;
 			buildPhases = (
 				1A3EA2BD2034FA4900EC10CE /* Sources */,
 				1A3EA2BE2034FA4900EC10CE /* Frameworks */,
@@ -222,14 +303,14 @@
 			);
 			dependencies = (
 			);
-			name = Compis;
+			name = CorgiCode;
 			productName = Compis;
-			productReference = 1A3EA2C12034FA4900EC10CE /* Compis.app */;
+			productReference = 1A3EA2C12034FA4900EC10CE /* CorgiCode.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1A3EA2D82034FA4900EC10CE /* CompisTests */ = {
+		1A3EA2D82034FA4900EC10CE /* CorgiCodeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A3EA2F02034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CompisTests" */;
+			buildConfigurationList = 1A3EA2F02034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCodeTests" */;
 			buildPhases = (
 				1A3EA2D52034FA4900EC10CE /* Sources */,
 				1A3EA2D62034FA4900EC10CE /* Frameworks */,
@@ -240,14 +321,14 @@
 			dependencies = (
 				1A3EA2DB2034FA4900EC10CE /* PBXTargetDependency */,
 			);
-			name = CompisTests;
+			name = CorgiCodeTests;
 			productName = CompisTests;
-			productReference = 1A3EA2D92034FA4900EC10CE /* CompisTests.xctest */;
+			productReference = 1A3EA2D92034FA4900EC10CE /* CorgiCodeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		1A3EA2E32034FA4A00EC10CE /* CompisUITests */ = {
+		1A3EA2E32034FA4A00EC10CE /* CorgiCodeUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1A3EA2F32034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CompisUITests" */;
+			buildConfigurationList = 1A3EA2F32034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCodeUITests" */;
 			buildPhases = (
 				1A3EA2E02034FA4A00EC10CE /* Sources */,
 				1A3EA2E12034FA4A00EC10CE /* Frameworks */,
@@ -258,9 +339,9 @@
 			dependencies = (
 				1A3EA2E62034FA4A00EC10CE /* PBXTargetDependency */,
 			);
-			name = CompisUITests;
+			name = CorgiCodeUITests;
 			productName = CompisUITests;
-			productReference = 1A3EA2E42034FA4A00EC10CE /* CompisUITests.xctest */;
+			productReference = 1A3EA2E42034FA4A00EC10CE /* CorgiCodeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -289,7 +370,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1A3EA2BC2034FA4900EC10CE /* Build configuration list for PBXProject "Compis" */;
+			buildConfigurationList = 1A3EA2BC2034FA4900EC10CE /* Build configuration list for PBXProject "CorgiCode" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -302,9 +383,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1A3EA2C02034FA4900EC10CE /* Compis */,
-				1A3EA2D82034FA4900EC10CE /* CompisTests */,
-				1A3EA2E32034FA4A00EC10CE /* CompisUITests */,
+				1A3EA2C02034FA4900EC10CE /* CorgiCode */,
+				1A3EA2D82034FA4900EC10CE /* CorgiCodeTests */,
+				1A3EA2E32034FA4A00EC10CE /* CorgiCodeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -315,6 +396,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A3EA2D12034FA4900EC10CE /* LaunchScreen.storyboard in Resources */,
+				1ABCE2692087053C0052D4E6 /* TestPrograms.plist in Resources */,
+				1ABCE2862088FDC40052D4E6 /* Info.plist in Resources */,
 				1A3EA2CE2034FA4900EC10CE /* Assets.xcassets in Resources */,
 				1A3EA2CC2034FA4900EC10CE /* Main.storyboard in Resources */,
 				1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */,
@@ -342,16 +425,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCE28B2088FF300052D4E6 /* QEDTextView.m in Sources */,
 				058C878120868327009CF8AB /* Memory.swift in Sources */,
 				1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */,
 				1ABCE2542086CD4A0052D4E6 /* Execution.swift in Sources */,
+				1ABCE2822088FDC40052D4E6 /* CYRLayoutManager.m in Sources */,
 				1A3EA3202034FB5500EC10CE /* parser.ym in Sources */,
 				1A6A267E20532E8100C8E9FF /* DataBridge.m in Sources */,
+				1ABCE2852088FDC40052D4E6 /* CYRTextView.m in Sources */,
+				1ABCE2842088FDC40052D4E6 /* CYRTextStorage.m in Sources */,
+				1ABCE28E2089021F0052D4E6 /* MoreViewController.m in Sources */,
+				1ABCE2832088FDC40052D4E6 /* CYRToken.m in Sources */,
+				1ABCE262208701CA0052D4E6 /* ProgramCollectionViewCell.m in Sources */,
 				1A6A2681205335DE00C8E9FF /* Tables.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,
 				1A3EA2D42034FA4900EC10CE /* main.m in Sources */,
+				1ABCE25F2086FE5F0052D4E6 /* CollectionViewController.m in Sources */,
 				0514203220688A1C00BE8CE6 /* Wrapper.swift in Sources */,
 				1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */,
+				1ABCE265208702D60052D4E6 /* Program.m in Sources */,
 				1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */,
 				1A8DD39B205C68EF00F6070E /* Quadruples.swift in Sources */,
 				1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */,
@@ -379,12 +471,12 @@
 /* Begin PBXTargetDependency section */
 		1A3EA2DB2034FA4900EC10CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1A3EA2C02034FA4900EC10CE /* Compis */;
+			target = 1A3EA2C02034FA4900EC10CE /* CorgiCode */;
 			targetProxy = 1A3EA2DA2034FA4900EC10CE /* PBXContainerItemProxy */;
 		};
 		1A3EA2E62034FA4A00EC10CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1A3EA2C02034FA4900EC10CE /* Compis */;
+			target = 1A3EA2C02034FA4900EC10CE /* CorgiCode */;
 			targetProxy = 1A3EA2E52034FA4A00EC10CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -560,7 +652,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JMCE.CompisTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compis.app/Compis";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CorgiCode.app/CorgiCode";
 			};
 			name = Debug;
 		};
@@ -576,7 +668,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JMCE.CompisTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compis.app/Compis";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CorgiCode.app/CorgiCode";
 			};
 			name = Release;
 		};
@@ -613,7 +705,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1A3EA2BC2034FA4900EC10CE /* Build configuration list for PBXProject "Compis" */ = {
+		1A3EA2BC2034FA4900EC10CE /* Build configuration list for PBXProject "CorgiCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A3EA2EB2034FA4A00EC10CE /* Debug */,
@@ -622,7 +714,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1A3EA2ED2034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "Compis" */ = {
+		1A3EA2ED2034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A3EA2EE2034FA4A00EC10CE /* Debug */,
@@ -631,7 +723,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1A3EA2F02034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CompisTests" */ = {
+		1A3EA2F02034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCodeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A3EA2F12034FA4A00EC10CE /* Debug */,
@@ -640,7 +732,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1A3EA2F32034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CompisUITests" */ = {
+		1A3EA2F32034FA4A00EC10CE /* Build configuration list for PBXNativeTarget "CorgiCodeUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1A3EA2F42034FA4A00EC10CE /* Debug */,

@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Program.h"
+#import "QEDTextView.h"
 
 
 @interface ViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UIWebView *corgiWeb;
+@property (weak, nonatomic) IBOutlet UITextView *consoleTextView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *dissmisButton;
+@property (retain, nonatomic) QEDTextView *codeTextView;
+@property (weak, nonatomic) Program *selectedProgram;
+@property (weak, nonatomic) NSString *selectedCode;
 
 - (IBAction)parseTextView:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 @end
 

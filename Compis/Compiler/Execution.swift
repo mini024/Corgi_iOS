@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//import "DataBridge.h"
 
 extension Helper {
     
@@ -72,7 +73,7 @@ extension Helper {
                 quadrupleNumber = quadruple.resultVar! - 1
                 break
             case .WRITE:
-                print(virtualMemory.getValueIn(address: quadruple.resultVar!))
+                runWrite(address: quadruple.resultVar!)
                 break
             case .READ:
                 break
@@ -97,6 +98,24 @@ extension Helper {
                 break
             }
             quadrupleNumber += 1;
+        }
+    }
+    
+    func runWrite(address: Int) {
+        let valueTuple = virtualMemory.getValueIn(address: address)
+        
+        if valueTuple.1 == .Int {
+            let value = String(valueTuple.0 as! Int)
+            ParseTestSuccessBlock(value)
+        } else if valueTuple.1 == .Float {
+            let value = String(valueTuple.0 as! Float)
+            ParseTestSuccessBlock(value)
+        } else if valueTuple.1 == .Bool {
+            let value = String(valueTuple.0 as! Bool)
+            ParseTestSuccessBlock(value)
+        } else {
+            let value = valueTuple.0 as! String
+            ParseTestSuccessBlock(value)
         }
     }
     

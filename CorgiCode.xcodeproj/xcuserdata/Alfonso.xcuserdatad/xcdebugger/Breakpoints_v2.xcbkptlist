@@ -287,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "407"
             endingLineNumber = "407"
-            landmarkName = "runAddition(leftAddress:rightAddress:resultAddress:)"
+            landmarkName = "runAnd(leftAddress:rightAddress:resultAddress:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -303,7 +303,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "413"
             endingLineNumber = "413"
-            landmarkName = "runAddition(leftAddress:rightAddress:resultAddress:)"
+            landmarkName = "runOR(leftAddress:rightAddress:resultAddress:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
