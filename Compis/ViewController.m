@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+    textView.text = @"corgi test; var arrA: Int[5]; var a: Int; var b: Int; corgiRun(){ a = 2; b = 1; arrA[a+b] = a; b = arrA[3] + a; write (b);}";
     
     [corgiWeb loadHTMLString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
     
@@ -63,7 +63,7 @@
     };
     
     addVariableBlock = ^(NSString *name, NSString *type, int parameter) {
-        [Helper.singleton addVariable:name type: type parameter: parameter];
+        [Helper.singleton addVariableToTable:name type: type parameter: parameter];
     };
     
     addArrayVariableBlock = ^(NSString *name, NSString *type, int size) {
@@ -142,11 +142,11 @@
     };
     
     generateLoopConditionQuadruplesBlock = ^(NSString *id, int min, int max, int by) {
-        [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
+        return [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
     };
     
     generateByQuadrupleBlock = ^() {
-        [Helper.singleton generateByQuadruple];
+        return [Helper.singleton generateByQuadruple];
     };
     
     fillEndConditionQuadrupleBlock = ^() {
@@ -170,7 +170,9 @@
     };
     
     generateEndOfProgramQuadrupleBlock = ^() {
-        [Helper.singleton generateEndOfProgramQuadruple];
+        if (!_failed) {
+            [Helper.singleton generateEndOfProgramQuadruple];
+        }
     };
     
     generateGoSubQuadrupleBlock = ^(NSString *name) {
@@ -189,13 +191,21 @@
         return [Helper.singleton checkRangeforArrayExpresion];
     };
     
+    addSizeGaptoBaseAddressBlock = ^(){
+        return [Helper.singleton addSizeGaptoBaseAddress];
+    };
+    
+    generateReturnBlock = ^() {
+        return [Helper.singleton generateReturnQuadruple];
+    };
+    
     yyparse();
     
     yy_delete_buffer(buf);
 }
 
 - (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test ; var a : Int; var x : Float; corgiRun() { a=0; x = a + 3.0;}";
+    textView.text = @"corgi test; var a : Int; var x : Float; func dos(b:Int) -> Int { b = b * i * j; return (b*2);} corgiRun() {a=0; dos(a); x= a + 3.0;}";
 }
 
 - (IBAction)Test2:(id)sender {

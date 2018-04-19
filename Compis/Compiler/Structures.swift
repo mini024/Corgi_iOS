@@ -19,6 +19,7 @@ enum Type: Int {
     case String = 2
     case Bool = 3
     case Int = 4
+    case Void = 5
     case ERROR = 999
 }
 

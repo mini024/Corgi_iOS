@@ -27,7 +27,6 @@ extension Helper {
                 idAddresses.append(address)
                 idTypes.append(Type.Float)
             case "String":
-                
                 let address = virtualMemory.constantsMemory.setString(value: name)
                 idAddresses.append(address)
                 idTypes.append(Type.String)
@@ -112,6 +111,12 @@ extension Helper {
     func generateGOTOFquadruple() {
         // Step 1 result = pilaO.pop()
         let temporalVariableAddress = idAddresses.popLast()
+        let temporalType = idTypes.popLast()
+        
+        guard temporalType == Type.Bool else {
+            print("ERROR GOTOF - Wrong condition type")
+            return
+        }
         
         // Step 2 generate GOTOF quad
         let oper = Operator.GOTOF
@@ -125,44 +130,46 @@ extension Helper {
     }
     
     func generateGOTOquadruple() {
-        // Generate GOTO Quadruple
-        let oper = Operator.GOTO
-        let nextQuadruple = 99999
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
-        
         // Check if there is pending quadruples -> end of case condition
         if let end = pendingQuadruples.popLast() {
             // Fill goTo addresses in other quadruple
             quadruples[end].resultVar = quadruples.count + 1
         }
         
+        // Generate GOTO Quadruple
+        let oper = Operator.GOTO
+        let nextQuadruple = 99999
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
+        
         // Add index to pending quadruples to fill later.
         let pendingIndex = quadruples.count
-        pendingQuadruples.append(pendingIndex)
+        pendingQuadruples.append(pendingIndex - 1)
+        
     }
     
     func generateWriteQuadruple(_ id:String) {
-        let variableAddress = getVariableAddress(id: id)
-        
-        if variableAddress != 0 {
-            quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
-            return
-        }
-        
-        // Add string to temporal variable
-        let temporalAddress =  virtualMemory.temporalMemory.setString(value: id)
+        let variableAddress = idAddresses.popLast()
+        _ = idTypes.popLast()
         
         // Create quadruple with temoral value
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: temporalAddress))
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
         
     }
     
-    func generateLoopConditionQuadruples(_ id:String, min:Int, max:Int, by:Int) {
-        let maxAddress = idAddresses[idAddresses.count - 1]
-        let minAddress = idAddresses[idAddresses.count - 2]
-        let variableAddress = idAddresses[idAddresses.count - 3]
+    func generateLoopConditionQuadruples(_ id:String, min:Int, max:Int, by:Int) -> Bool {
+        let maxAddress = idAddresses.popLast()!
+        let minAddress = idAddresses.popLast()!
+        let variableAddress = idAddresses.popLast()!
+        let maxType = idTypes.popLast()
+        let minType = idTypes.popLast()
+        let varType = idTypes.popLast()
         
-        pendingQuadruples.append(quadruples.count + 1)
+        guard varType == Type.Int && minType == Type.Int && maxType == Type.Int else {
+            print("Error - Variable and Range must be Ints")
+            return false
+        }
+        
+        pendingQuadruples.append(quadruples.count)
         
         // Conditional Quadruple
         let lessThanMaxAddress = virtualMemory.temporalMemory.setBool(value: nil)
@@ -174,16 +181,32 @@ extension Helper {
         let conditionAddress = virtualMemory.temporalMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
         
+        // Push variable Address to keep using
+        idAddresses.append(variableAddress)
+        idTypes.append(varType!)
+        
         // Push temporal with result to address stack
         idAddresses.append(conditionAddress)
+        idTypes.append(Type.Bool)
+        
+        return true
     }
     
-    // Quadruple for for loops "by" increments
-    func generateByQuadruple() {
-        let byAddress = idAddresses[idAddresses.count - 1]
-        let variableAddress = idAddresses[idAddresses.count - 4]
+    /**
+        Quadruple for for loops "by" increments
+    */
+    func generateByQuadruple() -> Bool {
+        let byAddress = idAddresses.popLast()
+        let byType = idTypes.popLast()
+        let variableAddress = idAddresses.popLast()
+        let variableType = idTypes.popLast()
+        
+        guard byType == Type.Int && variableType == Type.Int else {
+            return false
+        }
         
         quadruples.append(QuadrupleDir(leftOperand: byAddress, rightOperand: variableAddress, oper: Operator(rawValue: 0)!, resultVar: variableAddress))
+        return true
     }
     
     func generateERAQuadruple(_ name: String) {
@@ -196,9 +219,12 @@ extension Helper {
     }
     
     func generateEndOfFunctionQuadruple() {
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
+        if currentFunc != "corgiRun" {
+           quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
+        }
+        
         funcTable[currentFunc]?.memory = virtualMemory.localMemory
-        virtualMemory.localMemory = Memory()
+        virtualMemory.localMemory = Memory(value: virtualMemory.localMemory.INT_START_ADDRESS)
         printQuadruples()
     }
     
@@ -207,7 +233,9 @@ extension Helper {
         let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
         quadruples[0].resultVar = corgiRunQuadruple!
         printQuadruples()
-        virtualMemory.run(quadruples: quadruples)
+        virtualMemory.memoryStack.append((funcTable["corgiRun"]?.memory)!)
+        virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
+        run(quadruples: quadruples)
     }
     
     func generateGoSubQuadruple() {
@@ -216,6 +244,13 @@ extension Helper {
         
         quadruples.append(QuadrupleDir(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
         funcTable[functionName!]?.currentParameter = 0
+        
+        // Check if there is return value in stack
+        if (funcTable[functionName!]?.returnType)! != Type.Void {
+            let returnAddress = returnValues.popLast()
+            idAddresses.append(returnAddress!)
+            idTypes.append((funcTable[functionName!]?.returnType)!)
+        }
     }
     
     func generateParameterQuadruple() -> Bool {
@@ -231,17 +266,35 @@ extension Helper {
         }
         
         let parameterType = parameterTuple.0
-        let parameterID = parameterTuple.1
+        let parameterAddress = parameterTuple.1
         
         guard argumentType == parameterType else {
             print("Error Wrong parameter type")
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterID))
+        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
         
         funcTable[currentFunc]?.currentParameter += 1
         
+        return true
+    }
+    
+    func generateReturnQuadruple() -> Bool{
+        guard funcTable[currentFunc]?.returnType != Type.Void else {
+            quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
+            return true
+        }
+        
+        let valueType = idTypes.popLast()
+        let valueAddress = idAddresses.popLast()
+        
+        // Check type of return type & value
+        guard funcTable[currentFunc]?.returnType == valueType else {print("ERROR - Wrong return type"); return false}
+    
+        // Generate quadruple
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
+        returnValues.append(valueAddress!)
         return true
     }
     
@@ -280,21 +333,28 @@ extension Helper {
     
     func checkRangeforArrayExpresion() -> Void {
         
-        let size = idAddresses.popLast()
+        let size = idAddresses[idAddresses.count-1]
         let arr = pendingArray[pendingArray.count-1]
         let arrSize = getArraySize(address: arr)
         
         quadruples.append(QuadrupleDir(leftOperand: arrSize, rightOperand: 0, oper: .VER, resultVar: size))
-        
+        printQuadruples()
     }
     
-    func addSizeGaptoBaseAddress() -> Void {
+    func addSizeGaptoBaseAddress() -> Bool {
         
         let arrBaseDir = pendingArray.popLast()
         let gap = idAddresses.popLast()
+        let gapType = idTypes.popLast()
+        
+        guard gapType == Type.Int else {print("Error - wrong gap type"); return false;}
         
         let targetArrayAddress = virtualMemory.temporalMemory.setInt(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: arrBaseDir!, rightOperand: gap, oper: .Sum, resultVar: targetArrayAddress))
+        
+        idAddresses.append(targetArrayAddress)
+        quadruples.append(QuadrupleDir(leftOperand: -1 * arrBaseDir!, rightOperand: gap, oper: .Sum, resultVar: targetArrayAddress))
+        
+        return true
     }
     
 }

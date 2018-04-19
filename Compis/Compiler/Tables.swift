@@ -25,7 +25,7 @@ extension Helper {
         funcTable[id]?.returnType = stringToType(type: type)
     }
     
-    func addVariable(_ id: String, type:String, parameter:Bool) {
+    func createAddressForVariable(type:String) -> Int {
         var scope: Scope = .global
         var address = 0
         if currentFunc != "Corgi" {
@@ -59,6 +59,17 @@ extension Helper {
             }
         }
         
+        return address
+    }
+    
+    func addVariableToTable(_ id: String, type:String, parameter:Bool) {
+        
+        let address = createAddressForVariable(type: type)
+        var scope: Scope = .global
+        if currentFunc != "Corgi" {
+            scope = .local
+        }
+        
         if parameter {
             let type = stringToType(type: type)
             funcTable[currentFunc]?.parameters[id] = Symbol(type: type , scope: scope, address: address, index: funcTable[currentFunc]?.parameters.count, arrSize: nil)
@@ -68,8 +79,13 @@ extension Helper {
     }
     
     func addArrayVariable(_ id: String, type: String, size:Int) {
-        addVariable(id, type: type, parameter: false)
+        addVariableToTable(id, type: type, parameter: false)
         funcTable[currentFunc]?.variables[id]?.arrSize = size
+        
+        // Create size - 1 of addresses
+        for _ in 0...size-1 {
+            _ = createAddressForVariable(type:type)
+        }
         
     }
     
@@ -88,6 +104,16 @@ extension Helper {
         }
         
         return function!.startAddress
+    }
+    
+    func getFunctionNameWith(address: Int) -> String {
+        for function in funcTable {
+            if function.value.startAddress == address {
+                return function.key
+            }
+        }
+        
+        return "Error"
     }
     
     func variableExists(_ id: String) -> Bool {
@@ -130,6 +156,22 @@ extension Helper {
         return -1
     }
     
+    func getVariableIdWith(address: Int) -> String{
+        for variable in (funcTable[currentFunc]?.variables)! {
+            if variable.value.address == address {
+                return variable.key
+            }
+        }
+        
+        for variable in (funcTable["Corgi"]?.variables)! {
+            if variable.value.address == address {
+                return variable.key
+            }
+        }
+        
+        return "Error"
+    }
+    
     func parameterExists(_ id: String) -> Bool{
         if funcTable[currentFunc]?.parameters[id] != nil {
             return true
@@ -152,21 +194,18 @@ extension Helper {
     
     func getArraySize(address: Int) -> Int {
         
-        if currentFunc != "Corgi"{
-            
-            for array in (funcTable[currentFunc]?.variables)! {
-                if array.value.index == address{
-                    return (array.value.arrSize)
-                }
-            }
-            
-        }else{
-            for array in (funcTable["Corgi"]?.variables)! {
-                if array.value.index == address{
-                    return (array.value.arrSize)
-                }
+        for array in (funcTable[currentFunc]?.variables)! {
+            if array.value.address == address{
+                return (array.value.arrSize)
             }
         }
+        
+        for array in (funcTable["Corgi"]?.variables)! {
+            if array.value.address == address{
+                return (array.value.arrSize)
+            }
+        }
+        
         return -1
     }
     

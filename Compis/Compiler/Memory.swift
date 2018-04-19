@@ -26,32 +26,46 @@ class Memory {
         STRING_START_ADDRESS += value
         BOOL_START_ADDRESS += value
     }
+
+    func copy () -> Memory {
+        let copy = Memory(value: INT_START_ADDRESS)
+        copy.intMemory = intMemory
+        copy.floatMemory = floatMemory
+        copy.stringMemory = stringMemory
+        copy.boolMemory = boolMemory
+        return copy
+    }
     
     func setValueIn(address: Int, result: Any) {
-        if address < FLOAT_START_ADDRESS {
-            intMemory[address - INT_START_ADDRESS] = result as? Int
-        } else if address < STRING_START_ADDRESS {
-            floatMemory[address - FLOAT_START_ADDRESS] = result as? Float
-        } else if address < BOOL_START_ADDRESS {
-            stringMemory[address - STRING_START_ADDRESS] = result as? String
+        var realAddress = address
+//        if address < 0 {
+//            realAddress = getValueIn(address: address)!.0 as! Int
+//        }
+        
+        if realAddress < FLOAT_START_ADDRESS {
+            intMemory[realAddress - INT_START_ADDRESS] = result as? Int
+        } else if realAddress < STRING_START_ADDRESS {
+            floatMemory[realAddress - FLOAT_START_ADDRESS] = result as? Float
+        } else if realAddress < BOOL_START_ADDRESS {
+            stringMemory[realAddress - STRING_START_ADDRESS] = result as? String
         } else {
-            boolMemory[address - BOOL_START_ADDRESS] = result as? Bool
+            boolMemory[realAddress - BOOL_START_ADDRESS] = result as? Bool
         }
     }
     
     func getValueIn(address: Int) -> (Any, Type) {
         if address < FLOAT_START_ADDRESS {
             // int
-            return (intMemory[address - INT_START_ADDRESS] as Any, Type.Int)
+            return (intMemory[address - INT_START_ADDRESS]! as Int, Type.Int)
         } else if address < STRING_START_ADDRESS {
             // Float
-            return (floatMemory[address - FLOAT_START_ADDRESS] as Any, Type.Float)
+            return (floatMemory[address - FLOAT_START_ADDRESS]! as Float, Type.Float)
         } else if address < BOOL_START_ADDRESS {
             // String
-            return (stringMemory[address - STRING_START_ADDRESS] as Any, Type.String)
+            return (stringMemory[address - STRING_START_ADDRESS]! as String, Type.String)
         } else {
             // Bool
-            return (boolMemory[address - BOOL_START_ADDRESS] as Any, Type.Bool)
+            return (boolMemory[address - BOOL_START_ADDRESS]! as Bool, Type.Bool)
         }
     }
     

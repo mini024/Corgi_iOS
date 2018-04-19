@@ -139,7 +139,11 @@ FUNC ID {
 ;
 
 return:
-RETURN returnAux
+RETURN returnAux {
+    if (!generateReturnBlock()) {
+         ParseTestFailBlock(@"Wrong return type");
+    }
+}
 ;
 
 returnAux:
@@ -183,7 +187,12 @@ ID {
 ;
 
 llamadaParametros:
-',' Megaexpresion llamadaParametros
+',' Megaexpresion {
+    // Send param/ save param quadruple
+    if (!generateParameterQuadrupleBlock(@"parametro")) {
+        ParseTestFailBlock(@"Verify argument type doesn't exist \n");
+    }
+} llamadaParametros
 | /*epsilon*/
 ;
 
@@ -219,7 +228,7 @@ ID {
 ;
 
 idAux:
-SLFT_BRA {checkIfArrayBlock();} Megaexpresion {checkRangeforArrayExpresionBlock();} SRGT_BRA //{resolveArrayExpresionBlock)();}
+SLFT_BRA {checkIfArrayBlock();} Megaexpresion {checkRangeforArrayExpresionBlock();} SRGT_BRA {addSizeGaptoBaseAddressBlock();}
 | LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
     generateParameterQuadrupleBlock(@"parametro");
@@ -258,7 +267,7 @@ SLFT_BRA INT SRGT_BRA {
 ;
 
 constante:
-INT { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
+INT {addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
 | FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
 | id
 | STRING { addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");}
@@ -301,7 +310,9 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 condicion:
 CASE LFT_BRA expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto conditionAux RGT_BRA {
+} COLON estatuto {
+    generateGOTOquadrupleBlock();
+} conditionAux RGT_BRA {
     fillEndConditionQuadrupleBlock();
 }
 ;
@@ -314,14 +325,14 @@ CASE_OR condicion2
 condicion2:
 expresion {
     generateGOTOFquadrupleBlock();
-} COLON estatuto conditionAux
+} COLON estatuto {
+    generateGOTOquadrupleBlock();
+} conditionAux
 | conditionElse
 ;
 
 conditionElse:
-ELSE {
-    generateGOTOquadrupleBlock();
-} COLON estatuto {
+ELSE COLON estatuto {
     fillEndConditionQuadrupleBlock();
 }
 | /*epsilon*/
@@ -340,11 +351,15 @@ FOR ID {
 } FOR_RANGE INT {
     addIdToStackBlock([NSString stringWithFormat:@"%d", $8], @"Int");
 } BY INT {
-    generateLoopConditionQuadruplesBlock([NSString stringWithFormat:@"%s", $2], $5, $8, $11);
+    if (!generateLoopConditionQuadruplesBlock([NSString stringWithFormat:@"%s", $2], $5, $8, $11)) {
+        ParseTestFailBlock(@"Variable and Range must be Ints");
+    }
     generateGOTOFquadrupleBlock();
     addIdToStackBlock([NSString stringWithFormat:@"%d", $11], @"Int");
 } LFT_BRA estatutos {
-    generateByQuadrupleBlock();
+    if (!generateByQuadrupleBlock()) {
+        ParseTestFailBlock(@"By value must be type Int");
+    }
 } RGT_BRA {
     generateGOTOquadrupleBlock();
     fillEndLoopQuadrupleBlock();

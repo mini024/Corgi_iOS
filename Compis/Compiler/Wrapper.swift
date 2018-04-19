@@ -21,6 +21,7 @@ import UIKit
     var idAddresses: [Int] = []
     var callingFunction: [String] = []
     var pendingArray: [Int] = []
+    var returnValues: [Int] = []
     
     // Quadruple
     var pendingQuadruples: [Int] = [] // jumps stack
@@ -105,8 +106,10 @@ import UIKit
             return .Float
         case "Bool":
             return .Bool
-        case "Variable":
-            return .Int
+        case "Void":
+            return .Void
+        case "void":
+            return .Void
         default:
             return .Corgi
         }
