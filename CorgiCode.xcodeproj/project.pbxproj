@@ -31,6 +31,14 @@
 		1ABCE262208701CA0052D4E6 /* ProgramCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE261208701CA0052D4E6 /* ProgramCollectionViewCell.m */; };
 		1ABCE265208702D60052D4E6 /* Program.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE264208702D60052D4E6 /* Program.m */; };
 		1ABCE2692087053C0052D4E6 /* TestPrograms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCE2682087053C0052D4E6 /* TestPrograms.plist */; };
+		1ABCE2822088FDC40052D4E6 /* CYRLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */; };
+		1ABCE2832088FDC40052D4E6 /* CYRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27A2088FDC30052D4E6 /* CYRToken.m */; };
+		1ABCE2842088FDC40052D4E6 /* CYRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */; };
+		1ABCE2852088FDC40052D4E6 /* CYRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */; };
+		1ABCE2862088FDC40052D4E6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1ABCE2812088FDC30052D4E6 /* Info.plist */; };
+		1ABCE2882088FEB20052D4E6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCE2872088FEB10052D4E6 /* CoreText.framework */; };
+		1ABCE28B2088FF300052D4E6 /* QEDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28A2088FF300052D4E6 /* QEDTextView.m */; };
+		1ABCE28E2089021F0052D4E6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28D2089021F0052D4E6 /* MoreViewController.m */; };
 		1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */; };
 		1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C2E9207EC27C00F53B2A /* Structures.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +99,21 @@
 		1ABCE263208702D60052D4E6 /* Program.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
 		1ABCE264208702D60052D4E6 /* Program.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Program.m; sourceTree = "<group>"; };
 		1ABCE2682087053C0052D4E6 /* TestPrograms.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = TestPrograms.plist; path = Compis/TestPrograms.plist; sourceTree = SOURCE_ROOT; };
+		1ABCE2782088FDC30052D4E6 /* CYRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextView.h; sourceTree = "<group>"; };
+		1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRLayoutManager.m; sourceTree = "<group>"; };
+		1ABCE27A2088FDC30052D4E6 /* CYRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRToken.m; sourceTree = "<group>"; };
+		1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextStorage.m; sourceTree = "<group>"; };
+		1ABCE27C2088FDC30052D4E6 /* CYRTextViewKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextViewKit.h; sourceTree = "<group>"; };
+		1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextView.m; sourceTree = "<group>"; };
+		1ABCE27E2088FDC30052D4E6 /* CYRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRToken.h; sourceTree = "<group>"; };
+		1ABCE27F2088FDC30052D4E6 /* CYRLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRLayoutManager.h; sourceTree = "<group>"; };
+		1ABCE2802088FDC30052D4E6 /* CYRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextStorage.h; sourceTree = "<group>"; };
+		1ABCE2812088FDC30052D4E6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ABCE2872088FEB10052D4E6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1ABCE2892088FF300052D4E6 /* QEDTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QEDTextView.h; sourceTree = "<group>"; };
+		1ABCE28A2088FF300052D4E6 /* QEDTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEDTextView.m; sourceTree = "<group>"; };
+		1ABCE28C2089021F0052D4E6 /* MoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
+		1ABCE28D2089021F0052D4E6 /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
 		1AE1C2E9207EC27C00F53B2A /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCE2882088FEB20052D4E6 /* CoreText.framework in Frameworks */,
 				1A3EA3282034FF9800EC10CE /* CoreGraphics.framework in Frameworks */,
 				1A3EA3292034FF9800EC10CE /* Foundation.framework in Frameworks */,
 				1A3EA3252034FF7600EC10CE /* UIKit.framework in Frameworks */,
@@ -147,6 +171,7 @@
 		1A3EA2C32034FA4900EC10CE /* Compis */ = {
 			isa = PBXGroup;
 			children = (
+				1ABCE2772088FDC30052D4E6 /* CRYTextViewKit */,
 				1A3EA3212034FB5C00EC10CE /* Parser */,
 				1ABCE2552086FBA80052D4E6 /* Compiler */,
 				1ABCE266208704CB0052D4E6 /* CollectionView */,
@@ -155,6 +180,8 @@
 				1A3EA2C52034FA4900EC10CE /* AppDelegate.m */,
 				1A3EA2C72034FA4900EC10CE /* ViewController.h */,
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
+				1ABCE28C2089021F0052D4E6 /* MoreViewController.h */,
+				1ABCE28D2089021F0052D4E6 /* MoreViewController.m */,
 				1ABCE2682087053C0052D4E6 /* TestPrograms.plist */,
 				1A8DD39C205C6D9E00F6070E /* OperationTable.plist */,
 				1A3EA2CA2034FA4900EC10CE /* Main.storyboard */,
@@ -200,6 +227,7 @@
 		1A3EA3232034FF7500EC10CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1ABCE2872088FEB10052D4E6 /* CoreText.framework */,
 				1A3EA3262034FF9800EC10CE /* CoreGraphics.framework */,
 				1A3EA3272034FF9800EC10CE /* Foundation.framework */,
 				1A3EA3242034FF7500EC10CE /* UIKit.framework */,
@@ -239,6 +267,25 @@
 				1ABCE264208702D60052D4E6 /* Program.m */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		1ABCE2772088FDC30052D4E6 /* CRYTextViewKit */ = {
+			isa = PBXGroup;
+			children = (
+				1ABCE2892088FF300052D4E6 /* QEDTextView.h */,
+				1ABCE28A2088FF300052D4E6 /* QEDTextView.m */,
+				1ABCE27C2088FDC30052D4E6 /* CYRTextViewKit.h */,
+				1ABCE2782088FDC30052D4E6 /* CYRTextView.h */,
+				1ABCE2792088FDC30052D4E6 /* CYRLayoutManager.m */,
+				1ABCE27A2088FDC30052D4E6 /* CYRToken.m */,
+				1ABCE27B2088FDC30052D4E6 /* CYRTextStorage.m */,
+				1ABCE27D2088FDC30052D4E6 /* CYRTextView.m */,
+				1ABCE27E2088FDC30052D4E6 /* CYRToken.h */,
+				1ABCE27F2088FDC30052D4E6 /* CYRLayoutManager.h */,
+				1ABCE2802088FDC30052D4E6 /* CYRTextStorage.h */,
+				1ABCE2812088FDC30052D4E6 /* Info.plist */,
+			);
+			path = CRYTextViewKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +397,7 @@
 			files = (
 				1A3EA2D12034FA4900EC10CE /* LaunchScreen.storyboard in Resources */,
 				1ABCE2692087053C0052D4E6 /* TestPrograms.plist in Resources */,
+				1ABCE2862088FDC40052D4E6 /* Info.plist in Resources */,
 				1A3EA2CE2034FA4900EC10CE /* Assets.xcassets in Resources */,
 				1A3EA2CC2034FA4900EC10CE /* Main.storyboard in Resources */,
 				1A8DD39D205C6D9E00F6070E /* OperationTable.plist in Resources */,
@@ -377,11 +425,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ABCE28B2088FF300052D4E6 /* QEDTextView.m in Sources */,
 				058C878120868327009CF8AB /* Memory.swift in Sources */,
 				1A3EA2C92034FA4900EC10CE /* ViewController.m in Sources */,
 				1ABCE2542086CD4A0052D4E6 /* Execution.swift in Sources */,
+				1ABCE2822088FDC40052D4E6 /* CYRLayoutManager.m in Sources */,
 				1A3EA3202034FB5500EC10CE /* parser.ym in Sources */,
 				1A6A267E20532E8100C8E9FF /* DataBridge.m in Sources */,
+				1ABCE2852088FDC40052D4E6 /* CYRTextView.m in Sources */,
+				1ABCE2842088FDC40052D4E6 /* CYRTextStorage.m in Sources */,
+				1ABCE28E2089021F0052D4E6 /* MoreViewController.m in Sources */,
+				1ABCE2832088FDC40052D4E6 /* CYRToken.m in Sources */,
 				1ABCE262208701CA0052D4E6 /* ProgramCollectionViewCell.m in Sources */,
 				1A6A2681205335DE00C8E9FF /* Tables.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,

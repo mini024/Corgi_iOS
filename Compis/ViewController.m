@@ -13,15 +13,18 @@
 #import "y.tab.h"
 #import "DataBridge.h"
 
-@interface ViewController ()
+@interface ViewController () <UITextViewDelegate>
+
 @property bool failed;
-@property NSString* errors;
-@property NSString* result;
+@property NSString *errors;
+@property NSString *result;
 @property int line;
+//@property (nonatomic, strong) QEDTextView *codeTextView;
+
 @end
 
 @implementation ViewController
-@synthesize textView;
+@synthesize codeTextView;
 @synthesize consoleTextView;
 @synthesize selectedProgram;
 @synthesize selectedCode;
@@ -31,19 +34,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    CGRect frame = CGRectMake(10, self.navigationController.navigationBar.bounds.size.height + 40, self.view.frame.size.width - 20, self.consoleTextView.frame.origin.y - self.navigationController.navigationBar.frame.size.height - 10);
+    QEDTextView *codeTextView = [[QEDTextView alloc] initWithFrame:frame];
+    codeTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    codeTextView.delegate = self;
+    
+    self.codeTextView = codeTextView;
+    
     if (selectedProgram.code != nil) {
-        textView.text = selectedCode;
+        codeTextView.text = selectedCode;
     } else {
-        textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+        codeTextView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
     }
+    
+    [self.view addSubview:codeTextView];
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     if (selectedProgram.code != nil) {
-        textView.text = selectedCode;
+        codeTextView.text = selectedCode;
     } else {
-        textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+        codeTextView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
     }
 }
 
@@ -63,7 +75,7 @@
     
     [Helper.singleton clear];
     
-    buf = yy_scan_string([self.textView.text cStringUsingEncoding:NSUTF8StringEncoding]);
+    buf = yy_scan_string([self.codeTextView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
     ParseTestSuccessBlock = ^(NSString *value) {
         if (!self.failed) {
@@ -215,22 +227,6 @@
     yyparse();
     
     yy_delete_buffer(buf);
-}
-
-- (IBAction)Test1:(id)sender {
-    textView.text = @"corgi test;\nvar a : Int;\nvar x : Float;\n\nfunc dos(b:Int) -> Int {\n\tb = b * i * j;\n\treturn (b*2);\n}\n\ncorgiRun() {\n\ta=0;\n\tdos(a);\n\tx= a + 3.0;\n}";
-}
-
-- (IBAction)Test2:(id)sender {
-    textView.text = @"corgi test;\nvar a : Int;\n\ncorgiRun() {\n\ta = 0;\n\tfor a in 0...10 by 1 {\n\twrite(\"Hello\");\n\t}\n}";
-}
-
-- (IBAction)Test3:(id)sender {
-    textView.text = selectedProgram.code;
-}
-    
-- (IBAction)Test4:(id)sender {
-    textView.text = @"corgi test;\nvar i: Int;\nvar j: Int;\n\nfunc uno(a:Int) -> void { \n\tvar n : Int; \n\tn = a * 2; \n\tcase {\n\t\tn < a+4 : uno(a+1); \n\t}\n\twrite(i);\n\treturn;\n}\n\nfunc dos(b:Int) -> Int {\n\tb = b * i + j; \n\treturn (b*2);\n}\n\ncorgiRun() { \n\ti = 2;\n\tj = i * 2 - 1;\n\tuno(j);\n\ti = dos(i+j);\n}\n";
 }
 
 

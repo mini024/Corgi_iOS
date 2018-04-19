@@ -19,15 +19,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Code Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rJI-uG-Ocm">
-                                <rect key="frame" x="9" y="73" width="357" height="387"/>
-                                <color key="backgroundColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Console" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ojv-ER-Wbd">
                                 <rect key="frame" x="9" y="468" width="357" height="142"/>
                                 <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ojv-ER-Wbd" secondAttribute="height" multiplier="357:142" id="Sbb-v7-Rwk"/>
+                                </constraints>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -35,14 +32,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rJI-uG-Ocm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="4St-cg-4R4"/>
-                            <constraint firstItem="rJI-uG-Ocm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="9" id="4fP-W1-j0Z"/>
-                            <constraint firstItem="rJI-uG-Ocm" firstAttribute="trailing" secondItem="Ojv-ER-Wbd" secondAttribute="trailing" id="N4t-1E-DXd"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rJI-uG-Ocm" secondAttribute="bottom" constant="158" id="Zmm-YV-Umd"/>
-                            <constraint firstItem="rJI-uG-Ocm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a4o-aB-Db1"/>
-                            <constraint firstItem="rJI-uG-Ocm" firstAttribute="leading" secondItem="Ojv-ER-Wbd" secondAttribute="leading" id="eFc-8F-6hR"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ojv-ER-Wbd" secondAttribute="bottom" constant="8" id="ezl-GD-hoA"/>
-                            <constraint firstItem="Ojv-ER-Wbd" firstAttribute="top" secondItem="rJI-uG-Ocm" secondAttribute="bottom" constant="8" symbolic="YES" id="oju-GN-ogf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ojv-ER-Wbd" secondAttribute="trailing" constant="9" id="0Xx-EW-Gr5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ojv-ER-Wbd" secondAttribute="bottom" constant="8" id="9Px-eI-gOr"/>
+                            <constraint firstItem="Ojv-ER-Wbd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="9" id="eup-Ge-GUs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -55,28 +47,45 @@
                     </navigationItem>
                     <connections>
                         <outlet property="consoleTextView" destination="Ojv-ER-Wbd" id="jMr-sF-9gS"/>
-                        <outlet property="textView" destination="rJI-uG-Ocm" id="4yy-i3-JBF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1431.2" y="160.56971514242881"/>
         </scene>
-        <!--View Controller-->
+        <!--More View Controller-->
         <scene sceneID="uEO-vm-dGn">
             <objects>
-                <viewController id="nsN-Ax-CX2" sceneMemberID="viewController">
+                <viewController id="nsN-Ax-CX2" customClass="MoreViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UF4-JU-b0Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4vx-b7-FC8" customClass="QEDTextView">
+                                <rect key="frame" x="0.0" y="54" width="375" height="564"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4vx-b7-FC8" firstAttribute="top" secondItem="8Ye-UN-ePC" secondAttribute="top" constant="34" id="5rV-mu-j5G"/>
+                            <constraint firstItem="4vx-b7-FC8" firstAttribute="bottom" secondItem="8Ye-UN-ePC" secondAttribute="bottom" id="CP0-Nf-tQG"/>
+                            <constraint firstItem="4vx-b7-FC8" firstAttribute="leading" secondItem="UF4-JU-b0Q" secondAttribute="leading" id="Cs5-ZT-VD1"/>
+                            <constraint firstAttribute="trailing" secondItem="4vx-b7-FC8" secondAttribute="trailing" id="Qlz-jr-rm0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="8Ye-UN-ePC"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="more" id="0md-Dj-E62"/>
+                    <connections>
+                        <outlet property="textView" destination="4vx-b7-FC8" id="wif-w5-qq9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x6i-u5-6V8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="492" y="1021"/>
+            <point key="canvasLocation" x="492" y="1020.5397301349326"/>
         </scene>
         <!--Code Files-->
         <scene sceneID="5JX-BN-fQc">

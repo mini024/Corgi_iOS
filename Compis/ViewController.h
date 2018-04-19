@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Program.h"
+#import "QEDTextView.h"
 
 
 @interface ViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UITextView *consoleTextView;
+@property (retain, nonatomic) QEDTextView *codeTextView;
 @property (weak, nonatomic) Program *selectedProgram;
 @property (weak, nonatomic) NSString *selectedCode;
 
