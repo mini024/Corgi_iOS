@@ -170,12 +170,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.755497"
+            timestampString = "545861544.0998321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "335"
             endingLineNumber = "335"
-            landmarkName = "checkRangeforArrayExpresion()"
+            landmarkName = "checkIfArray()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.756721"
+            timestampString = "545861544.100323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
@@ -202,12 +202,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.757282"
+            timestampString = "545861544.100652"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
             endingLineNumber = "56"
-            landmarkName = "generateQuadruple()"
+            landmarkName = "popPar()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -218,12 +218,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.757766"
+            timestampString = "545861544.100935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "addSizeGaptoBaseAddress()"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "Helper"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Compis/Compiler/Execution.swift"
+            timestampString = "545861544.101225"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
+            landmarkName = "runAnd(leftAddress:rightAddress:resultAddress:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CorgiCode.Helper.runAnd(leftAddress: Swift.Int, rightAddress: Swift.Int, resultAddress: Swift.Int) -&gt; ()"
+                  moduleName = "CorgiCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alfonso/Google%20Drive/ITC%208vo%20Semestre/Compiladores/Corgi_iOS/Compis/Compiler/Execution.swift"
+                  timestampString = "545861210.020358"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "404"
+                  endingLineNumber = "404"
+                  offsetFromSymbolStart = "784">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CorgiCode.Helper.runAnd(leftAddress: Swift.Int, rightAddress: Swift.Int, resultAddress: Swift.Int) -&gt; ()"
+                  moduleName = "CorgiCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alfonso/Google%20Drive/ITC%208vo%20Semestre/Compiladores/Corgi_iOS/Compis/Compiler/Execution.swift"
+                  timestampString = "545861210.026188"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "404"
+                  endingLineNumber = "404"
+                  offsetFromSymbolStart = "981">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Compis/Compiler/Execution.swift"
+            timestampString = "545861544.101573"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
+            landmarkName = "runOR(leftAddress:rightAddress:resultAddress:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Compis/Compiler/Execution.swift"
+            timestampString = "545861544.101863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "Helper"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Compis/Compiler/Memory.swift"
+            timestampString = "545861544.102155"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "setValueIn(address:result:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Compis/Compiler/Execution.swift"
+            timestampString = "545861544.102239"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
+            landmarkName = "runAddition(leftAddress:rightAddress:resultAddress:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -234,12 +346,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Compis/Compiler/Memory.swift"
-            timestampString = "545847357.75823"
+            timestampString = "545861544.102594"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "getValueIn(address:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "setValueIn(address:result:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -249,13 +361,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.758706"
+            filePath = "Compis/Compiler/Memory.swift"
+            timestampString = "545861544.1026649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
-            landmarkName = "checkIfArray()"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "setValueIn(address:result:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -265,45 +377,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Compis/Compiler/Quadruples.swift"
-            timestampString = "545847357.75914"
+            filePath = "Compis/Compiler/Memory.swift"
+            timestampString = "545861544.1027319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
-            landmarkName = "addSizeGaptoBaseAddress()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Compis/Compiler/Execution.swift"
-            timestampString = "545847357.75969"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
-            landmarkName = "runAnd(leftAddress:rightAddress:resultAddress:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Compis/Compiler/Execution.swift"
-            timestampString = "545847357.760242"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
-            landmarkName = "runOR(leftAddress:rightAddress:resultAddress:)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "setValueIn(address:result:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

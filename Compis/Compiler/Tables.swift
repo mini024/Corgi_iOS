@@ -35,27 +35,27 @@ extension Helper {
         switch type {
         case "Int":
             if scope == .global {
-                address = virtualMemory.globalMemory.setInt(value: nil)
+                address = virtualMemory.globalMemory.setInt(value: 99999)
             } else {
-                address = virtualMemory.localMemory.setInt(value: nil)
+                address = virtualMemory.localMemory.setInt(value: 99999)
             }
         case "Float":
             if scope == .global {
-                address = virtualMemory.globalMemory.setFloat(value: nil)
+                address = virtualMemory.globalMemory.setFloat(value: 9999.9)
             } else {
-                address = virtualMemory.localMemory.setFloat(value: nil)
+                address = virtualMemory.localMemory.setFloat(value: 9999.9)
             }
         case "Bool":
             if scope == .global {
-                address = virtualMemory.globalMemory.setBool(value: nil)
+                address = virtualMemory.globalMemory.setBool(value: false)
             } else {
-                address = virtualMemory.localMemory.setBool(value: nil)
+                address = virtualMemory.localMemory.setBool(value: false)
             }
         default:
             if scope == .global {
-                address = virtualMemory.globalMemory.setString(value: nil)
+                address = virtualMemory.globalMemory.setString(value: "")
             } else {
-                address = virtualMemory.localMemory.setString(value: nil)
+                address = virtualMemory.localMemory.setString(value: "")
             }
         }
         

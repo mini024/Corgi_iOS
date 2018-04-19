@@ -34,8 +34,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    textView.text = @"corgi test; var arrA: Int[5]; var a: Int; var b: Int; corgiRun(){ a = 2; b = 1; arrA[a+b] = a; b = arrA[3] + a; write (b);}";
-
     // Code Text View
     CGRect frame = CGRectMake(10, self.navigationController.navigationBar.bounds.size.height + 40, self.view.frame.size.width - 20, self.consoleTextView.frame.origin.y - self.navigationController.navigationBar.frame.size.height - 10);
     QEDTextView *codeTextView = [[QEDTextView alloc] initWithFrame:frame];
@@ -47,7 +45,7 @@
     if (selectedProgram.code != nil) {
         codeTextView.text = selectedCode;
     } else {
-        codeTextView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
+        codeTextView.text = @"corgi test; var arrA: Int[5]; var a: Int; var b: Int; corgiRun(){ a = 2; b = 1; arrA[a+b] = a; b = arrA[3] + a; write (b);}";
     }
     
     [self.view addSubview:codeTextView];

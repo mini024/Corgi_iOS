@@ -422,16 +422,25 @@ extension Helper {
      Runs addition and sets value in result Address
      */
     func runAddition(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
-        if leftAddress < 0 {
-            let rightTuple = virtualMemory.getValueIn(address: rightAddress)
-            let rightValue = rightTuple.0 as! Int
-            virtualMemory.setValueIn(address: resultAddress, result: -1 * leftAddress + rightValue)
+        var realLeftAddress = leftAddress
+        if rightAddress < 0 {
+            let leftTuple = virtualMemory.getValueIn(address: leftAddress)
+            let leftAddress = leftTuple.0 as! Int
+            virtualMemory.setValueIn(address: resultAddress, result: -1 * rightAddress + leftAddress)
             return
         }
         
-        let leftTuple = virtualMemory.getValueIn(address: leftAddress)
+        if leftAddress < 0 {
+            realLeftAddress = -1 * leftAddress
+        }
+        
+        var leftTuple = virtualMemory.getValueIn(address: realLeftAddress)
         let rightTuple = virtualMemory.getValueIn(address: rightAddress)
         
+        if leftAddress < 0 {
+            leftTuple = virtualMemory.getValueIn(address: leftTuple.0 as! Int)
+        }
+
         if leftTuple.1 == .Int && rightTuple.1 == .Int {
             let leftValue = leftTuple.0 as! Int
             let rightValue = rightTuple.0 as! Int

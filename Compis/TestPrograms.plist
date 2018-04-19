@@ -81,5 +81,18 @@ a = 2;
 b = 3;
 c = 1;
 }</string>
+	<key>Test Arrays</key>
+	<string>corgi test;
+var arrA: Int[5];
+var a: Int;
+var b: Int;
+
+corgiRun() {
+  a = 2;
+  b = 1;
+  arrA[a+b] = a;
+  b = arrA[3] + a;
+  write (b);
+}</string>
 </dict>
 </plist>

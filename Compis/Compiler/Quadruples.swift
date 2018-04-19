@@ -74,16 +74,16 @@ extension Helper {
         
         switch resultType! {
         case .Int:
-            resultAddress =  virtualMemory.localMemory.setInt(value: nil)
+            resultAddress =  virtualMemory.localMemory.setInt(value: 9999)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Float:
-            resultAddress = virtualMemory.localMemory.setFloat(value: nil)
+            resultAddress = virtualMemory.localMemory.setFloat(value: 9999.9)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .String:
-            resultAddress = virtualMemory.localMemory.setString(value: nil)
+            resultAddress = virtualMemory.localMemory.setString(value: "")
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Bool:
-            resultAddress = virtualMemory.localMemory.setBool(value: nil)
+            resultAddress = virtualMemory.localMemory.setBool(value: false)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         default:
             return false
@@ -352,10 +352,10 @@ extension Helper {
         
         guard gapType == Type.Int else {print("Error - wrong gap type"); return false;}
         
-        let targetArrayAddress = virtualMemory.temporalMemory.setInt(value: nil)
+        let targetArrayAddress = virtualMemory.localMemory.setInt(value: 99999)
         
-        idAddresses.append(targetArrayAddress)
-        quadruples.append(QuadrupleDir(leftOperand: -1 * arrBaseDir!, rightOperand: gap, oper: .Sum, resultVar: targetArrayAddress))
+        idAddresses.append(-1 * targetArrayAddress)
+        quadruples.append(QuadrupleDir(leftOperand: gap, rightOperand: -1 * arrBaseDir!, oper: .Sum, resultVar: targetArrayAddress))
         
         return true
     }

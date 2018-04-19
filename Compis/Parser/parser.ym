@@ -228,7 +228,7 @@ ID {
 ;
 
 idAux:
-SLFT_BRA {checkIfArrayBlock();} Megaexpresion {checkRangeforArrayExpresionBlock();} SRGT_BRA {addSizeGaptoBaseAddressBlock();}
+SLFT_BRA {checkIfArrayBlock();} exp {checkRangeforArrayExpresionBlock();} SRGT_BRA {addSizeGaptoBaseAddressBlock();}
 | LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
     generateParameterQuadrupleBlock(@"parametro");

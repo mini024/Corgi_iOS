@@ -38,9 +38,9 @@ class Memory {
     
     func setValueIn(address: Int, result: Any) {
         var realAddress = address
-//        if address < 0 {
-//            realAddress = getValueIn(address: address)!.0 as! Int
-//        }
+        if address < 0 {
+            realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
+        }
         
         if realAddress < FLOAT_START_ADDRESS {
             intMemory[realAddress - INT_START_ADDRESS] = result as? Int
