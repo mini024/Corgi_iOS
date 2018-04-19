@@ -11,6 +11,9 @@ import UIKit
 @objc class Helper: NSObject{
     static var singleton = Helper()
     
+    // Program
+    var programName = ""
+    
     // Virtual Memory
     let virtualMemory = VirtualMemory()
     

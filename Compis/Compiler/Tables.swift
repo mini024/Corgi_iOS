@@ -12,6 +12,9 @@ import UIKit
 extension Helper {
     
     func addCorgiFunctionBlock(_ id: String, type: String) {
+        if type == "Corgi" {
+            programName = id
+        }
         currentFunc = type
         funcTable[currentFunc] = Function(type: stringToType(type: type), address: quadruples.count)
     }

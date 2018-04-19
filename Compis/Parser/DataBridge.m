@@ -10,7 +10,7 @@
 #import "DataBridge.h"
 
 // Line Counter
-void (^addLineCounterBlock)();
+void (^addLineCounterBlock)(void);
 int (^getLineNumber)(void);
 
 // Variables
