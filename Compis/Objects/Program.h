@@ -8,14 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Program : NSObject
+@interface Program : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* code;
 
-- (id) init;
-- (id) initWithTitle:(NSString *)title;
-- (id) initWithCode:(NSString *)code;
 - (id) initWithTitle:(NSString *)title andCode:(NSString *)code;
 - (void) setTitle:(NSString *)title;
 - (void) setCode:(NSString *)code;

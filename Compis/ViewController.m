@@ -13,6 +13,8 @@
 #import "y.tab.h"
 #import "DataBridge.h"
 
+NSString * const KEY_PROGRAM = @"SavedProgram";
+
 @interface ViewController () <UITextViewDelegate>
 
 @property bool failed;
@@ -35,7 +37,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     // Code Text View
-    CGRect frame = CGRectMake(10, self.navigationController.navigationBar.bounds.size.height + 40, self.view.frame.size.width - 20, self.consoleTextView.frame.origin.y - self.navigationController.navigationBar.frame.size.height - 10);
+    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.bounds.size.height + 20, self.view.frame.size.width, self.consoleTextView.frame.origin.y - 10);
     QEDTextView *codeTextView = [[QEDTextView alloc] initWithFrame:frame];
     codeTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     codeTextView.delegate = self;
@@ -49,6 +51,12 @@
     }
     
     [self.view addSubview:codeTextView];
+    
+    // Keyboard
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
+    
+    [self.view addGestureRecognizer:swipeDown];
 
 }
 
@@ -243,17 +251,25 @@
     yy_delete_buffer(buf);
 }
 
-// MARK: Text View Delegate
+- (IBAction)saveCode:(id)sender {
+    // Get my saved programs
+    NSDictionary *savedPrograms = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedPrograms"];
+    
+    if (savedPrograms == nil) {
+        savedPrograms = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSMutableDictionary *newProgram = [[NSMutableDictionary alloc] init];
+    [newProgram setObject:codeTextView.text forKey:Helper.singleton.programName];
+    [newProgram addEntriesFromDictionary:savedPrograms];
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.dissmisButton.enabled = YES;
+    [[NSUserDefaults standardUserDefaults] setObject:newProgram forKey:@"SavedPrograms"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    self.dissmisButton.enabled = NO;
-}
+// MARK: Keyboard
 
-- (IBAction)dismissKeyboard:(id)sender {
+- (void)dismissKeyboard {
     [codeTextView resignFirstResponder];
 }
 

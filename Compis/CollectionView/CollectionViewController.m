@@ -18,21 +18,33 @@
 @implementation CollectionViewController
 
 static NSString * const reuseIdentifier = @"myCell";
-NSDictionary *programDict;
+NSMutableDictionary *programDict;
 NSArray *programKeys;
 Program *selectedProgram;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // Get Saved Programs
+    [self getPrograms];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    // Get Saved Programs
+    [self getPrograms];
     
-    // Register cell classes
-//    [self.collectionView registerClass:[ProgramCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView reloadData];
+}
+
+- (void)getPrograms {
+    // Get my saved programs
+    NSDictionary *savedPrograms = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedPrograms"];
     
-    // Do any additional setup after loading the view.
-    programDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TestPrograms" ofType:@"plist"]];
+    // Get test programs
+    programDict = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TestPrograms" ofType:@"plist"]];
+    
+    //Join
+    [programDict addEntriesFromDictionary:savedPrograms];
     programKeys = programDict.allKeys;
 }
 
