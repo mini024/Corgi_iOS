@@ -16,11 +16,13 @@
 @interface ViewController ()
 @property bool failed;
 @property NSString* errors;
+@property NSString* result;
+@property int line;
 @end
 
 @implementation ViewController
 @synthesize textView;
-@synthesize corgiWeb;
+@synthesize consoleTextView;
 @synthesize selectedProgram;
 @synthesize selectedCode;
 
@@ -35,11 +37,6 @@
         textView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
     }
     
-    [corgiWeb loadHTMLString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
-    
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
-    [corgiWeb loadData:data MIMEType:@"image/gif" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif"]];
-    [corgiWeb scalesPageToFit];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,21 +58,33 @@
     YY_BUFFER_STATE buf;
     _failed = false;
     _errors = @"";
+    _result = @"";
+    _line = 1;
+    
     [Helper.singleton clear];
     
     buf = yy_scan_string([self.textView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
     ParseTestSuccessBlock = ^(NSString *value) {
         if (!self.failed) {
-            textView.text = value;
+            _result = [_result stringByAppendingString:value];
+            consoleTextView.text = _result;
         }
     };
     
     ParseTestFailBlock = ^(NSString *msg) {
         self.failed = true;
         _errors = [_errors stringByAppendingString:msg];
-        textView.text = _errors;
+        consoleTextView.text = _errors;
         
+    };
+    
+    addLineCounterBlock = ^() {
+        _line +=1;
+    };
+    
+    getLineNumber = ^() {
+        return _line;
     };
     
     addVariableBlock = ^(NSString *name, NSString *type, int parameter) {
@@ -157,8 +166,8 @@
         [Helper.singleton generateGOTOquadruple];
     };
     
-    generateLoopConditionQuadruplesBlock = ^(NSString *id, int min, int max, int by) {
-        return [Helper.singleton generateLoopConditionQuadruples:id min:min max:max by:by];
+    generateLoopConditionQuadruplesBlock = ^() {
+        return [Helper.singleton generateLoopConditionQuadruples];
     };
     
     generateByQuadrupleBlock = ^() {

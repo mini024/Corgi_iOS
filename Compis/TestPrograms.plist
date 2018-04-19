@@ -2,13 +2,84 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Test Factorial</key>
+	<string>corgi testFactorial;
+
+func factorial(n:Int) -&gt; Int {
+	var i: Int;
+	var factorial: Int;
+	factorial = 1;
+	i = 0;
+	for i in 1…n by 1 {
+		factorial = factorial * i;
+	}
+}
+
+corgiRun() { 
+	var fact:Int;
+	fact = factorial(10);
+	write(fact);
+}</string>
 	<key>Test Functions</key>
-	<string>corgi test;\r var i: Int;\n var j: Int;\n func uno(a:Int) -&gt; void { \n var n : Int; \n n = a * 2; \n case {  \n n &lt; a+4 : uno(a+1); \n}\n write(i);\n return;\n}\n func dos(b:Int) -&gt; Int {\nb = b * i + j; \nreturn (b*2);\n}\n corgiRun() { \ni = 2;\n j = i * 2 - 1;\n uno(j);\n i = dos(i+j);\n}\n</string>
+	<string>corgi test;
+var i: Int;
+var j: Int;
+
+func uno(a:Int) -&gt; void { 
+	var n : Int;
+	n = a * 2; 
+	case {  
+		n &lt; a+4 : uno(a+1); 
+	}
+	write(i);
+	return;
+}
+
+func dos(b:Int) -&gt; Int {
+	b = b * i + j; 
+	return (b*2);
+}
+
+corgiRun() { 
+	i = 2;
+	j = i * 2 - 1;
+	uno(j);
+	i = dos(i+j);
+}</string>
 	<key>Test Case</key>
-	<string>corgi test;\nvar a : Int;\nvar b : Int;\nvar c : Int;\n\ncorgiRun() {\n\ta = 2;\n\tb = 3;\n\tc = 1;\n\tcase {\n\t\ta&gt;b: write(a);\n\t\t|a&gt;c: write(b);\n\t\t|else: write(c);\n\t}\n}</string>
+	<string>corgi test;
+var a : Int;
+var b : Int;
+var c : Int;
+corgiRun() {
+a = 2;
+b = 3;
+c = 1;
+  case {
+    a&gt;b: write(a);
+    |a&gt;c: write(b);
+    |else: write(c);
+  }
+}</string>
 	<key>Test Loops</key>
-	<string>corgi test;\nvar a : Int;\n\ncorgiRun() {\n\ta = 0;\n\tfor a in 0...10 by 1 {\n\twrite(\&quot;Hello\&quot;);\n\t}\n}</string>
-	<key>Test</key>
-	<string>corgi test;\nvar a : Int;\nvar x : Float;\n\nfunc dos(b:Int) -&gt; Int {\n\tb = b * i * j;\n\treturn (b*2);\n}\n\ncorgiRun() {\n\ta=0;\n\tdos(a);\n\tx= a + 3.0;\n}</string>
+	<string>corgi test;
+var a : Int;
+
+corgiRun() {
+	a = 0;
+	for a in 0...10 by 1 {
+		write(&quot;Hello&quot;);
+	}
+}</string>
+	<key>Test Assigments</key>
+	<string>corgi test;
+var a : Int;
+var b : Int;
+var c : Int;
+corgiRun() {
+a = 2;
+b = 3;
+c = 1;
+}</string>
 </dict>
 </plist>

@@ -27,7 +27,10 @@ extension Helper {
                 idAddresses.append(address)
                 idTypes.append(Type.Float)
             case "String":
-                let address = virtualMemory.constantsMemory.setString(value: name)
+                var value = name
+                value = String(value.dropLast())
+                value = String(value.dropFirst())
+                let address = virtualMemory.constantsMemory.setString(value: value)
                 idAddresses.append(address)
                 idTypes.append(Type.String)
             case "Bool":
@@ -71,16 +74,16 @@ extension Helper {
         
         switch resultType! {
         case .Int:
-            resultAddress =  virtualMemory.temporalMemory.setInt(value: nil)
+            resultAddress =  virtualMemory.localMemory.setInt(value: nil)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Float:
-            resultAddress = virtualMemory.temporalMemory.setFloat(value: nil)
+            resultAddress = virtualMemory.localMemory.setFloat(value: nil)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .String:
-            resultAddress = virtualMemory.temporalMemory.setString(value: nil)
+            resultAddress = virtualMemory.localMemory.setString(value: nil)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Bool:
-            resultAddress = virtualMemory.temporalMemory.setBool(value: nil)
+            resultAddress = virtualMemory.localMemory.setBool(value: nil)
             quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         default:
             return false
@@ -156,7 +159,7 @@ extension Helper {
         
     }
     
-    func generateLoopConditionQuadruples(_ id:String, min:Int, max:Int, by:Int) -> Bool {
+    func generateLoopConditionQuadruples() -> Bool {
         let maxAddress = idAddresses.popLast()!
         let minAddress = idAddresses.popLast()!
         let variableAddress = idAddresses.popLast()!
@@ -172,13 +175,13 @@ extension Helper {
         pendingQuadruples.append(quadruples.count)
         
         // Conditional Quadruple
-        let lessThanMaxAddress = virtualMemory.temporalMemory.setBool(value: nil)
+        let lessThanMaxAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 10)!, resultVar: lessThanMaxAddress))
         
-        let greaterThanMinAddress = virtualMemory.temporalMemory.setBool(value: nil)
+        let greaterThanMinAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
         
-        let conditionAddress = virtualMemory.temporalMemory.setBool(value: nil)
+        let conditionAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
         
         // Push variable Address to keep using

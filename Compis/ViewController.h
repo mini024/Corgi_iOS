@@ -13,7 +13,7 @@
 @interface ViewController : UIViewController
 
 @property (retain, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UIWebView *corgiWeb;
+@property (weak, nonatomic) IBOutlet UITextView *consoleTextView;
 @property (weak, nonatomic) Program *selectedProgram;
 @property (weak, nonatomic) NSString *selectedCode;
 

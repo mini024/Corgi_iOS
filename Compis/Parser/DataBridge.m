@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "DataBridge.h"
 
+// Line Counter
+void (^addLineCounterBlock)();
+int (^getLineNumber)(void);
+
 // Variables
 void (^addVariableBlock)(NSString *id, NSString *type, int parameter);
 bool (^findVariableBlock)(NSString *value);
@@ -41,7 +45,7 @@ void (^generateGOTOFquadrupleBlock)(void);
 void (^generateGOTOquadrupleBlock)(void);
 void (^fillEndConditionQuadrupleBlock)(void);
 void (^fillEndLoopQuadrupleBlock)(void);
-bool (^generateLoopConditionQuadruplesBlock)(NSString *id, int min, int max, int by);
+bool (^generateLoopConditionQuadruplesBlock)(void);
 bool (^generateByQuadrupleBlock)(void);
 
 // Write and Read Quadruples

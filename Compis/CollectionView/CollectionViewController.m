@@ -80,7 +80,7 @@ Program *selectedProgram;
     // Get TabBar size
     CGFloat tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     CGFloat statusBarHeight = 15;
-    CGFloat spacingHeight = 40;
+    CGFloat spacingHeight = 50;
     CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight)/3 - spacingHeight;
     CGFloat width = (collectionView.frame.size.width - 20) / 3 - 10;
     return CGSizeMake(width, height);
@@ -93,7 +93,6 @@ Program *selectedProgram;
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
 }
-
 
 // Uncomment this method to specify if the specified item should be selected
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,10 +107,11 @@ Program *selectedProgram;
     selectedProgram = [[Program alloc] initWithTitle:name andCode:code];
     
     // Send program to console
-    ViewController *next = (ViewController*) self.tabBarController.viewControllers[1];
+    UINavigationController *next = (UINavigationController*) self.tabBarController.viewControllers[1];
+    ViewController *desitination = (ViewController*) next.topViewController;
     // Pass the selected object to the new view controller.
-    next.selectedProgram = selectedProgram;
-    next.selectedCode = code;
+    desitination.selectedProgram = selectedProgram;
+    desitination.selectedCode = code;
     [self.tabBarController setSelectedIndex:1];
 }
 
