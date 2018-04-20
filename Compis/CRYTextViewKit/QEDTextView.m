@@ -60,7 +60,7 @@
                                                              NSForegroundColorAttributeName : RGB(24, 110, 109)
                                                              }],
                                [CYRToken tokenWithName:@"reserved_words"
-                                                expression:@"(corgiRun|corgi|for|in|by|case|func|else|var)"
+                                                expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while)"
                                                 attributes:@{
                                                              NSForegroundColorAttributeName : RGB(104, 0, 111),
                                                              NSFontAttributeName : self.boldFont

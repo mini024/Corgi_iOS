@@ -46,12 +46,13 @@ extern bool (^checkNextOperatorBlock)(NSString *typeOp);
 extern void (^deleteParentesisFromStackBlock)(void);
 
 // COND, WHILE, FOR Queadruples
-extern void (^generateGOTOFquadrupleBlock)(void);
-extern void (^generateGOTOquadrupleBlock)(void);
+extern void (^generateGOTOFquadrupleBlock)(int id);
+extern void (^generateGOTOquadrupleBlock)(int id);
 extern void (^fillEndConditionQuadrupleBlock)(void);
 extern void (^fillEndLoopQuadrupleBlock)(void);
 extern bool (^generateLoopConditionQuadruplesBlock)(void);
 extern bool (^generateByQuadrupleBlock)(void);
+extern void (^generateWhileConditionQuadrupleBlock)(void);
 
 // Write and Read Quadruples
 extern void (^generateWritequadrupleBlock)(NSString *id);

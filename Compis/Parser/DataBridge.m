@@ -41,12 +41,13 @@ bool (^checkNextOperatorBlock)(NSString *typeOp);
 void (^deleteParentesisFromStackBlock)(void);
 
 // COND, WHILE, FOR Quadruples
-void (^generateGOTOFquadrupleBlock)(void);
-void (^generateGOTOquadrupleBlock)(void);
+void (^generateGOTOFquadrupleBlock)(int id);
+void (^generateGOTOquadrupleBlock)(int id);
 void (^fillEndConditionQuadrupleBlock)(void);
 void (^fillEndLoopQuadrupleBlock)(void);
 bool (^generateLoopConditionQuadruplesBlock)(void);
 bool (^generateByQuadrupleBlock)(void);
+void (^generateWhileConditionQuadrupleBlock)(void);
 
 // Write and Read Quadruples
 void (^generateWritequadrupleBlock)(NSString *id);

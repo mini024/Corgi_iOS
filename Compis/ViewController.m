@@ -180,16 +180,20 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
         [Helper.singleton popPar];
     };
     
-    generateGOTOFquadrupleBlock = ^() {
-        [Helper.singleton generateGOTOFquadruple];
+    generateGOTOFquadrupleBlock = ^(int code) {
+        [Helper.singleton generateGOTOFquadruple:code];
     };
     
-    generateGOTOquadrupleBlock = ^() {
-        [Helper.singleton generateGOTOquadruple];
+    generateGOTOquadrupleBlock = ^(int code) {
+        [Helper.singleton generateGOTOquadruple:code];
     };
     
     generateLoopConditionQuadruplesBlock = ^() {
         return [Helper.singleton generateLoopConditionQuadruples];
+    };
+    
+    generateWhileConditionQuadrupleBlock = ^() {
+        [Helper.singleton generateWhileConditionQuadruple];
     };
     
     generateByQuadrupleBlock = ^() {

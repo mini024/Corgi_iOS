@@ -48,7 +48,7 @@ import UIKit
     }
     
     func printQuadruples() {
-        var index = 1;
+        var index = 0;
         for quadruple in quadruples {
             print(String(index), terminator:" ")
             print(quadruple)

@@ -111,7 +111,7 @@ extension Helper {
         return true
     }
     
-    func generateGOTOFquadruple() {
+    func generateGOTOFquadruple(_ code:Int) {
         // Step 1 result = pilaO.pop()
         let temporalVariableAddress = idAddresses.popLast()
         let temporalType = idTypes.popLast()
@@ -128,15 +128,17 @@ extension Helper {
         
         // Step 2 pjumps.push(cont-1)
         let pendingIndex = quadruples.count
-        
         pendingQuadruples.append(pendingIndex - 1)
     }
     
-    func generateGOTOquadruple() {
-        // Check if there is pending quadruples -> end of case condition
+    func generateGOTOquadruple(_ code:Int) {
+        // Check if there is pending quadruples
         if let end = pendingQuadruples.popLast() {
-            // Fill goTo addresses in other quadruple
-            quadruples[end].resultVar = quadruples.count + 1
+            if code == 0 {
+                quadruples[end].resultVar = quadruples.count + 1
+            } else {
+                quadruples[end].resultVar = quadruples.count + 1
+            }
         }
         
         // Generate GOTO Quadruple
@@ -145,9 +147,11 @@ extension Helper {
         quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Add index to pending quadruples to fill later.
-        let pendingIndex = quadruples.count
-        pendingQuadruples.append(pendingIndex - 1)
-        
+        if code != 3 {
+            let pendingIndex = quadruples.count
+            pendingQuadruples.append(pendingIndex - 1)
+        }
+  
     }
     
     func generateWriteQuadruple(_ id:String) {
@@ -172,11 +176,11 @@ extension Helper {
             return false
         }
         
-        pendingQuadruples.append(quadruples.count)
+        pendingQuadruples.append(quadruples.count - 1)
         
         // Conditional Quadruple
         let lessThanMaxAddress = virtualMemory.localMemory.setBool(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 10)!, resultVar: lessThanMaxAddress))
+        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 7)!, resultVar: lessThanMaxAddress))
         
         let greaterThanMinAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
@@ -193,6 +197,11 @@ extension Helper {
         idTypes.append(Type.Bool)
         
         return true
+    }
+    
+    func generateWhileConditionQuadruple() {
+        let pendingIndex = quadruples.count
+        pendingQuadruples.append(pendingIndex - 1)
     }
     
     /**
@@ -306,7 +315,7 @@ extension Helper {
         let end = pendingQuadruples.popLast()
         
         if let next = pendingQuadruples.popLast() {
-            quadruples[end!].resultVar = next
+            quadruples[end!].resultVar = next + 1
         }
         
         printQuadruples()
@@ -316,7 +325,7 @@ extension Helper {
         // Step 2 end = pjumps.pop()
         let end = pendingQuadruples.popLast()
         
-        let nextQuadruple = quadruples.count + 1
+        let nextQuadruple = quadruples.count
         quadruples[end!].resultVar = nextQuadruple
         
         printQuadruples()
