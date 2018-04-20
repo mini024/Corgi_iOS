@@ -57,6 +57,9 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
     
     [self.view addGestureRecognizer:swipeDown];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.navigationController.navigationBar addGestureRecognizer:tap];
 
 }
 
