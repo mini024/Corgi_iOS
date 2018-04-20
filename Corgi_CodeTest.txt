@@ -94,3 +94,47 @@ b = 1;
   write (b);
 }
 
+// Fiboacci 
+
+corgi testFibonacci;
+
+corgiRun() { 
+	var n:Int;
+	var i: Int;
+	var x: Int;
+	var x2: Int;
+	var term: Int;
+	term = 0;
+	x = 0;
+	x2 = 1;
+	n = 4;
+	i = 1;
+
+	for i in 0...n by 1 {
+		case {
+			i == 1: write(x);
+			| i == 2: write(x2);
+			| else: 
+				term = x + x2; 
+				x = x2; 
+				x2 = term; 
+				write(term);
+		}
+	}
+} 
+
+// Factorial 
+
+corgi testFactorial;
+
+corgiRun() { 
+	var fact:Int;
+	var i: Int;
+	fact = 1;
+	i = 1;
+	for i in 0...10 by 1 {
+		fact = fact * i;
+	}
+	write(fact);
+} 
+
