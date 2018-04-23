@@ -14,7 +14,6 @@ func uno(a:Int) -&gt; void {
 		n &lt; a+4 : uno(a+1); 
 	}
 	write(i);
-	return;
 }
 
 func dos(b:Int) -&gt; Int {
