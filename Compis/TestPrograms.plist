@@ -71,9 +71,10 @@ var b: Int;
 corgiRun() {
   a = 2;
   b = 1;
+  arrA[0]=3;
   arrA[a+b] = a;
-  b = arrA[3] + a;
+  b = arrA[arrA[0]] + a;
   write (b);
-}</string>
+} </string>
 </dict>
 </plist>

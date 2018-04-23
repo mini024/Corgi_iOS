@@ -425,9 +425,18 @@ extension Helper {
     func runAddition(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
         var realLeftAddress = leftAddress
         if rightAddress < 0 {
+            
+            // Check if leftAddress (the overlap) is an negative address also * Indexing array with another array*
+            if leftAddress < 0{
+                let leftTuple = virtualMemory.getValueIn(address: -1 * leftAddress)
+                let overlap = leftTuple.0 as! Int
+                virtualMemory.setValueIn(address: resultAddress, result: -1 * rightAddress + (virtualMemory.getValueIn(address: overlap).0 as! Int))
+                return
+            }
+            
             let leftTuple = virtualMemory.getValueIn(address: leftAddress)
-            let leftAddress = leftTuple.0 as! Int
-            virtualMemory.setValueIn(address: resultAddress, result: -1 * rightAddress + leftAddress)
+            let overlap = leftTuple.0 as! Int
+            virtualMemory.setValueIn(address: resultAddress, result: -1 * rightAddress + overlap)
             return
         }
         
