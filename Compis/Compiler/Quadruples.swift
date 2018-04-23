@@ -351,7 +351,7 @@ extension Helper {
         let gapType = idTypes.popLast()
         
         guard gapType == Type.Int else {print("Error - wrong gap type"); return false;}
-        
+                
         let targetArrayAddress = virtualMemory.localMemory.setInt(value: 99999)
         
         idAddresses.append(-1 * targetArrayAddress)
