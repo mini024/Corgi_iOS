@@ -11,6 +11,9 @@ import UIKit
 @objc class Helper: NSObject{
     static var singleton = Helper()
     
+    // Program
+    var programName = ""
+    
     // Virtual Memory
     let virtualMemory = VirtualMemory()
     
@@ -45,7 +48,7 @@ import UIKit
     }
     
     func printQuadruples() {
-        var index = 1;
+        var index = 0;
         for quadruple in quadruples {
             print(String(index), terminator:" ")
             print(quadruple)
@@ -97,17 +100,15 @@ import UIKit
     }
     
     func stringToType(type: String) -> Type {
-        switch type {
-        case "String":
+        switch type.lowercased() {
+        case "string":
             return .String
-        case "Int":
+        case "int":
             return .Int
-        case "Float":
+        case "float":
             return .Float
-        case "Bool":
+        case "bool":
             return .Bool
-        case "Void":
-            return .Void
         case "void":
             return .Void
         default:

@@ -11,9 +11,18 @@ import UIKit
 // Function & Variable Tables
 extension Helper {
     
-    func addCorgiFunctionBlock(_ id: String, type: String) {
+    func addCorgiFunctionBlock(_ id: String, type: String) -> Bool {
+        if functionExists(id) {
+            return false
+        }
+        
+        if type == "Corgi" {
+            programName = id
+        }
         currentFunc = type
         funcTable[currentFunc] = Function(type: stringToType(type: type), address: quadruples.count)
+        
+        return true
     }
     
     func addFunctionWith(_ id: String) {

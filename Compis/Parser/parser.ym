@@ -85,19 +85,17 @@ CORGI ID SEMICOLON {
     }
     
     // Create goTo -> CorgiRun Quadruple
-    generateGOTOquadrupleBlock();
-} vars functions corgirun //{ if (ParseTestSuccessBlock) ParseTestSuccessBlock(@"Success");}
+    generateGOTOquadrupleBlock(3);
+} vars functions corgirun
 ;
 
 // MARK: Main Function
 corgirun:
-CORGIRUN LFT_PAR RGT_PAR {
-    if (!findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
-        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun");
-    } else {
+CORGIRUN LFT_PAR RGT_PAR LFT_BRA {
+    if (!addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun")) {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $1, getLineNumber()]);
     }
-} LFT_BRA vars estatutos RGT_BRA {
+} vars estatutos RGT_BRA {
     // EndFunc quadruple
     generateEndOfFunctionQuadrupleBlock();
     generateEndOfProgramQuadrupleBlock();
@@ -139,16 +137,17 @@ FUNC ID {
 ;
 
 return:
-RETURN returnAux {
+RETURN Megaexpresion SEMICOLON {
     if (!generateReturnBlock()) {
          ParseTestFailBlock([NSString stringWithFormat:@"Wrong return type in line %d", getLineNumber()]);
     }
 }
-;
-
-returnAux:
-Megaexpresion SEMICOLON
-| SEMICOLON
+| /*epsilon*/ {
+    // Verify that function has void return
+    if (!generateVoidReturnBlock()) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong/missing return type in line %d", getLineNumber()]);
+    }
+}
 ;
 
 parameters:
@@ -311,9 +310,9 @@ READ LFT_PAR id RGT_PAR SEMICOLON
 // MARK: Conditionals
 condicion:
 CASE LFT_BRA expresion {
-    generateGOTOFquadrupleBlock();
-} COLON estatuto {
-    generateGOTOquadrupleBlock();
+    generateGOTOFquadrupleBlock(0);
+} COLON estatutos {
+    generateGOTOquadrupleBlock(0);
 } conditionAux RGT_BRA {
     fillEndConditionQuadrupleBlock();
 }
@@ -326,15 +325,15 @@ CASE_OR condicion2
 
 condicion2:
 expresion {
-    generateGOTOFquadrupleBlock();
-} COLON estatuto {
-    generateGOTOquadrupleBlock();
+    generateGOTOFquadrupleBlock(0);
+} COLON estatutos {
+    generateGOTOquadrupleBlock(0);
 } conditionAux
 | conditionElse
 ;
 
 conditionElse:
-ELSE COLON estatuto {
+ELSE COLON estatutos {
     fillEndConditionQuadrupleBlock();
 }
 | /*epsilon*/
@@ -356,16 +355,23 @@ FOR ID {
     if (!generateLoopConditionQuadruplesBlock()) {
         ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Ints, line %d\n", getLineNumber()]);
     }
-    generateGOTOFquadrupleBlock();
+    generateGOTOFquadrupleBlock(0);
 } exp LFT_BRA estatutos {
+} RGT_BRA {
     if (!generateByQuadrupleBlock()) {
         ParseTestFailBlock([NSString stringWithFormat:@"By value must be type Int, line %d\n", getLineNumber()]);
     }
-} RGT_BRA {
-    generateGOTOquadrupleBlock();
+    generateGOTOquadrupleBlock(1);
     fillEndLoopQuadrupleBlock();
 }
-| WHILE LFT_PAR expresion RGT_PAR LFT_BRA estatutos RGT_BRA
+| WHILE LFT_PAR {
+    generateWhileConditionQuadrupleBlock();
+} expresion {
+    generateGOTOFquadrupleBlock(1);
+} RGT_PAR LFT_BRA estatutos RGT_BRA {
+    generateGOTOquadrupleBlock(1);
+    fillEndLoopQuadrupleBlock();
+}
 ;
 
 // MARK: Expresions

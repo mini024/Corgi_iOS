@@ -17,23 +17,23 @@ extension Helper {
             idAddresses.append(getVariableAddress(id: name))
             idTypes.append(getVariableType(name))
         } else {
-            switch type {
-            case "Int":
+            switch type.lowercased() {
+            case "int":
                 let address = virtualMemory.constantsMemory.setInt(value: Int(name)!)
                 idAddresses.append(address)
                 idTypes.append(Type.Int)
-            case "Float":
+            case "float":
                 let address = virtualMemory.constantsMemory.setFloat(value: Float(name)!)
                 idAddresses.append(address)
                 idTypes.append(Type.Float)
-            case "String":
+            case "string":
                 var value = name
                 value = String(value.dropLast())
                 value = String(value.dropFirst())
                 let address = virtualMemory.constantsMemory.setString(value: value)
                 idAddresses.append(address)
                 idTypes.append(Type.String)
-            case "Bool":
+            case "bool":
                 let address = virtualMemory.constantsMemory.setBool(value: name.toBool())
                 idAddresses.append(address)
                 idTypes.append(Type.Bool)
@@ -111,7 +111,7 @@ extension Helper {
         return true
     }
     
-    func generateGOTOFquadruple() {
+    func generateGOTOFquadruple(_ code:Int) {
         // Step 1 result = pilaO.pop()
         let temporalVariableAddress = idAddresses.popLast()
         let temporalType = idTypes.popLast()
@@ -128,15 +128,17 @@ extension Helper {
         
         // Step 2 pjumps.push(cont-1)
         let pendingIndex = quadruples.count
-        
         pendingQuadruples.append(pendingIndex - 1)
     }
     
-    func generateGOTOquadruple() {
-        // Check if there is pending quadruples -> end of case condition
+    func generateGOTOquadruple(_ code:Int) {
+        // Check if there is pending quadruples
         if let end = pendingQuadruples.popLast() {
-            // Fill goTo addresses in other quadruple
-            quadruples[end].resultVar = quadruples.count + 1
+            if code == 0 {
+                quadruples[end].resultVar = quadruples.count + 1
+            } else {
+                quadruples[end].resultVar = quadruples.count + 1
+            }
         }
         
         // Generate GOTO Quadruple
@@ -145,9 +147,11 @@ extension Helper {
         quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Add index to pending quadruples to fill later.
-        let pendingIndex = quadruples.count
-        pendingQuadruples.append(pendingIndex - 1)
-        
+        if code != 3 {
+            let pendingIndex = quadruples.count
+            pendingQuadruples.append(pendingIndex - 1)
+        }
+  
     }
     
     func generateWriteQuadruple(_ id:String) {
@@ -172,11 +176,11 @@ extension Helper {
             return false
         }
         
-        pendingQuadruples.append(quadruples.count)
+        pendingQuadruples.append(quadruples.count - 1)
         
         // Conditional Quadruple
         let lessThanMaxAddress = virtualMemory.localMemory.setBool(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 10)!, resultVar: lessThanMaxAddress))
+        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 7)!, resultVar: lessThanMaxAddress))
         
         let greaterThanMinAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
@@ -193,6 +197,11 @@ extension Helper {
         idTypes.append(Type.Bool)
         
         return true
+    }
+    
+    func generateWhileConditionQuadruple() {
+        let pendingIndex = quadruples.count
+        pendingQuadruples.append(pendingIndex - 1)
     }
     
     /**
@@ -285,8 +294,8 @@ extension Helper {
     
     func generateReturnQuadruple() -> Bool{
         guard funcTable[currentFunc]?.returnType != Type.Void else {
-            quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
-            return true
+            print("ERROR - Wrong return type");
+            return false
         }
         
         let valueType = idTypes.popLast()
@@ -301,12 +310,22 @@ extension Helper {
         return true
     }
     
+    func generateVoidReturnQuadruple() -> Bool {
+        if funcTable[currentFunc]?.returnType != Type.Void {
+            print("ERROR - Wrong return type");
+            return false
+        }
+        
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
+        return true
+    }
+    
     func fillEndLoopQuadruple() {
         // Step 2 end = pjumps.pop()
         let end = pendingQuadruples.popLast()
         
         if let next = pendingQuadruples.popLast() {
-            quadruples[end!].resultVar = next
+            quadruples[end!].resultVar = next + 1
         }
         
         printQuadruples()
@@ -316,7 +335,7 @@ extension Helper {
         // Step 2 end = pjumps.pop()
         let end = pendingQuadruples.popLast()
         
-        let nextQuadruple = quadruples.count + 1
+        let nextQuadruple = quadruples.count
         quadruples[end!].resultVar = nextQuadruple
         
         printQuadruples()

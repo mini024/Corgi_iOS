@@ -91,6 +91,7 @@ extension Helper {
                 quadrupleNumber = virtualMemory.quadruplesStack.popLast()!
                 break
             case .END:
+                EndBlock();
                 break
             case .RETURN:
                 break
@@ -105,16 +106,16 @@ extension Helper {
         let valueTuple = virtualMemory.getValueIn(address: address)
         
         if valueTuple.1 == .Int {
-            let value = String(valueTuple.0 as! Int)
+            let value = String(valueTuple.0 as! Int) + "\n"
             ParseTestSuccessBlock(value)
         } else if valueTuple.1 == .Float {
-            let value = String(valueTuple.0 as! Float)
+            let value = String(valueTuple.0 as! Float) + "\n"
             ParseTestSuccessBlock(value)
         } else if valueTuple.1 == .Bool {
-            let value = String(valueTuple.0 as! Bool)
+            let value = String(valueTuple.0 as! Bool) + "\n"
             ParseTestSuccessBlock(value)
         } else {
-            let value = valueTuple.0 as! String
+            let value = valueTuple.0 as! String + "\n"
             ParseTestSuccessBlock(value)
         }
     }

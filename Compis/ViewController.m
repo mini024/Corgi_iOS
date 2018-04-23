@@ -7,11 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "ConsoleViewController.h"
 #import "CorgiCode-Swift.h"
 #import "Program.h"
 
 #import "y.tab.h"
 #import "DataBridge.h"
+
+NSString * const KEY_PROGRAM = @"SavedProgram";
 
 @interface ViewController () <UITextViewDelegate>
 
@@ -19,53 +22,58 @@
 @property NSString *errors;
 @property NSString *result;
 @property int line;
-//@property (nonatomic, strong) QEDTextView *codeTextView;
 
 @end
 
 @implementation ViewController
 @synthesize codeTextView;
-@synthesize consoleTextView;
 @synthesize selectedProgram;
 @synthesize selectedCode;
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
     // Code Text View
-    CGRect frame = CGRectMake(10, self.navigationController.navigationBar.bounds.size.height + 40, self.view.frame.size.width - 20, self.consoleTextView.frame.origin.y - self.navigationController.navigationBar.frame.size.height - 10);
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.bounds.size.height + statusBarFrame.size.height, self.view.frame.size.width, self.tabBarController.tabBar.frame.origin.y);
     QEDTextView *codeTextView = [[QEDTextView alloc] initWithFrame:frame];
     codeTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     codeTextView.delegate = self;
     
     self.codeTextView = codeTextView;
     
-    if (selectedProgram.code != nil) {
-        codeTextView.text = selectedCode;
-    } else {
-        codeTextView.text = @"corgi test; var arrA: Int[5]; var a: Int; var b: Int; corgiRun(){ a = 2; b = 1; arrA[a+b] = a; b = arrA[3] + a; write (b);}";
-    }
-    
+    [self setCode];
     [self.view addSubview:codeTextView];
+    
+    // Keyboard
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    swipeDown.direction = UISwipeGestureRecognizerDirectionDown;
+    
+    [self.view addGestureRecognizer:swipeDown];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.navigationController.navigationBar addGestureRecognizer:tap];
 
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    consoleTextView.text = @"Console";
-    
-    if (selectedProgram.code != nil) {
-        codeTextView.text = selectedCode;
-    } else {
-        codeTextView.text = @"corgi test; var i: Int; var j: Int; func dos(b:Int) -> Int {b = b * i + j; return (b*2);} corgiRun() { var a: Int; i = 0; j = 10; a = dos(i+j); }";
-    }
+    [self setCode];
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) setCode {
+    if (selectedProgram.code != nil) {
+        codeTextView.text = selectedProgram.code;
+    } else {
+        _saveButton.enabled = NO;
+        codeTextView.text = @"corgi //[PROGRAM NAME]; \ncorgiRun() { \n }";
+    }
 }
 
 - (IBAction)parseTextView:(id)sender {
@@ -79,18 +87,29 @@
     
     buf = yy_scan_string([self.codeTextView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
+    EndBlock = ^() {
+        UINavigationController *next = (UINavigationController*) self.tabBarController.viewControllers[[self.tabBarController selectedIndex] + 1];
+        ConsoleViewController *destination = (ConsoleViewController*) next.topViewController;
+        if (!self.failed) {
+            destination.consoleText = _result;
+        } else {
+            destination.consoleText = _errors;
+        }
+        
+        selectedProgram.code = codeTextView.text;
+        
+        [self.tabBarController setSelectedIndex:[self.tabBarController selectedIndex] + 1];
+    };
+    
     ParseTestSuccessBlock = ^(NSString *value) {
         if (!self.failed) {
             _result = [_result stringByAppendingString:value];
-            consoleTextView.text = _result;
         }
     };
     
     ParseTestFailBlock = ^(NSString *msg) {
         self.failed = true;
         _errors = [_errors stringByAppendingString:msg];
-        consoleTextView.text = _errors;
-        
     };
     
     addLineCounterBlock = ^() {
@@ -110,7 +129,7 @@
     };
     
     addCorgiFunctionBlock = ^(NSString *name, NSString *type) {
-        [Helper.singleton addCorgiFunctionBlock:name type:type];
+        return [Helper.singleton addCorgiFunctionBlock:name type:type];
     };
     
     addFunctionWithIdBlock = ^(NSString *name) {
@@ -172,16 +191,20 @@
         [Helper.singleton popPar];
     };
     
-    generateGOTOFquadrupleBlock = ^() {
-        [Helper.singleton generateGOTOFquadruple];
+    generateGOTOFquadrupleBlock = ^(int code) {
+        [Helper.singleton generateGOTOFquadruple:code];
     };
     
-    generateGOTOquadrupleBlock = ^() {
-        [Helper.singleton generateGOTOquadruple];
+    generateGOTOquadrupleBlock = ^(int code) {
+        [Helper.singleton generateGOTOquadruple:code];
     };
     
     generateLoopConditionQuadruplesBlock = ^() {
         return [Helper.singleton generateLoopConditionQuadruples];
+    };
+    
+    generateWhileConditionQuadrupleBlock = ^() {
+        [Helper.singleton generateWhileConditionQuadruple];
     };
     
     generateByQuadrupleBlock = ^() {
@@ -211,11 +234,15 @@
     generateEndOfProgramQuadrupleBlock = ^() {
         if (!_failed) {
             [Helper.singleton generateEndOfProgramQuadruple];
+        } else {
+            EndBlock();
         }
     };
     
     generateGoSubQuadrupleBlock = ^(NSString *name) {
-        [Helper.singleton generateGoSubQuadruple];
+        if (!_failed) {
+            [Helper.singleton generateGoSubQuadruple];
+        }
     };
     
     generateParameterQuadrupleBlock = ^(NSString *name) {
@@ -238,22 +265,35 @@
         return [Helper.singleton generateReturnQuadruple];
     };
     
+    generateVoidReturnBlock = ^() {
+        return [Helper.singleton generateVoidReturnQuadruple];
+    };
+    
     yyparse();
     
     yy_delete_buffer(buf);
+    _saveButton.enabled = YES;
 }
 
-// MARK: Text View Delegate
+- (IBAction)saveCode:(id)sender {
+    // Get my saved programs
+    NSDictionary *savedPrograms = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedPrograms"];
+    
+    if (savedPrograms == nil) {
+        savedPrograms = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSMutableDictionary *newProgram = [[NSMutableDictionary alloc] init];
+    [newProgram setObject:codeTextView.text forKey:Helper.singleton.programName];
+    [newProgram addEntriesFromDictionary:savedPrograms];
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.dissmisButton.enabled = YES;
+    [[NSUserDefaults standardUserDefaults] setObject:newProgram forKey:@"SavedPrograms"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    self.dissmisButton.enabled = NO;
-}
+// MARK: Keyboard
 
-- (IBAction)dismissKeyboard:(id)sender {
+- (void)dismissKeyboard {
     [codeTextView resignFirstResponder];
 }
 
