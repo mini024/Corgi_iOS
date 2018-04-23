@@ -13,8 +13,8 @@
 
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextView *consoleTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+
 @property (retain, nonatomic) QEDTextView *codeTextView;
 @property (weak, nonatomic) Program *selectedProgram;
 @property (weak, nonatomic) NSString *selectedCode;

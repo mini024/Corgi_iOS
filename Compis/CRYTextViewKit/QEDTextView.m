@@ -60,23 +60,22 @@
                                                              NSForegroundColorAttributeName : RGB(24, 110, 109)
                                                              }],
                                [CYRToken tokenWithName:@"reserved_words"
-                                                expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while)"
-                                                attributes:@{
-                                                             NSForegroundColorAttributeName : RGB(104, 0, 111),
-                                                             NSFontAttributeName : self.boldFont
-                                                             }],
+                                            expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while|write)"
+                                            attributes:@{
+                                                         NSForegroundColorAttributeName : RGB(104, 0, 111),
+                                                         NSFontAttributeName : self.boldFont
+                                                         }],
                                [CYRToken tokenWithName:@"types"
                                                 expression:@"(Int|Float|Bool|Void|String)"
                                                 attributes:@{
                                                              NSForegroundColorAttributeName : RGB(11, 81, 195),
                                                              }],
                                [CYRToken tokenWithName:@"comment"
-                                                expression:@"//.*"
-                                                attributes:@{
-                                                             NSForegroundColorAttributeName : RGB(31, 131, 0),
-                                                             NSFontAttributeName : self.italicFont
-                                                             }]
-                               ];
+                                            expression:@"//.*"
+                                            attributes:@{
+                                                         NSForegroundColorAttributeName : RGB(31, 131, 0),
+                                                         NSFontAttributeName : self.italicFont
+                                                         }]];
     
     return solverTokens;
 }

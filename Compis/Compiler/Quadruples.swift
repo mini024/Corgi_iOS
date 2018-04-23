@@ -17,23 +17,23 @@ extension Helper {
             idAddresses.append(getVariableAddress(id: name))
             idTypes.append(getVariableType(name))
         } else {
-            switch type {
-            case "Int":
+            switch type.lowercased() {
+            case "int":
                 let address = virtualMemory.constantsMemory.setInt(value: Int(name)!)
                 idAddresses.append(address)
                 idTypes.append(Type.Int)
-            case "Float":
+            case "float":
                 let address = virtualMemory.constantsMemory.setFloat(value: Float(name)!)
                 idAddresses.append(address)
                 idTypes.append(Type.Float)
-            case "String":
+            case "string":
                 var value = name
                 value = String(value.dropLast())
                 value = String(value.dropFirst())
                 let address = virtualMemory.constantsMemory.setString(value: value)
                 idAddresses.append(address)
                 idTypes.append(Type.String)
-            case "Bool":
+            case "bool":
                 let address = virtualMemory.constantsMemory.setBool(value: name.toBool())
                 idAddresses.append(address)
                 idTypes.append(Type.Bool)
@@ -294,8 +294,8 @@ extension Helper {
     
     func generateReturnQuadruple() -> Bool{
         guard funcTable[currentFunc]?.returnType != Type.Void else {
-            quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
-            return true
+            print("ERROR - Wrong return type");
+            return false
         }
         
         let valueType = idTypes.popLast()
@@ -307,6 +307,16 @@ extension Helper {
         // Generate quadruple
         quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
         returnValues.append(valueAddress!)
+        return true
+    }
+    
+    func generateVoidReturnQuadruple() -> Bool {
+        if funcTable[currentFunc]?.returnType != Type.Void {
+            print("ERROR - Wrong return type");
+            return false
+        }
+        
+        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
         return true
     }
     

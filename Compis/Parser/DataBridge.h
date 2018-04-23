@@ -15,6 +15,9 @@
     This file is used to join the parser (flex & bision) with the fuctions and objects in the application. Functions will be used in neural points and objects will be used to store data.
  */
 
+// End Program
+extern void (^EndBlock)(void);
+
 // Line Counter
 extern void (^addLineCounterBlock)(void);
 extern int (^getLineNumber)(void);
@@ -30,7 +33,7 @@ extern void (^addArrayVariableBlock)(NSString *id, NSString *type, int size);
 extern bool (^findParameterBlock)(NSString *value);
 
 // Functions
-extern void (^addCorgiFunctionBlock)(NSString *id, NSString *type);
+extern bool (^addCorgiFunctionBlock)(NSString *id, NSString *type);
 extern void (^addFunctionWithIdBlock)(NSString *id);
 extern void (^addFunctionReturnTypeBlock)(NSString *id, NSString *type);
 extern bool (^findFunctionBlock)(NSString *value);
@@ -65,6 +68,7 @@ extern void (^generateEndOfProgramQuadrupleBlock)(void);
 extern void (^generateGoSubQuadrupleBlock)(NSString * id);
 extern bool (^generateParameterQuadrupleBlock)(NSString * id);
 extern bool (^generateReturnBlock)(void);
+extern bool (^generateVoidReturnBlock)(void);
 
 //Arrays
 extern bool (^checkIfArrayBlock)(void);

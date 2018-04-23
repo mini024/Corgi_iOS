@@ -25,7 +25,7 @@ corgi {return CORGI;}
 var {return VAR;}
 func { return FUNC;}
 case {return CASE;}
-Int|Float|Bool|String|void {yylval.strval= strdup(yytext); return TYPE;}
+Int|Float|Bool|String|Void|int|float|bool|String|void {yylval.strval= strdup(yytext); return TYPE;}
 [a-zA-Z][a-zA-Z0-9]* {yylval.strval= strdup(yytext); return ID;}
 \( {return LFT_PAR;}
 \) {return RGT_PAR;}
@@ -72,6 +72,7 @@ int yywrap()
 
 void yyerror(char *s) 
 {
-    if (ParseTestFailBlock) 
+    if (ParseTestFailBlock)
         ParseTestFailBlock([NSString stringWithFormat:@"%s", s]);
+        EndBlock();
 }

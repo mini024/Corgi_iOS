@@ -2,19 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>testFactorial</key>
-	<string>corgi testFactorial;
-
-corgiRun() { 
-	var fact:Int;
-	var i: Int;
-	fact = 1;
-	i = 1;
-	for i in 0...10 by 1 {
-		fact = fact * i;
-	}
-	write(fact);
-}</string>
 	<key>Test Functions</key>
 	<string>corgi test;
 var i: Int;

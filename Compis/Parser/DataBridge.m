@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "DataBridge.h"
 
+// End Program
+void (^EndBlock)(void);
+
 // Line Counter
 void (^addLineCounterBlock)(void);
 int (^getLineNumber)(void);
@@ -25,7 +28,7 @@ void (^addParameterBlock)(NSString *id, NSString *type);
 bool (^findParameterBlock)(NSString *value);
 
 // Functions
-void (^addCorgiFunctionBlock)(NSString *id, NSString *type);
+bool (^addCorgiFunctionBlock)(NSString *id, NSString *type);
 void (^addFunctionWithIdBlock)(NSString *id);
 void (^addFunctionReturnTypeBlock)(NSString *id, NSString *type);
 bool (^findFunctionBlock)(NSString *value);
@@ -60,6 +63,7 @@ void (^generateEndOfProgramQuadrupleBlock)(void);
 void (^generateGoSubQuadrupleBlock)(NSString * id);
 bool (^generateParameterQuadrupleBlock)(NSString * id);
 bool (^generateReturnBlock)(void);
+bool (^generateVoidReturnBlock)(void);
 
 // Arrays
 bool (^checkIfArrayBlock)(void);

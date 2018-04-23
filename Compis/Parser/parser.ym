@@ -86,18 +86,16 @@ CORGI ID SEMICOLON {
     
     // Create goTo -> CorgiRun Quadruple
     generateGOTOquadrupleBlock(3);
-} vars functions corgirun //{ if (ParseTestSuccessBlock) ParseTestSuccessBlock(@"Success");}
+} vars functions corgirun
 ;
 
 // MARK: Main Function
 corgirun:
-CORGIRUN LFT_PAR RGT_PAR {
-    if (!findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
-        addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun");
-    } else {
+CORGIRUN LFT_PAR RGT_PAR LFT_BRA {
+    if (!addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun")) {
         ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $1, getLineNumber()]);
     }
-} LFT_BRA vars estatutos RGT_BRA {
+} vars estatutos RGT_BRA {
     // EndFunc quadruple
     generateEndOfFunctionQuadrupleBlock();
     generateEndOfProgramQuadrupleBlock();
@@ -139,16 +137,17 @@ FUNC ID {
 ;
 
 return:
-RETURN returnAux {
+RETURN Megaexpresion SEMICOLON {
     if (!generateReturnBlock()) {
          ParseTestFailBlock([NSString stringWithFormat:@"Wrong return type in line %d", getLineNumber()]);
     }
 }
-;
-
-returnAux:
-Megaexpresion SEMICOLON
-| SEMICOLON
+| /*epsilon*/ {
+    // Verify that function has void return
+    if (!generateVoidReturnBlock()) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong/missing return type in line %d", getLineNumber()]);
+    }
+}
 ;
 
 parameters:

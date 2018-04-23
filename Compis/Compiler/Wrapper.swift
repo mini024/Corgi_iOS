@@ -100,17 +100,15 @@ import UIKit
     }
     
     func stringToType(type: String) -> Type {
-        switch type {
-        case "String":
+        switch type.lowercased() {
+        case "string":
             return .String
-        case "Int":
+        case "int":
             return .Int
-        case "Float":
+        case "float":
             return .Float
-        case "Bool":
+        case "bool":
             return .Bool
-        case "Void":
-            return .Void
         case "void":
             return .Void
         default:

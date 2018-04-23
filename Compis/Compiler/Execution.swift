@@ -91,6 +91,7 @@ extension Helper {
                 quadrupleNumber = virtualMemory.quadruplesStack.popLast()!
                 break
             case .END:
+                EndBlock();
                 break
             case .RETURN:
                 break
