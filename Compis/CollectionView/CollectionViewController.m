@@ -8,6 +8,7 @@
 
 #import "CollectionViewController.h"
 #import "ViewController.h"
+#import "TitleCollectionReusableView.h"
 #import "ProgramCollectionViewCell.h"
 #import "Program.h"
 
@@ -110,6 +111,19 @@ Program *selectedProgram;
     CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight - navBarHeight)/3 - spacingHeight;
     CGFloat width = (collectionView.frame.size.width - 20) / 3 - 10;
     return CGSizeMake(width, height);
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    TitleCollectionReusableView *view = (TitleCollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"header" forIndexPath:indexPath];
+   
+    if (indexPath.section == 0) {
+        view.title = @"My programs";
+    } else {
+        view.title = @"Default programs";
+    }
+    
+    return view;
 }
 
 #pragma mark <UICollectionViewDelegate>
