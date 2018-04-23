@@ -276,6 +276,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 }
 
 - (IBAction)saveCode:(id)sender {
+    // Check if program alrea
     // Get my saved programs
     NSDictionary *savedPrograms = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedPrograms"];
     

@@ -39,6 +39,8 @@
 		1ABCE2882088FEB20052D4E6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCE2872088FEB10052D4E6 /* CoreText.framework */; };
 		1ABCE28B2088FF300052D4E6 /* QEDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28A2088FF300052D4E6 /* QEDTextView.m */; };
 		1ABCE28E2089021F0052D4E6 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE28D2089021F0052D4E6 /* MoreViewController.m */; };
+		1ABCE2BD208E81730052D4E6 /* TitleCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2B9208E81730052D4E6 /* TitleCollectionReusableView.m */; };
+		1ABCE2BE208E81730052D4E6 /* ConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCE2BC208E81730052D4E6 /* ConsoleViewController.m */; };
 		1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */; };
 		1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1C2E9207EC27C00F53B2A /* Structures.swift */; };
 /* End PBXBuildFile section */
@@ -114,6 +116,10 @@
 		1ABCE28A2088FF300052D4E6 /* QEDTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QEDTextView.m; sourceTree = "<group>"; };
 		1ABCE28C2089021F0052D4E6 /* MoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		1ABCE28D2089021F0052D4E6 /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
+		1ABCE2B9208E81730052D4E6 /* TitleCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleCollectionReusableView.m; sourceTree = "<group>"; };
+		1ABCE2BA208E81730052D4E6 /* ConsoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleViewController.h; sourceTree = "<group>"; };
+		1ABCE2BB208E81730052D4E6 /* TitleCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleCollectionReusableView.h; sourceTree = "<group>"; };
+		1ABCE2BC208E81730052D4E6 /* ConsoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleViewController.m; sourceTree = "<group>"; };
 		1AD0A88D2068494000AFB9D7 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
 		1AE1C2E9207EC27C00F53B2A /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +186,8 @@
 				1A3EA2C52034FA4900EC10CE /* AppDelegate.m */,
 				1A3EA2C72034FA4900EC10CE /* ViewController.h */,
 				1A3EA2C82034FA4900EC10CE /* ViewController.m */,
+				1ABCE2BA208E81730052D4E6 /* ConsoleViewController.h */,
+				1ABCE2BC208E81730052D4E6 /* ConsoleViewController.m */,
 				1ABCE28C2089021F0052D4E6 /* MoreViewController.h */,
 				1ABCE28D2089021F0052D4E6 /* MoreViewController.m */,
 				1ABCE2682087053C0052D4E6 /* TestPrograms.plist */,
@@ -252,6 +260,8 @@
 		1ABCE266208704CB0052D4E6 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				1ABCE2BB208E81730052D4E6 /* TitleCollectionReusableView.h */,
+				1ABCE2B9208E81730052D4E6 /* TitleCollectionReusableView.m */,
 				1ABCE25D2086FE5F0052D4E6 /* CollectionViewController.h */,
 				1ABCE25E2086FE5F0052D4E6 /* CollectionViewController.m */,
 				1ABCE260208701CA0052D4E6 /* ProgramCollectionViewCell.h */,
@@ -439,11 +449,13 @@
 				1ABCE262208701CA0052D4E6 /* ProgramCollectionViewCell.m in Sources */,
 				1A6A2681205335DE00C8E9FF /* Tables.swift in Sources */,
 				1A3EA31F2034FB5500EC10CE /* tokenizer.lm in Sources */,
+				1ABCE2BD208E81730052D4E6 /* TitleCollectionReusableView.m in Sources */,
 				1A3EA2D42034FA4900EC10CE /* main.m in Sources */,
 				1ABCE25F2086FE5F0052D4E6 /* CollectionViewController.m in Sources */,
 				0514203220688A1C00BE8CE6 /* Wrapper.swift in Sources */,
 				1AD0A88E2068494000AFB9D7 /* VirtualMemory.swift in Sources */,
 				1ABCE265208702D60052D4E6 /* Program.m in Sources */,
+				1ABCE2BE208E81730052D4E6 /* ConsoleViewController.m in Sources */,
 				1AE1C2EA207EC27C00F53B2A /* Structures.swift in Sources */,
 				1A8DD39B205C68EF00F6070E /* Quadruples.swift in Sources */,
 				1A3EA2C62034FA4900EC10CE /* AppDelegate.m in Sources */,
