@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ConsoleViewController.h"
 #import "CorgiCode-Swift.h"
+#import "ColorPalette.h"
 #import "Program.h"
 
 #import "y.tab.h"
@@ -41,6 +42,14 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     codeTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     codeTextView.delegate = self;
     
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"NightMode"] isEqual: @"true"] ) {
+        codeTextView.backgroundColor = ColorPalette.codeBackgroundNightModeColor;
+        codeTextView.textColor = ColorPalette.codeTextNightModeColor;
+    } else {
+        codeTextView.backgroundColor = ColorPalette.codeBackgroundColor;
+        codeTextView.textColor = ColorPalette.codeTextColor;
+    }
+    
     self.codeTextView = codeTextView;
     
     [self setCode];
@@ -59,12 +68,24 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 
 - (void)viewDidAppear:(BOOL)animated {
     [self setCode];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"NightMode"] isEqual: @"true"] ) {
+        codeTextView.textColor = ColorPalette.codeTextNightModeColor;
+        codeTextView.backgroundColor = ColorPalette.codeBackgroundNightModeColor;
+    } else {
+        codeTextView.textColor = ColorPalette.codeTextColor;
+        codeTextView.backgroundColor = ColorPalette.codeBackgroundColor;
+    }
+    [codeTextView changedMode];
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) setTextView {
+    
 }
 
 - (void) setCode {

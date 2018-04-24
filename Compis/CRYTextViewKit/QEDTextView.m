@@ -7,6 +7,7 @@
 //
 
 #import "QEDTextView.h"
+#import "ColorPalette.h"
 
 #import <CoreText/CoreText.h>
 
@@ -47,37 +48,80 @@
         _italicFont = (__bridge_transfer UIFont*)CTFontCreateWithName(CFSTR("HelveticaNeue-Italic"), 14.0f, NULL);
     }
     
+    _nightMode = [[NSUserDefaults standardUserDefaults] objectForKey:@"NightMode"];
+    
+    if (_nightMode == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"false" forKey:@"NightMode"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        _nightMode = @"false";
+    }
+    
     self.tokens = [self solverTokens];
 }
 
 
 - (NSArray *)solverTokens
 {
-    NSArray *solverTokens =  @[
-                               [CYRToken tokenWithName:@"string"
+    if ([_nightMode isEqualToString:@"false"]) {
+        NSArray *solverTokens =  @[
+                                   [CYRToken tokenWithName:@"string"
                                                 expression:@"\".*?(\"|$)"
                                                 attributes:@{
-                                                             NSForegroundColorAttributeName : RGB(24, 110, 109)
+                                                             NSForegroundColorAttributeName : ColorPalette.codeStringsColor
                                                              }],
-                               [CYRToken tokenWithName:@"reserved_words"
-                                            expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while|write)"
-                                            attributes:@{
-                                                         NSForegroundColorAttributeName : RGB(104, 0, 111),
-                                                         NSFontAttributeName : self.boldFont
-                                                         }],
-                               [CYRToken tokenWithName:@"types"
+                                   [CYRToken tokenWithName:@"reserved_words"
+                                                expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while|write)"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeReservedWordsColor,
+                                                             NSFontAttributeName : self.boldFont
+                                                             }],
+                                   [CYRToken tokenWithName:@"types"
                                                 expression:@"(Int|Float|Bool|Void|String)"
                                                 attributes:@{
-                                                             NSForegroundColorAttributeName : RGB(11, 81, 195),
+                                                             NSForegroundColorAttributeName : ColorPalette.codeTypesColor,
+                                                             NSFontAttributeName : self.boldFont
                                                              }],
-                               [CYRToken tokenWithName:@"comment"
-                                            expression:@"//.*"
-                                            attributes:@{
-                                                         NSForegroundColorAttributeName : RGB(31, 131, 0),
-                                                         NSFontAttributeName : self.italicFont
-                                                         }]];
+                                   [CYRToken tokenWithName:@"comment"
+                                                expression:@"//.*"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeCommentsColor,
+                                                             NSFontAttributeName : self.italicFont
+                                                             }]];
+        return solverTokens;
+    } else {
+        NSArray *solverTokens =  @[
+                                   [CYRToken tokenWithName:@"string"
+                                                expression:@"\".*?(\"|$)"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeStringsColor,
+                                                             NSFontAttributeName : self.boldFont
+                                                             }],
+                                   [CYRToken tokenWithName:@"reserved_words"
+                                                expression:@"(corgiRun|corgi|for|in|by|case|func|else|var|return|while|write)"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeReservedWordsNightModeColor,
+                                                             NSFontAttributeName : self.boldFont
+                                                             }],
+                                   [CYRToken tokenWithName:@"types"
+                                                expression:@"(Int|Float|Bool|Void|String)"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeTypesNightModeColor,
+                                                             NSFontAttributeName : self.boldFont
+                                                             }],
+                                   [CYRToken tokenWithName:@"comment"
+                                                expression:@"//.*"
+                                                attributes:@{
+                                                             NSForegroundColorAttributeName : ColorPalette.codeCommentsColor,
+                                                             NSFontAttributeName : self.italicFont
+                                                             }]];
+        return solverTokens;
+    }
     
-    return solverTokens;
+    
+}
+
+- (void) changedMode {
+    self.tokens = [self solverTokens];
 }
 
 

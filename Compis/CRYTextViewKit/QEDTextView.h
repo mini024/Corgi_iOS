@@ -13,6 +13,9 @@
 @property (nonatomic, strong) UIFont *defaultFont;
 @property (nonatomic, strong) UIFont *boldFont;
 @property (nonatomic, strong) UIFont *italicFont;
+@property (nonatomic) NSString *nightMode;
+
+- (void) changedMode;
 
 @end
 

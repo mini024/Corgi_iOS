@@ -7,6 +7,8 @@
 //
 
 #import "ConsoleViewController.h"
+#import "ColorPalette.h"
+
 
 @interface ConsoleViewController ()
 
@@ -22,6 +24,9 @@
     if (consoleText != nil) {
         consoleTextView.text = consoleText;
     }
+    
+    consoleTextView.backgroundColor = ColorPalette.outputBackgroundColor;
+    consoleTextView.textColor = ColorPalette.outputTextColor;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
