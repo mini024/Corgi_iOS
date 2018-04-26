@@ -31,23 +31,33 @@ class VirtualMemory {
     }
     
     func setValueForParameter(address: Int, result: Any) {
-        if address < LOCAL_START_ADDRESS {
-            globalMemory.setValueIn(address: address, result:result)
-        } else if address < CONSTANTS_START_ADDRESS {
-            memoryStack[memoryStack.count - 1].setValueIn(address: address, result:result)
+        var realAddress = address
+        if address < 0 {
+            realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
+        }
+        
+        if realAddress < LOCAL_START_ADDRESS {
+            globalMemory.setValueIn(address: realAddress, result:result)
+        } else if realAddress < CONSTANTS_START_ADDRESS {
+            memoryStack[memoryStack.count - 1].setValueIn(address: realAddress, result:result)
         } else {
-            constantsMemory.setValueIn(address: address, result:result)
+            constantsMemory.setValueIn(address: realAddress, result:result)
         }
     }
     
     func getValueIn(address: Int) -> (Any, Type) {
-        if address < LOCAL_START_ADDRESS {
-            return globalMemory.getValueIn(address:address)
-        } else if address < CONSTANTS_START_ADDRESS {
+        var realAddress = address
+        if address < 0 {
+            realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
+        }
+        
+        if realAddress < LOCAL_START_ADDRESS {
+            return globalMemory.getValueIn(address:realAddress)
+        } else if realAddress < CONSTANTS_START_ADDRESS {
             // local de function -> se busca en functon Memory
-            return localMemory.getValueIn(address:address)
+            return localMemory.getValueIn(address:realAddress)
         } else {
-            return constantsMemory.getValueIn(address:address)
+            return constantsMemory.getValueIn(address:realAddress)
         }
     }
 
