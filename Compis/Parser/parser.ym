@@ -245,7 +245,7 @@ id EQUAL {
 ;
 
 asignation:
-SLFT_BRA constante asignations SRGT_BRA
+SLFT_BRA constante  asignations SRGT_BRA
 | Megaexpresion {
     if (!checkNextOperatorBlock(@"assignation"))
     ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types in line %d\n", getLineNumber()]);
