@@ -22,6 +22,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 @property bool failed;
 @property NSString *errors;
 @property NSString *result;
+@property NSString *unSavedCode;
 @property int line;
 
 @end
@@ -78,6 +79,10 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     [codeTextView changedMode];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    _unSavedCode = codeTextView.text;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -91,6 +96,8 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 - (void) setCode {
     if (selectedProgram.code != nil) {
         codeTextView.text = selectedProgram.code;
+    } else if (_unSavedCode != nil ) {
+        codeTextView.text = _unSavedCode;
     } else {
         _saveButton.enabled = NO;
         codeTextView.text = @"corgi //[PROGRAM NAME]; \ncorgiRun() { \n }";
@@ -105,6 +112,9 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     _line = 1;
     
     [Helper.singleton clear];
+    
+    self.codeTextView.text = [self.codeTextView.text stringByReplacingOccurrencesOfString:@"”" withString:@"\""];
+    self.codeTextView.text = [self.codeTextView.text stringByReplacingOccurrencesOfString:@"“" withString:@"\""];
     
     buf = yy_scan_string([self.codeTextView.text cStringUsingEncoding:NSUTF8StringEncoding]);
     
@@ -297,12 +307,42 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 }
 
 - (IBAction)saveCode:(id)sender {
-    // Check if program alrea
     // Get my saved programs
     NSDictionary *savedPrograms = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedPrograms"];
     
     if (savedPrograms == nil) {
         savedPrograms = [[NSMutableDictionary alloc] init];
+    }
+    
+    // Check if program already exists
+    if (savedPrograms[Helper.singleton.programName] != nil) {
+        // Show Alert
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:[NSString stringWithFormat: @"Replace existing?"]
+                                    message:[NSString stringWithFormat:@"Program with name %@ already exists, do you want to replace exisiting code?", Helper.singleton.programName]
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:@"Cancel"
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {
+                                           // Disable save button
+                                           _saveButton.enabled = false;
+                                       }];
+        UIAlertAction *replaceAction = [UIAlertAction
+                                      actionWithTitle:@"Replace"
+                                      style:UIAlertActionStyleDefault
+                                      handler:^(UIAlertAction * action) {
+                                          NSMutableDictionary *newProgram = [[NSMutableDictionary alloc] init];
+                                          [newProgram addEntriesFromDictionary:savedPrograms];
+                                          [newProgram setObject:codeTextView.text forKey:Helper.singleton.programName];
+                                          
+                                          [[NSUserDefaults standardUserDefaults] setObject:newProgram forKey:@"SavedPrograms"];
+                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                      }];
+        [alert addAction:replaceAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
     }
     
     NSMutableDictionary *newProgram = [[NSMutableDictionary alloc] init];

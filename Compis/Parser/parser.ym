@@ -45,7 +45,6 @@ extern int yylineno;
 %token EQUAL;
 %token COM_OP;
 %token LOG_OP;
-%token READ;
 %token LFT_BRA;
 %token RGT_BRA;
 %token COLON;
@@ -285,7 +284,6 @@ asignacion
 | condicion
 | loop
 | write
-| read
 | llamada
 ;
 
@@ -301,10 +299,6 @@ writeAux:
     generateWritequadrupleBlock([NSString stringWithFormat:@"Hello\n"]);
 } writeAux
 | /*epsilon*/
-;
-
-read:
-READ LFT_PAR id RGT_PAR SEMICOLON
 ;
 
 // MARK: Conditionals

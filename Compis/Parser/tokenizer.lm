@@ -17,7 +17,6 @@ by {return BY;}
 else {return ELSE;}
 while {return WHILE;}
 write {return WRITE;}
-read {return READ;}
 return {return RETURN;}
 true|false {return BOOLEAN;}
 corgiRun {return CORGIRUN;}
@@ -46,7 +45,7 @@ Int|Float|Bool|String|Void|int|float|bool|String|void {yylval.strval= strdup(yyt
 \|\| {return OR_OP;}
 
 \{ {return LFT_BRA;}
-    \} {return RGT_BRA;}
+\} {return RGT_BRA;}
 \[ {return SLFT_BRA;}
 \] {return SRGT_BRA;}
 \-\> { return ARROW;}

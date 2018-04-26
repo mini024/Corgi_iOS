@@ -65,7 +65,7 @@
     if ([_nightMode isEqualToString:@"false"]) {
         NSArray *solverTokens =  @[
                                    [CYRToken tokenWithName:@"string"
-                                                expression:@"\".*?(\"|$)"
+                                                expression:@"\".*?(\"|$)|“.*?(”|$)"
                                                 attributes:@{
                                                              NSForegroundColorAttributeName : ColorPalette.codeStringsColor
                                                              }],
@@ -91,7 +91,7 @@
     } else {
         NSArray *solverTokens =  @[
                                    [CYRToken tokenWithName:@"string"
-                                                expression:@"\".*?(\"|$)"
+                                                expression:@"\".*?(\"|$)|“.*?(”|$)"
                                                 attributes:@{
                                                              NSForegroundColorAttributeName : ColorPalette.codeStringsColor,
                                                              NSFontAttributeName : self.boldFont
