@@ -108,8 +108,8 @@ Program *selectedProgram;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     CGFloat spacingHeight = 50;
-    CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight - navBarHeight)/3 - spacingHeight;
-    CGFloat width = (collectionView.frame.size.width - 20) / 3 - 10;
+    CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight - navBarHeight - spacingHeight)/3 ;
+    CGFloat width = height * 0.71;
     return CGSizeMake(width, height);
 }
 
@@ -124,6 +124,10 @@ Program *selectedProgram;
     }
     
     return view;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(5.0, 0.0, 5.0, 0.0);
 }
 
 #pragma mark <UICollectionViewDelegate>

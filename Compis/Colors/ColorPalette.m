@@ -15,7 +15,7 @@
 }
 
 + (UIColor *) codeBackgroundNightModeColor {
-    return [[UIColor alloc] initWithRed:44.0/255.0 green:62.0/255.0 blue:90.0/255.0 alpha:1.0];
+    return [[UIColor alloc] initWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:1.0];
 }
 
 + (UIColor *) codeTextColor {
@@ -31,11 +31,11 @@
 }
 
 + (UIColor *) codeReservedWordsNightModeColor {
-    return [[UIColor alloc] initWithRed:200.0/255.0 green:93.0/255.0 blue:182.0/255.0 alpha:1.0];
+    return [[UIColor alloc] initWithRed:230.0/255.0 green:126.0/255.0 blue:34.0/255.0 alpha:1.0];
 }
 
 + (UIColor *) codeReservedWordsColor {
-    return [[UIColor alloc] initWithRed:200.0/255.0 green:93.0/255.0 blue:182.0/255.0 alpha:1.0];
+    return [[UIColor alloc] initWithRed:230.0/255.0 green:126.0/255.0 blue:34.0/255.0 alpha:1.0];
 }
 
 + (UIColor *) codeTypesNightModeColor {

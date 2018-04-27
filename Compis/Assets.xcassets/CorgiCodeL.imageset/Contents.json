@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "file-orange.png",
+      "filename" : "CorgiCodeL-1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "CorgiCodeL.png",
       "scale" : "2x"
     },
     {
