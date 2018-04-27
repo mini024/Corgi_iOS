@@ -22,7 +22,9 @@ func bubbleSort(n : Int) -&gt; void {
           arrA[j+1] = temp;
       }
     }
+    j = 0;
   }
+  i = 0;
 }
 
 corgiRun() {
@@ -37,7 +39,7 @@ corgiRun() {
 
   bubbleSort(n);
 
-  for i in 0...n-1 by 1{
+  for i in 0...n by 1{
     	j = arrA[i]; 
 	write(j);
   }
