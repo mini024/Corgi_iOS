@@ -72,6 +72,6 @@ int yywrap()
 void yyerror(char *s) 
 {
     if (ParseTestFailBlock)
-        ParseTestFailBlock([NSString stringWithFormat:@"%s, line %d", s, getLineNumber()], @"Parser");
+        ParseTestFailBlock([NSString stringWithFormat:@"Unexpected %s, line %d \n",yytext, getLineNumber()]);
         EndBlock();
 }

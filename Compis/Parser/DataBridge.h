@@ -40,7 +40,7 @@ extern bool (^findFunctionBlock)(NSString *value);
 
 // Results
 extern void (^ParseTestSuccessBlock)(NSString *value);
-extern void (^ParseTestFailBlock)(NSString *msg, NSString *origin);
+extern void (^ParseTestFailBlock)(NSString *msg);
 
 // Operations
 extern void (^addIdToStackBlock)(NSString *id, NSString *type);
@@ -58,8 +58,7 @@ extern bool (^generateByQuadrupleBlock)(void);
 extern void (^generateWhileConditionQuadrupleBlock)(void);
 
 // Write and Read Quadruples
-extern void (^generateWritequadrupleBlock)(NSString *id);
-extern void (^generateReadquadrupleBlock)(NSString *id);
+extern void (^generateWritequadrupleBlock)(void);
 
 // Function Quadruples
 extern void (^generateERAQuadrupleBlock)(NSString *id);

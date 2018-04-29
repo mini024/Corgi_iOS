@@ -35,7 +35,7 @@ bool (^findFunctionBlock)(NSString *value);
 
 // Results
 void (^ParseTestSuccessBlock)(NSString *value);
-void (^ParseTestFailBlock)(NSString *msg, NSString *origin);
+void (^ParseTestFailBlock)(NSString *msg);
 
 // Operations
 void (^addIdToStackBlock)(NSString *id, NSString *type);
@@ -53,8 +53,7 @@ bool (^generateByQuadrupleBlock)(void);
 void (^generateWhileConditionQuadrupleBlock)(void);
 
 // Write and Read Quadruples
-void (^generateWritequadrupleBlock)(NSString *id);
-void (^generateReadquadrupleBlock)(NSString *id);
+void (^generateWritequadrupleBlock)(void);
 
 // Function Quadruples
 void (^generateERAQuadrupleBlock)(NSString *id);

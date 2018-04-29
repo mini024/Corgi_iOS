@@ -138,14 +138,8 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
         }
     };
     
-    ParseTestFailBlock = ^(NSString *msg, NSString *origin) {
+    ParseTestFailBlock = ^(NSString *msg) {
         self.failed = true;
-        
-        if ([origin isEqualToString:@"Parser"]) {
-            msg = [msg stringByReplacingOccurrencesOfString:@"syntax error, " withString:@"syntax error -> "];
-            msg = [msg stringByReplacingOccurrencesOfString:@"unexpected" withString:@"found"];
-            msg = [msg stringByReplacingOccurrencesOfString:@", expecting" withString:@" where expected"];
-        }
         _errors = [_errors stringByAppendingString:msg];
     };
     
@@ -256,8 +250,8 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
         [Helper.singleton fillEndLoopQuadruple];
     };
     
-    generateWritequadrupleBlock = ^(NSString *name) {
-        [Helper.singleton generateWriteQuadruple:name];
+    generateWritequadrupleBlock = ^() {
+        [Helper.singleton generateWriteQuadruple];
     };
     
     generateERAQuadrupleBlock = ^(NSString *name) {

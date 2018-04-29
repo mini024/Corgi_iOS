@@ -154,7 +154,7 @@ extension Helper {
   
     }
     
-    func generateWriteQuadruple(_ id:String) {
+    func generateWriteQuadruple() {
         let variableAddress = idAddresses.popLast()
         _ = idTypes.popLast()
         
