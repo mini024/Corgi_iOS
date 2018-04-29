@@ -2,6 +2,49 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Test Bubble sort</key>
+	<string>corgi sort;
+var i: Int;
+var j: Int;
+var n: Int;
+var arrA: Int[5];
+var temp: Int;
+
+
+func bubbleSort(n : Int) -&gt; void {
+  
+  for i in 0...n-1 by 1{
+    for j in 0...n-i-1 by 1{
+      case {
+        arrA[j]&gt;arrA[j+1]: 
+          temp = arrA[j];
+          arrA[j] = arrA[j+1];
+          arrA[j+1] = temp;
+      }
+    }
+    j = 0;
+  }
+  i = 0;
+}
+
+corgiRun() {
+  i = 0;
+  j = 0;
+  n = 5;
+  arrA[0] = 5;
+  arrA[1] = 1;
+  arrA[2] = 4;
+  arrA[3] = 2;
+  arrA[4] = 8;
+
+  bubbleSort(n);
+
+  for i in 0...n by 1{
+    	j = arrA[i]; 
+	write(j);
+  }
+  
+}</string>
 	<key>Test Factorial</key>
 	<string>corgi testFactorial;
 

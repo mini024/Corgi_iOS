@@ -186,31 +186,47 @@ extension Helper {
      Evaluates greater conditional and sets result in result Address.
      */
     func runGreater(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
-        let leftTuple = virtualMemory.getValueIn(address: leftAddress)
-        let rightTuple = virtualMemory.getValueIn(address: rightAddress)
         
-        if leftTuple.1 == .Int && rightTuple.1 == .Int {
-            let leftValue = leftTuple.0 as! Int
-            let rightValue = rightTuple.0 as! Int
+        var leftTuple: (val: Any, type: Type)? = nil
+        var rightTuple: (val: Any, type: Type)? = nil
+        
+        if leftAddress < 0 || rightAddress < 0 {
+            
+            if leftAddress < 0 {
+                leftTuple = virtualMemory.getValueIn(address :(virtualMemory.getValueIn(address: -1*leftAddress)).0 as! Int)
+            }
+            
+            if rightAddress < 0 {
+                rightTuple = virtualMemory.getValueIn(address: (virtualMemory.getValueIn(address: -1*rightAddress)).0 as! Int)
+            }
+            
+        }else{
+            leftTuple = virtualMemory.getValueIn(address: leftAddress)
+            rightTuple = virtualMemory.getValueIn(address: rightAddress)
+        }
+        
+        if leftTuple?.1 == .Int && rightTuple?.1 == .Int {
+            let leftValue = leftTuple?.0 as! Int
+            let rightValue = rightTuple?.0 as! Int
             
             virtualMemory.setValueIn(address: resultAddress, result: leftValue > rightValue)
             return
-        } else if leftTuple.1 == .Int && rightTuple.1 == .Float {
-            let leftValue = Float(leftTuple.0 as! Int)
-            let rightValue = rightTuple.0 as! Float
+        } else if leftTuple?.1 == .Int && rightTuple?.1 == .Float {
+            let leftValue = Float(leftTuple?.0 as! Int)
+            let rightValue = rightTuple?.0 as! Float
             
             virtualMemory.setValueIn(address: resultAddress, result: leftValue > rightValue)
             return
-        } else if leftTuple.1 == .Float && rightTuple.1 == .Int {
-            let leftValue = leftTuple.0 as! Float
-            let rightValue = Float(rightTuple.0 as! Int)
+        } else if leftTuple?.1 == .Float && rightTuple?.type == .Int {
+            let leftValue = leftTuple?.0 as! Float
+            let rightValue = Float(rightTuple?.0 as! Int)
             
             virtualMemory.setValueIn(address: resultAddress, result: leftValue > rightValue)
             return
         }
         
-        let leftValue = leftTuple.0 as! Float
-        let rightValue = rightTuple.0 as! Float
+        let leftValue = leftTuple?.0 as! Float
+        let rightValue = rightTuple?.0 as! Float
         
         virtualMemory.setValueIn(address: resultAddress, result: leftValue > rightValue)
     }
