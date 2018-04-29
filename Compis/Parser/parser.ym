@@ -80,7 +80,7 @@ CORGI ID SEMICOLON {
     if (!findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
         addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $2], @"Corgi");
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $2, getLineNumber()], @"Gramar");
     }
     
     // Create goTo -> CorgiRun Quadruple
@@ -92,7 +92,7 @@ CORGI ID SEMICOLON {
 corgirun:
 CORGIRUN LFT_PAR RGT_PAR LFT_BRA {
     if (!addCorgiFunctionBlock([NSString stringWithFormat:@"%s", $1], @"corgiRun")) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $1, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $1, getLineNumber()], @"Gramar");
     }
 } vars estatutos RGT_BRA {
     // EndFunc quadruple
@@ -113,21 +113,21 @@ FUNC ID {
     if (!findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
         addFunctionWithIdBlock([NSString stringWithFormat:@"%s", $2]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of function \"%s\" in line %d \n", $2, getLineNumber()], @"Gramar");
     }
 } LFT_PAR ID COLON TYPE {
     // Store parameter
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $5])) {
         addVariableBlock([NSString stringWithFormat:@"%s", $5],[NSString stringWithFormat:@"%s", $7], true);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $5, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $5, getLineNumber()], @"Gramar");
     }
 } parameters RGT_PAR ARROW TYPE {
     // Add return type to function
     if (findFunctionBlock([NSString stringWithFormat:@"%s", $2])) {
         addFunctionReturnTypeBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $12]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Function \"%s\" doesn't exist, line %d \n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Function \"%s\" doesn't exist, line %d \n", $2, getLineNumber()], @"Gramar");
     }
 } bloque {
     // EndFunc quadruple
@@ -138,13 +138,13 @@ FUNC ID {
 return:
 RETURN Megaexpresion SEMICOLON {
     if (!generateReturnBlock()) {
-         ParseTestFailBlock([NSString stringWithFormat:@"Wrong return type in line %d", getLineNumber()]);
+         ParseTestFailBlock([NSString stringWithFormat:@"Wrong return type in line %d", getLineNumber()], @"Gramar");
     }
 }
 | /*epsilon*/ {
     // Verify that function has void return
     if (!generateVoidReturnBlock()) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Wrong/missing return type in line %d", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong/missing return type in line %d", getLineNumber()], @"Gramar");
     }
 }
 ;
@@ -155,7 +155,7 @@ parameters:
     if (!findParameterBlock([NSString stringWithFormat:@"%s", $2])) {
         addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], true);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $2, getLineNumber()], @"Gramar");
     }
 } parameters
 | /*epsilon*/
@@ -171,12 +171,12 @@ ID {
         // Generate ERA with id
         generateERAQuadrupleBlock([NSString stringWithFormat:@"%s", $1]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Wrong value type in parameter \"%s\" in line %d \n", $1, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong value type in parameter \"%s\" in line %d \n", $1, getLineNumber()], @"Gramar");
     }
 } LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
     if (!generateParameterQuadrupleBlock(@"parametro")) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type \"%s\" doesn't exist, line %d \n", $1, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type \"%s\" doesn't exist, line %d \n", $1, getLineNumber()], @"Gramar");
     }
 } llamadaParametros RGT_PAR SEMICOLON {
     //GoSub quadruple
@@ -188,7 +188,7 @@ llamadaParametros:
 ',' Megaexpresion {
     // Send param/ save param quadruple
     if (!generateParameterQuadrupleBlock(@"parametro")) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type doesn't exist, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type doesn't exist, line %d \n", getLineNumber()], @"Gramar");
     }
 } llamadaParametros
 | /*epsilon*/
@@ -207,7 +207,7 @@ VAR ID COLON TYPE tipoAux SEMICOLON {
     } else if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 > 0) { // ARRAYS PARSING
         addArrayVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], $5);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Redeclaration of variable \"%s\" in line %d \n", $2, getLineNumber()], @"Gramar");
     }
 }
 ;
@@ -220,7 +220,7 @@ ID {
         // Generate ERA with id
         generateERAQuadrupleBlock([NSString stringWithFormat:@"%s", $1]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Variable/Function with id \"%s\" doesn't exist \n in line %d", $1, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable/Function with id \"%s\" doesn't exist \n in line %d", $1, getLineNumber()], @"Gramar");
     }
 } idAux
 ;
@@ -247,7 +247,7 @@ asignation:
 SLFT_BRA constante asignations SRGT_BRA
 | Megaexpresion {
     if (!checkNextOperatorBlock(@"assignation"))
-    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types in line %d\n", getLineNumber()]);
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types in line %d\n", getLineNumber()], @"Gramar");
 }
 ;
 
@@ -339,7 +339,7 @@ FOR ID {
     if (findVariableBlock([NSString stringWithFormat:@"%s", $2])) {
         addIdToStackBlock([NSString stringWithFormat:@"%s", $2], @"Variable");
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist in line %d\n", $2, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist in line %d\n", $2, getLineNumber()], @"Gramar");
     }
 } IN exp {
     //addIdToStackBlock([NSString stringWithFormat:@"%d", $5], @"Int");
@@ -347,13 +347,13 @@ FOR ID {
     //addIdToStackBlock([NSString stringWithFormat:@"%d", $8], @"Int");
 } BY {
     if (!generateLoopConditionQuadruplesBlock()) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Ints, line %d\n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Ints, line %d\n", getLineNumber()], @"Gramar");
     }
     generateGOTOFquadrupleBlock(0);
 } exp LFT_BRA estatutos {
 } RGT_BRA {
     if (!generateByQuadrupleBlock()) {
-        ParseTestFailBlock([NSString stringWithFormat:@"By value must be type Int, line %d\n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"By value must be type Int, line %d\n", getLineNumber()], @"Gramar");
     }
     generateGOTOquadrupleBlock(1);
     fillEndLoopQuadrupleBlock();
@@ -372,10 +372,10 @@ FOR ID {
 Megaexpresion:
 expresion {
     if (!checkNextOperatorBlock(@"logical"))
-    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d\n", getLineNumber()]);
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d\n", getLineNumber()], @"Gramar");
 } Superexpresion {
     if (!checkNextOperatorBlock(@"logical"))
-    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()], @"Gramar");
 }
 ;
 
@@ -388,10 +388,10 @@ AND_OP {addOperatorToStackBlock(@"&&");} expresion
 expresion:
 exp {
     if (!checkNextOperatorBlock(@"relational"))
-        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()], @"Gramar");
 } expresion2 {
     if (!checkNextOperatorBlock(@"relational"))
-    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
+    ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()], @"Gramar");
 }
 ;
 
@@ -408,7 +408,7 @@ LOW_OP {addOperatorToStackBlock(@"<");} exp
 exp:
 termino {
     if (!checkNextOperatorBlock(@"exp"))
-        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()], @"Gramar");
 } exp2
 ;
 
@@ -421,7 +421,7 @@ SUM { addOperatorToStackBlock(@"+"); } exp
 termino:
 factor {
     if (!checkNextOperatorBlock(@"term"))
-        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()], @"Gramar");
 } termino2
 ;
 

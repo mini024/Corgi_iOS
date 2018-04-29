@@ -108,7 +108,7 @@ Program *selectedProgram;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     CGFloat spacingHeight = 50;
-    CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight - navBarHeight - spacingHeight)/3 ;
+    CGFloat height = (collectionView.frame.size.height - tabBarHeight - statusBarHeight - navBarHeight - spacingHeight)/4 ;
     CGFloat width = height * 0.71;
     return CGSizeMake(width, height);
 }

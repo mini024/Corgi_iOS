@@ -138,8 +138,14 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
         }
     };
     
-    ParseTestFailBlock = ^(NSString *msg) {
+    ParseTestFailBlock = ^(NSString *msg, NSString *origin) {
         self.failed = true;
+        
+        if ([origin isEqualToString:@"Parser"]) {
+            msg = [msg stringByReplacingOccurrencesOfString:@"syntax error, " withString:@"syntax error -> "];
+            msg = [msg stringByReplacingOccurrencesOfString:@"unexpected" withString:@"found"];
+            msg = [msg stringByReplacingOccurrencesOfString:@", expecting" withString:@" where expected"];
+        }
         _errors = [_errors stringByAppendingString:msg];
     };
     

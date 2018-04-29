@@ -40,7 +40,7 @@ extern bool (^findFunctionBlock)(NSString *value);
 
 // Results
 extern void (^ParseTestSuccessBlock)(NSString *value);
-extern void (^ParseTestFailBlock)(NSString *msg);
+extern void (^ParseTestFailBlock)(NSString *msg, NSString *origin);
 
 // Operations
 extern void (^addIdToStackBlock)(NSString *id, NSString *type);

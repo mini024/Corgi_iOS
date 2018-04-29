@@ -35,7 +35,7 @@ bool (^findFunctionBlock)(NSString *value);
 
 // Results
 void (^ParseTestSuccessBlock)(NSString *value);
-void (^ParseTestFailBlock)(NSString *msg);
+void (^ParseTestFailBlock)(NSString *msg, NSString *origin);
 
 // Operations
 void (^addIdToStackBlock)(NSString *id, NSString *type);
