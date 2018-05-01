@@ -201,7 +201,12 @@ var vars
 ;
 
 var:
-VAR ID COLON TYPE tipoAux SEMICOLON {
+VAR ID COLON TYPE tipoAux {
+    if (strcmp($4, "Void") == 0 || strcmp($4, "void") == 0) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable \"%s\" can't be type void in line %d \n", $2, getLineNumber()]);
+    }
+    
+    } SEMICOLON {
     if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 == 0) {
         addVariableBlock([NSString stringWithFormat:@"%s", $2],[NSString stringWithFormat:@"%s", $4], false);
     } else if (!findVariableBlock([NSString stringWithFormat:@"%s", $2]) && $5 > 0) { // ARRAYS PARSING
@@ -448,6 +453,3 @@ LFT_PAR {addOperatorToStackBlock(@"(");} expresion RGT_PAR {deleteParentesisFrom
 ;
 ;
 ;
-
-
-
