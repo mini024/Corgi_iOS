@@ -64,7 +64,7 @@ extern void (^generateWritequadrupleBlock)(void);
 extern void (^generateERAQuadrupleBlock)(NSString *id);
 extern void (^generateEndOfFunctionQuadrupleBlock)(void);
 extern void (^generateEndOfProgramQuadrupleBlock)(void);
-extern void (^generateGoSubQuadrupleBlock)(NSString * id);
+extern bool (^generateGoSubQuadrupleBlock)(NSString * id);
 extern bool (^generateParameterQuadrupleBlock)(NSString * id);
 extern bool (^generateReturnBlock)(void);
 extern bool (^generateVoidReturnBlock)(void);

@@ -272,8 +272,9 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     
     generateGoSubQuadrupleBlock = ^(NSString *name) {
         if (!self->_failed) {
-            [Helper.singleton generateGoSubQuadruple];
+            return [Helper.singleton generateGoSubQuadruple];
         }
+        return YES;
     };
     
     generateParameterQuadrupleBlock = ^(NSString *name) {

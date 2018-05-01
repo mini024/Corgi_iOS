@@ -250,7 +250,13 @@ extension Helper {
         run(quadruples: quadruples)
     }
     
-    func generateGoSubQuadruple() {
+    func generateGoSubQuadruple() -> Bool{
+        // Check number of parameters
+        if funcTable[callingFunction.last!]?.parameters.count !=  funcTable[callingFunction.last!]?.currentParameter {
+            print("Faltan parametros")
+            return false
+        }
+        
         let functionName = callingFunction.popLast()
         let functionAddress: Int = getFunctionStartAddressWith(id: functionName!)
         
@@ -263,6 +269,8 @@ extension Helper {
             idAddresses.append(returnAddress!)
             idTypes.append((funcTable[functionName!]?.returnType)!)
         }
+        
+        return true
     }
     
     func generateParameterQuadruple() -> Bool {
@@ -287,7 +295,7 @@ extension Helper {
         
         quadruples.append(Quadruple(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
         
-        funcTable[currentFunc]?.currentParameter += 1
+        funcTable[callingFunction.last!]?.currentParameter += 1
         
         return true
     }
@@ -344,6 +352,7 @@ extension Helper {
     func checkIfArray() -> Bool {
         
         let arrAddress = idAddresses.popLast()
+        _ = idTypes.popLast()
         let size = getArraySize(address: arrAddress!)
         
         if size > 0 {
@@ -374,6 +383,7 @@ extension Helper {
         let targetArrayAddress = virtualMemory.localMemory.setInt(value: 99999)
         
         idAddresses.append(-1 * targetArrayAddress)
+        idTypes.append(gapType!)
         quadruples.append(Quadruple(leftOperand: gap, rightOperand: -1 * arrBaseDir!, oper: .Sum, resultVar: targetArrayAddress))
         
         return true

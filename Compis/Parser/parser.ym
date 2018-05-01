@@ -173,7 +173,9 @@ ID {
     }
 } LFT_PAR llamadaParametros RGT_PAR SEMICOLON {
     //GoSub quadruple
-    generateGoSubQuadrupleBlock(@"llamada");
+    if (!generateGoSubQuadrupleBlock(@"llamada")) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong number of arguments in function call in line %d \n", getLineNumber()]);
+    }
 }
 ;
 
@@ -181,7 +183,7 @@ llamadaParametros:
 Megaexpresion {
     // Send param/ save param quadruple
     if (!generateParameterQuadrupleBlock(@"parametro")) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type doesn't exist, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument with type doesn't exist, line %d \n", getLineNumber()]);
     }
 } llamadaParametrosAux
 | /*epsilon*/

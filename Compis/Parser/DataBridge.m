@@ -59,7 +59,7 @@ void (^generateWritequadrupleBlock)(void);
 void (^generateERAQuadrupleBlock)(NSString *id);
 void (^generateEndOfFunctionQuadrupleBlock)(void);
 void (^generateEndOfProgramQuadrupleBlock)(void);
-void (^generateGoSubQuadrupleBlock)(NSString * id);
+bool (^generateGoSubQuadrupleBlock)(NSString * id);
 bool (^generateParameterQuadrupleBlock)(NSString * id);
 bool (^generateReturnBlock)(void);
 bool (^generateVoidReturnBlock)(void);
