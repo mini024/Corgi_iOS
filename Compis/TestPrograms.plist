@@ -2,6 +2,51 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Test Factorial Recursive </key>
+	<string>corgi facR;
+        
+func fac(n : Int) -&gt; Int {
+        var res:Int;
+        var temp:Int;
+        res = 0;
+
+        case {
+        		n &lt;= 0: res = 1;
+       		 | else :
+        			res = fac(n-1);
+			res = n * res;
+        }
+        return res;
+}
+        
+corgiRun() {
+        var f:Int;
+        f = fac(9);
+        write(f);
+}</string>
+	<key>Test Fibonacci Recursive </key>
+	<string>corgi fibR;
+
+func fib(n : Int) -&gt; Int {
+	var res:Int;
+	var temp:Int;
+
+	res = 0;
+	case {
+		n &lt;= 1: res = n;
+		| else : 
+			res = fib(n-1);
+			temp = fib(n-2);
+			res = res + temp;
+	}
+	return res;
+}
+
+corgiRun() {
+  var f:Int;
+  f = fib(9);
+  write(f);
+}</string>
 	<key>Test Bubble sort</key>
 	<string>corgi sort;
 var i: Int;

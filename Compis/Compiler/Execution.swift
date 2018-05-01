@@ -97,6 +97,11 @@ extension Helper {
                 break
             case .VER:
                 break
+            case .RET:
+                runReturn(address: quadruple.resultVar!, result: quadruple.leftOperand!);
+                // Change memories
+                virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
+                break;
             }
             quadrupleNumber += 1;
         }
@@ -168,7 +173,7 @@ extension Helper {
      Make top memory from memory stack local memory and sleep local memory
     */
     func runSub(quadrupleNumber: Int) {
-        let local = virtualMemory.localMemory
+        let local = virtualMemory.localMemory.copy()
         
         // Make top memory -> local memory
         virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
@@ -178,6 +183,12 @@ extension Helper {
         
         // Save quadruple to return
         virtualMemory.quadruplesStack.append(quadrupleNumber)
+    }
+    
+    func runReturn(address: Int, result: Int) {
+        let value = virtualMemory.getValueIn(address: result)
+        
+        virtualMemory.memoryStack.last?.setValueIn(address: address, result: value.0)
     }
     
     
@@ -482,6 +493,12 @@ extension Helper {
         } else if leftTuple.1 == .Float && rightTuple.1 == .Int {
             let leftValue = leftTuple.0 as! Float
             let rightValue = Float(rightTuple.0 as! Int)
+            
+            virtualMemory.setValueIn(address: resultAddress, result: leftValue + rightValue)
+            return
+        } else if leftTuple.1 == .String && rightTuple.1 == .String {
+            let leftValue = leftTuple.0 as! String
+            let rightValue = rightTuple.0 as! String
             
             virtualMemory.setValueIn(address: resultAddress, result: leftValue + rightValue)
             return

@@ -232,7 +232,9 @@ SLFT_BRA {checkIfArrayBlock();} exp {checkRangeforArrayExpresionBlock();} SRGT_B
     generateParameterQuadrupleBlock(@"parametro");
 } llamadaParametros RGT_PAR {
     //GoSub quadruple
-    generateGoSubQuadrupleBlock(@"llamada");
+    if (!generateGoSubQuadrupleBlock(@"llamada")) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Wrong number of arguments in function call in line %d \n", getLineNumber()]);
+    }
 }
 | /*epsilon*/
 ;

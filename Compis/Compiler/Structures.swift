@@ -51,6 +51,7 @@ enum Operator: Int, CustomStringConvertible{
     case END = 24
     case RETURN = 25
     case VER = 26
+    case RET = 27
     
     var description: String {
         switch self {
@@ -108,6 +109,8 @@ enum Operator: Int, CustomStringConvertible{
             return "RETURN"
         case .VER:
             return "VER"
+        case .RET:
+            return "RET"
         }
     }
 }
@@ -122,6 +125,7 @@ struct Variable {
 
 struct Function {
     var returnType: Type!
+    var returnAddress: Int!
     var variables = [String: Variable]()
     var parameters = [String: Variable]()
     var startAddress: Int // Quadruple index

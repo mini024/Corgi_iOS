@@ -21,12 +21,18 @@ class VirtualMemory {
     var quadruplesStack: [Int] = []
     
     func setValueIn(address: Int, result: Any) {
-        if address < LOCAL_START_ADDRESS {
-            globalMemory.setValueIn(address: address, result:result)
-        } else if address < CONSTANTS_START_ADDRESS {
-            localMemory.setValueIn(address: address, result:result)
+        var realAddress = address
+        if address < Helper.singleton.quadruples.count && address > 0 {
+            let funcName = Helper.singleton.getFunctionNameWith(address: address)
+            realAddress = (Helper.singleton.funcTable[funcName]?.returnAddress)!
+        }
+        
+        if realAddress < LOCAL_START_ADDRESS {
+            globalMemory.setValueIn(address: realAddress, result:result)
+        } else if realAddress < CONSTANTS_START_ADDRESS {
+            localMemory.setValueIn(address: realAddress, result:result)
         } else {
-            constantsMemory.setValueIn(address: address, result:result)
+            constantsMemory.setValueIn(address: realAddress, result:result)
         }
     }
     
@@ -49,6 +55,9 @@ class VirtualMemory {
         var realAddress = address
         if address < 0 {
             realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
+        } else if address < Helper.singleton.quadruples.count {
+            let funcName = Helper.singleton.getFunctionNameWith(address: address)
+            realAddress = (Helper.singleton.funcTable[funcName]?.returnAddress)!
         }
         
         if realAddress < LOCAL_START_ADDRESS {
