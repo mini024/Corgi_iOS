@@ -122,33 +122,33 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
         UINavigationController *next = (UINavigationController*) self.tabBarController.viewControllers[[self.tabBarController selectedIndex] + 1];
         ConsoleViewController *destination = (ConsoleViewController*) next.topViewController;
         if (!self.failed) {
-            destination.consoleText = _result;
+            destination.consoleText = self->_result;
         } else {
-            destination.consoleText = _errors;
+            destination.consoleText = self->_errors;
         }
         
-        selectedProgram.code = codeTextView.text;
+        self->selectedProgram.code = self->codeTextView.text;
         
         [self.tabBarController setSelectedIndex:[self.tabBarController selectedIndex] + 1];
     };
     
     ParseTestSuccessBlock = ^(NSString *value) {
         if (!self.failed) {
-            _result = [_result stringByAppendingString:value];
+            self->_result = [self->_result stringByAppendingString:value];
         }
     };
     
     ParseTestFailBlock = ^(NSString *msg) {
         self.failed = true;
-        _errors = [_errors stringByAppendingString:msg];
+        self->_errors = [self->_errors stringByAppendingString:msg];
     };
     
     addLineCounterBlock = ^() {
-        _line +=1;
+        self->_line +=1;
     };
     
     getLineNumber = ^() {
-        return _line;
+        return self->_line;
     };
     
     addVariableBlock = ^(NSString *name, NSString *type, int parameter) {
@@ -192,7 +192,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     };
     
     checkNextOperatorBlock = ^(NSString *type) {
-        if (_failed) {
+        if (self->_failed) {
             return YES;
         }
         
@@ -263,7 +263,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     };
     
     generateEndOfProgramQuadrupleBlock = ^() {
-        if (!_failed) {
+        if (!self->_failed) {
             [Helper.singleton generateEndOfProgramQuadruple];
         } else {
             EndBlock();
@@ -271,7 +271,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     };
     
     generateGoSubQuadrupleBlock = ^(NSString *name) {
-        if (!_failed) {
+        if (!self->_failed) {
             [Helper.singleton generateGoSubQuadruple];
         }
     };
@@ -326,7 +326,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
                                        style:UIAlertActionStyleDefault
                                        handler:^(UIAlertAction * action) {
                                            // Disable save button
-                                           _saveButton.enabled = false;
+                                           self->_saveButton.enabled = false;
                                        }];
         UIAlertAction *replaceAction = [UIAlertAction
                                       actionWithTitle:@"Replace"
@@ -334,7 +334,7 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
                                       handler:^(UIAlertAction * action) {
                                           NSMutableDictionary *newProgram = [[NSMutableDictionary alloc] init];
                                           [newProgram addEntriesFromDictionary:savedPrograms];
-                                          [newProgram setObject:codeTextView.text forKey:Helper.singleton.programName];
+                                          [newProgram setObject:self->codeTextView.text forKey:Helper.singleton.programName];
                                           
                                           [[NSUserDefaults standardUserDefaults] setObject:newProgram forKey:@"SavedPrograms"];
                                           [[NSUserDefaults standardUserDefaults] synchronize];

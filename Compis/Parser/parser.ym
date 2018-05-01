@@ -171,7 +171,7 @@ ID {
         // Generate ERA with id
         generateERAQuadrupleBlock([NSString stringWithFormat:@"%s", $1]);
     } else {
-        ParseTestFailBlock([NSString stringWithFormat:@"Wrong value type in parameter \"%s\" in line %d \n", $1, getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Function \"%s\" doesn't exist in line %d \n", $1, getLineNumber()]);
     }
 } LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
@@ -347,13 +347,13 @@ FOR ID {
     //addIdToStackBlock([NSString stringWithFormat:@"%d", $8], @"Int");
 } BY {
     if (!generateLoopConditionQuadruplesBlock()) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Ints, line %d\n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Integers, line %d\n", getLineNumber()]);
     }
     generateGOTOFquadrupleBlock(0);
 } exp LFT_BRA estatutos {
 } RGT_BRA {
     if (!generateByQuadrupleBlock()) {
-        ParseTestFailBlock([NSString stringWithFormat:@"By value must be type Int, line %d\n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"By value must be an Integer, line %d\n", getLineNumber()]);
     }
     generateGOTOquadrupleBlock(1);
     fillEndLoopQuadrupleBlock();

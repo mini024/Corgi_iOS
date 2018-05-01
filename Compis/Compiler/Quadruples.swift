@@ -75,16 +75,16 @@ extension Helper {
         switch resultType! {
         case .Int:
             resultAddress =  virtualMemory.localMemory.setInt(value: 9999)
-            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Float:
             resultAddress = virtualMemory.localMemory.setFloat(value: 9999.9)
-            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .String:
             resultAddress = virtualMemory.localMemory.setString(value: "")
-            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         case .Bool:
             resultAddress = virtualMemory.localMemory.setBool(value: false)
-            quadruples.append(QuadrupleDir(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
+            quadruples.append(Quadruple(leftOperand: leftOperand!, rightOperand: rightOperand, oper: oper!, resultVar: resultAddress))
         default:
             return false
         }
@@ -106,7 +106,7 @@ extension Helper {
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
+        quadruples.append(Quadruple(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
         printQuadruples()
         return true
     }
@@ -124,7 +124,7 @@ extension Helper {
         // Step 2 generate GOTOF quad
         let oper = Operator.GOTOF
         let nextQuadruple = 99999
-        quadruples.append(QuadrupleDir(leftOperand: temporalVariableAddress, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
+        quadruples.append(Quadruple(leftOperand: temporalVariableAddress, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Step 2 pjumps.push(cont-1)
         let pendingIndex = quadruples.count
@@ -144,7 +144,7 @@ extension Helper {
         // Generate GOTO Quadruple
         let oper = Operator.GOTO
         let nextQuadruple = 99999
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
+        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: oper, resultVar: nextQuadruple))
         
         // Add index to pending quadruples to fill later.
         if code != 3 {
@@ -159,7 +159,7 @@ extension Helper {
         _ = idTypes.popLast()
         
         // Create quadruple with temoral value
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
+        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
         
     }
     
@@ -180,13 +180,13 @@ extension Helper {
         
         // Conditional Quadruple
         let lessThanMaxAddress = virtualMemory.localMemory.setBool(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 7)!, resultVar: lessThanMaxAddress))
+        quadruples.append(Quadruple(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 7)!, resultVar: lessThanMaxAddress))
         
         let greaterThanMinAddress = virtualMemory.localMemory.setBool(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
+        quadruples.append(Quadruple(leftOperand: variableAddress, rightOperand: minAddress, oper: Operator(rawValue: 9)!, resultVar: greaterThanMinAddress))
         
         let conditionAddress = virtualMemory.localMemory.setBool(value: nil)
-        quadruples.append(QuadrupleDir(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
+        quadruples.append(Quadruple(leftOperand: lessThanMaxAddress, rightOperand: greaterThanMinAddress, oper: Operator(rawValue: 12)!, resultVar: conditionAddress))
         
         // Push variable Address to keep using
         idAddresses.append(variableAddress)
@@ -217,7 +217,7 @@ extension Helper {
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: byAddress, rightOperand: variableAddress, oper: Operator(rawValue: 0)!, resultVar: variableAddress))
+        quadruples.append(Quadruple(leftOperand: byAddress, rightOperand: variableAddress, oper: Operator(rawValue: 0)!, resultVar: variableAddress))
         return true
     }
     
@@ -226,13 +226,13 @@ extension Helper {
         
         guard functionStartQuadruple > 0 else {print("Error No function declared" + name); return}
         
-        quadruples.append(QuadrupleDir(leftOperand: functionStartQuadruple, rightOperand: nil, oper: Operator(rawValue: 20)!, resultVar: nil))
+        quadruples.append(Quadruple(leftOperand: functionStartQuadruple, rightOperand: nil, oper: Operator(rawValue: 20)!, resultVar: nil))
         callingFunction.append(name)
     }
     
     func generateEndOfFunctionQuadruple() {
         if currentFunc != "corgiRun" {
-           quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
+           quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
         }
         
         funcTable[currentFunc]?.memory = virtualMemory.localMemory
@@ -241,7 +241,7 @@ extension Helper {
     }
     
     func generateEndOfProgramQuadruple() {
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
+        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
         let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
         quadruples[0].resultVar = corgiRunQuadruple!
         printQuadruples()
@@ -254,7 +254,7 @@ extension Helper {
         let functionName = callingFunction.popLast()
         let functionAddress: Int = getFunctionStartAddressWith(id: functionName!)
         
-        quadruples.append(QuadrupleDir(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
+        quadruples.append(Quadruple(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
         funcTable[functionName!]?.currentParameter = 0
         
         // Check if there is return value in stack
@@ -285,7 +285,7 @@ extension Helper {
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
+        quadruples.append(Quadruple(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
         
         funcTable[currentFunc]?.currentParameter += 1
         
@@ -305,7 +305,7 @@ extension Helper {
         guard funcTable[currentFunc]?.returnType == valueType else {print("ERROR - Wrong return type"); return false}
     
         // Generate quadruple
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
+        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
         returnValues.append(valueAddress!)
         return true
     }
@@ -316,7 +316,7 @@ extension Helper {
             return false
         }
         
-        quadruples.append(QuadrupleDir(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
+        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
         return true
     }
     
@@ -359,7 +359,7 @@ extension Helper {
         let arr = pendingArray[pendingArray.count-1]
         let arrSize = getArraySize(address: arr)
         
-        quadruples.append(QuadrupleDir(leftOperand: arrSize, rightOperand: 0, oper: .VER, resultVar: size))
+        quadruples.append(Quadruple(leftOperand: arrSize, rightOperand: 0, oper: .VER, resultVar: size))
         printQuadruples()
     }
     
@@ -374,7 +374,7 @@ extension Helper {
         let targetArrayAddress = virtualMemory.localMemory.setInt(value: 99999)
         
         idAddresses.append(-1 * targetArrayAddress)
-        quadruples.append(QuadrupleDir(leftOperand: gap, rightOperand: -1 * arrBaseDir!, oper: .Sum, resultVar: targetArrayAddress))
+        quadruples.append(Quadruple(leftOperand: gap, rightOperand: -1 * arrBaseDir!, oper: .Sum, resultVar: targetArrayAddress))
         
         return true
     }

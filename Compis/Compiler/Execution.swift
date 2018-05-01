@@ -11,7 +11,7 @@ import Foundation
 
 extension Helper {
     
-    func run(quadruples: [QuadrupleDir]) {
+    func run(quadruples: [Quadruple]) {
         var quadrupleNumber = 0
         
         while quadrupleNumber < quadruples.count{

@@ -112,7 +112,7 @@ enum Operator: Int, CustomStringConvertible{
     }
 }
 
-struct Symbol {
+struct Variable {
     var type: Type!
     var scope: Scope!
     var address: Int!
@@ -122,8 +122,8 @@ struct Symbol {
 
 struct Function {
     var returnType: Type!
-    var variables = [String: Symbol]()
-    var parameters = [String: Symbol]()
+    var variables = [String: Variable]()
+    var parameters = [String: Variable]()
     var startAddress: Int // Quadruple index
     var currentParameter = 0
     var memory: Memory!
@@ -142,7 +142,7 @@ struct Function {
     }
 }
 
-struct QuadrupleDir {
+struct Quadruple {
     var leftOperand : Int?
     var rightOperand : Int?
     var oper: Operator

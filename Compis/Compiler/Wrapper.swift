@@ -28,7 +28,7 @@ import UIKit
     
     // Quadruple
     var pendingQuadruples: [Int] = [] // jumps stack
-    var quadruples: [QuadrupleDir] = []
+    var quadruples: [Quadruple] = []
     var temporalVariables: [Any] = []
     var indexTempVars = 0
     
