@@ -13,7 +13,7 @@ func fac(n : Int) -&gt; Int {
         case {
         		n &lt;= 0: res = 1;
        		 | else :
-        			res = fac(n-1);
+        			res = fac(n+-1);
 			res = n * res;
         }
         return res;
@@ -35,8 +35,8 @@ func fib(n : Int) -&gt; Int {
 	case {
 		n &lt;= 1: res = n;
 		| else : 
-			res = fib(n-1);
-			temp = fib(n-2);
+			res = fib(n+-1);
+			temp = fib(n+-2);
 			res = res + temp;
 	}
 	return res;
@@ -58,8 +58,8 @@ var temp: Int;
 
 func bubbleSort(n : Int) -&gt; void {
   
-  for i in 0...n-1 by 1{
-    for j in 0...n-i-1 by 1{
+  for i in 0...(n+-1) by 1{
+    for j in 0...(n-i+-1) by 1{
       case {
         arrA[j]&gt;arrA[j+1]: 
           temp = arrA[j];

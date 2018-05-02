@@ -96,7 +96,7 @@ extension Helper {
             case .RETURN:
                 break
             case .VER:
-                if quadruple.leftOperand! > virtualMemory.getValueIn(address:quadruple.resultVar!).0 as! Int || quadruple.leftOperand! < 0 {
+                if quadruple.leftOperand! < virtualMemory.getValueIn(address:quadruple.resultVar!).0 as! Int || quadruple.leftOperand! < 0 {
                     ParseTestFailBlock("Index in array is out of bounds");
                     quadrupleNumber = quadruples.count
                     EndBlock();
