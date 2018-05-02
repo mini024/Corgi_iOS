@@ -20,8 +20,13 @@ class VirtualMemory {
     // Stores quadruple address to return when calling goto function
     var quadruplesStack: [Int] = []
     
+    /**
+     Sets value in right memory depending on address index
+     */
     func setValueIn(address: Int, result: Any) {
         var realAddress = address
+        
+        // Get real address if it is a quadruple address, this is for return values
         if address < Helper.singleton.quadruples.count && address > 0 {
             let funcName = Helper.singleton.getFunctionNameWith(address: address)
             realAddress = (Helper.singleton.funcTable[funcName]?.returnAddress)!
@@ -36,8 +41,12 @@ class VirtualMemory {
         }
     }
     
+    /**
+     Sets parameter value in right memory depending on address index
+     */
     func setValueForParameter(address: Int, result: Any) {
         var realAddress = address
+        // Get real address if it is a negative address, using arrays
         if address < 0 {
             realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
         }
@@ -51,11 +60,14 @@ class VirtualMemory {
         }
     }
     
+    /**
+     Gets value from right memory depending on address index
+     */
     func getValueIn(address: Int) -> (Any, Type) {
         var realAddress = address
-        if address < 0 {
+        if address < 0 { // Get real address if it is a negative address, using arrays
             realAddress = Helper.singleton.virtualMemory.getValueIn(address: -1 * address).0 as! Int
-        } else if address < Helper.singleton.quadruples.count {
+        } else if address < Helper.singleton.quadruples.count { // Get real address if it is a quadruple address, this is for return values
             let funcName = Helper.singleton.getFunctionNameWith(address: address)
             realAddress = (Helper.singleton.funcTable[funcName]?.returnAddress)!
         }

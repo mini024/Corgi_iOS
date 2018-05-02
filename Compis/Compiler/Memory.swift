@@ -27,6 +27,9 @@ class Memory {
         BOOL_START_ADDRESS += value
     }
 
+    /**
+     Generates memory copy
+     */
     func copy () -> Memory {
         let copy = Memory(value: INT_START_ADDRESS)
         copy.intMemory = intMemory
@@ -36,6 +39,9 @@ class Memory {
         return copy
     }
     
+    /**
+     Sets value in right memory depending on address index
+     */
     func setValueIn(address: Int, result: Any) {
         var realAddress = address
         if address < 0 {
@@ -53,6 +59,9 @@ class Memory {
         }
     }
     
+    /**
+     Gets value from right memory depending on address index
+     */
     func getValueIn(address: Int) -> (Any, Type) {
         if address < FLOAT_START_ADDRESS {
             // int
@@ -69,58 +78,44 @@ class Memory {
         }
     }
     
+    /**
+     Generates space in Ints memory
+        @param value - value to store
+        @return type - New address
+     */
     func setInt(value: Int?) -> Int {
         intMemory.append(value)
         return INT_START_ADDRESS + intMemory.count - 1
     }
     
+    /**
+     Generates space in Float memory
+     @param value - value to store
+     @return type - New address
+     */
     func setFloat(value: Float?) -> Int {
         floatMemory.append(value)
         return FLOAT_START_ADDRESS + floatMemory.count - 1
     }
     
+    /**
+     Generates space in String memory
+     @param value - value to store
+     @return type - New address
+     */
     func setString(value: String?) -> Int {
         stringMemory.append(value)
         return STRING_START_ADDRESS + stringMemory.count - 1
     }
     
+    /**
+     Generates space in Bool memory
+     @param value - value to store
+     @return type - New address
+     */
     func setBool(value: Bool?) -> Int {
         boolMemory.append(value)
         return BOOL_START_ADDRESS + boolMemory.count - 1
-    }
-    
-    func getMaxAddress() -> Int {
-        return BOOL_START_ADDRESS + boolMemory.count
-    }
-    
-    func getIntWith(address: Int) -> Int? {
-        if address < FLOAT_START_ADDRESS {
-            return intMemory[address - INT_START_ADDRESS]
-        }
-        
-        return nil
-    }
-    
-    func getFloatWith(address: Int) -> Float? {
-        if address < STRING_START_ADDRESS {
-            return floatMemory[address - FLOAT_START_ADDRESS]
-        }
-        
-        return nil
-    }
-    
-    func getStringWith(address: Int) -> String? {
-        if address < BOOL_START_ADDRESS {
-            return stringMemory[address - STRING_START_ADDRESS]
-        }
-        return nil
-    }
-    
-    func getBoolWith(address: Int) -> Bool? {
-        if address >= BOOL_START_ADDRESS {
-            return boolMemory[address - BOOL_START_ADDRESS]
-        }
-        return nil
     }
     
 }
