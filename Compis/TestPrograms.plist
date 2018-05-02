@@ -2,6 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Test Find</key>
+	<string>corgi find;
+var i: Int;
+var n: Int;
+var found: Bool;
+var arrA: Int[5];
+
+func find(n : Int) -&gt; Bool {
+  
+  for i in 0...n by 1{
+    case {
+        arrA[i] == n: 
+		found = true;
+      }
+    }
+  i = 0;
+  return found;
+}
+
+corgiRun() {
+  i = 0;
+  n = 2;
+  found = true;
+  arrA[0] = 5;
+  arrA[1] = 1;
+  arrA[2] = 4;
+  arrA[3] = 2;
+  arrA[4] = 8;
+
+find(n);  
+write(found);
+
+} </string>
 	<key>Test Factorial Recursive </key>
 	<string>corgi facR;
         
