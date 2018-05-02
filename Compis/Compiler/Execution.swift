@@ -112,6 +112,9 @@ extension Helper {
         }
     }
     
+    /**
+     Sends stirng value to the success block so it can be written in the output text view.
+     */
     func runWrite(address: Int) {
         let valueTuple = virtualMemory.getValueIn(address: address)
         
@@ -190,9 +193,14 @@ extension Helper {
         virtualMemory.quadruplesStack.append(quadrupleNumber)
     }
     
+    /**
+     Gets return value ans stores it in address of the local memory that called function.
+     */
     func runReturn(address: Int, result: Int) {
+        // Return addresss value
         let value = virtualMemory.getValueIn(address: result)
         
+        // Memory that called current function
         virtualMemory.memoryStack.last?.setValueIn(address: address, result: value.0)
     }
     

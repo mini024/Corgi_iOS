@@ -91,7 +91,6 @@ extension Helper {
         
         idAddresses.append(resultAddress) // push temporal variable to operands stack
         idTypes.append(resultType!) // push temporal variable type to types stack
-        //printQuadruples()
         return true
     }
     
@@ -102,12 +101,13 @@ extension Helper {
         let resultVariable = idAddresses.popLast()
         let resultType = idTypes.popLast()
 
+        // Checks that types are the same
         guard temporalType == resultType else {
             return false
         }
         
+        // Generates assignation quadruple
         quadruples.append(Quadruple(leftOperand: temporalVariable, rightOperand: nil, oper: oper!, resultVar: resultVariable!))
-        //printQuadruples()
         return true
     }
     
@@ -151,10 +151,11 @@ extension Helper {
     }
     
     func generateWriteQuadruple() {
+        // Gets value address
         let variableAddress = idAddresses.popLast()
         _ = idTypes.popLast()
         
-        // Create quadruple with temoral value
+        // Create quadruple with value
         quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 18)!, resultVar: variableAddress))
         
     }
@@ -174,7 +175,7 @@ extension Helper {
         
         pendingQuadruples.append(quadruples.count - 1)
         
-        // Conditional Quadruple
+        // Conditional Quadruple - quadurples to make sure value is in range
         let lessThanMaxAddress = virtualMemory.localMemory.setBool(value: nil)
         quadruples.append(Quadruple(leftOperand: variableAddress, rightOperand: maxAddress, oper: Operator(rawValue: 7)!, resultVar: lessThanMaxAddress))
         
@@ -197,6 +198,8 @@ extension Helper {
     
     func generateWhileConditionQuadruple() {
         let pendingIndex = quadruples.count
+        
+        // Add current index to pendign quadruples
         pendingQuadruples.append(pendingIndex - 1)
     }
     
@@ -217,6 +220,10 @@ extension Helper {
         return true
     }
     
+    /**
+     Quadruple for calling function, used to create new memory of called function.
+     @param name: function name used to get start address
+     */
     func generateERAQuadruple(_ name: String) {
         let functionStartQuadruple = getFunctionStartAddressWith(id: name)
         
@@ -226,6 +233,9 @@ extension Helper {
         callingFunction.append(name)
     }
     
+    /**
+     Quadruple to detect end of function
+     */
     func generateEndOfFunctionQuadruple() {
         if currentFunc != "corgiRun" {
            quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 23)!, resultVar: nil))
@@ -235,6 +245,9 @@ extension Helper {
         virtualMemory.localMemory = Memory(value: virtualMemory.localMemory.INT_START_ADDRESS)
     }
     
+    /**
+     Quadruple to detect end of program
+     */
     func generateEndOfProgramQuadruple() {
         quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 24)!, resultVar: nil))
         let corgiRunQuadruple = funcTable["corgiRun"]?.startAddress
@@ -245,6 +258,9 @@ extension Helper {
         run(quadruples: quadruples)
     }
     
+    /**
+     Quadruple to change local memory to top memory in stack.
+     */
     func generateGoSubQuadruple() -> Bool{
         // Check number of parameters
         if funcTable[callingFunction.last!]?.parameters.count !=  funcTable[callingFunction.last!]?.currentParameter {
@@ -255,10 +271,11 @@ extension Helper {
         let functionName = callingFunction.popLast()
         let functionAddress: Int = getFunctionStartAddressWith(id: functionName!)
         
+        // Creae go sub quadruple
         quadruples.append(Quadruple(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
         funcTable[functionName!]?.currentParameter = 0
         
-        // Add result to temp variable
+        // Create quadruple with RET operation to save return value in right address
         if functionName == currentFunc {
             switch funcTable[functionName!]?.returnType! {
             case Type.Int?:
@@ -297,7 +314,7 @@ extension Helper {
             return true
         }
         
-        // Check if there is return value in stack
+        // Check if there is return value in stack, if there is move it to idAddresses stack. This is used when there isn't recursion.
         if (funcTable[functionName!]?.returnType)! != Type.Void && functionName != currentFunc {
             if let returnAddress = returnValues.popLast() {
                 idAddresses.append(returnAddress)
@@ -308,6 +325,9 @@ extension Helper {
         return true
     }
     
+    /**
+     Quadruple to send parameter values to new local memory
+     */
     func generateParameterQuadruple() -> Bool {
         let argumentAddress = idAddresses.popLast()
         let argumentType = idTypes.popLast()
@@ -315,6 +335,7 @@ extension Helper {
         let parameterIndex = funcTable[functionName]?.currentParameter
         let parameterTuple = getParameterTypeAndAddressWith(index: parameterIndex!, function: functionName)
         
+        // Check that there is suposed to be another parameter
         guard parameterTuple.0 != .ERROR else {
             print("No parameter on index")
             return false
@@ -323,18 +344,24 @@ extension Helper {
         let parameterType = parameterTuple.0
         let parameterAddress = parameterTuple.1
         
+        // Check parameter type
         guard argumentType == parameterType else {
             print("Error Wrong parameter type")
             return false
         }
         
+        // Create quadruple
         quadruples.append(Quadruple(leftOperand: argumentAddress, rightOperand: nil, oper: Operator(rawValue: 22)!, resultVar: parameterAddress))
         
+        // Move to next parameter
         funcTable[callingFunction.last!]?.currentParameter += 1
         
         return true
     }
     
+    /**
+     Return quadruple at end of function declaration, has return address
+     */
     func generateReturnQuadruple() -> Bool{
         guard funcTable[currentFunc]?.returnType != Type.Void else {
             print("ERROR - Wrong return type");
@@ -347,24 +374,35 @@ extension Helper {
         // Check type of return type & value
         guard funcTable[currentFunc]?.returnType == valueType else {print("ERROR - Wrong return type"); return false}
         
+        // Save local return adddress in function table
         funcTable[currentFunc]?.returnAddress = valueAddress
     
         // Generate quadruple
         quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
+        
+        // Add pending return value to stack
         returnValues.append(valueAddress!)
         return true
     }
     
+    /**
+     Return quadruple at end of function declaration, it is empty
+     */
     func generateVoidReturnQuadruple() -> Bool {
+        // Check if fuction should return nil
         if funcTable[currentFunc]?.returnType != Type.Void {
             print("ERROR - Wrong return type");
             return false
         }
         
+        // Generate quadruple
         quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: nil))
         return true
     }
     
+    /**
+     Fill missing quadruples after finsishing loop
+     */
     func fillEndLoopQuadruple() {
         // Step 2 end = pjumps.pop()
         let end = pendingQuadruples.popLast()
@@ -376,6 +414,9 @@ extension Helper {
         //printQuadruples()
     }
     
+    /**
+     Fill missing quadruples after finsishing conditional
+     */
     func fillEndConditionQuadruple() {
         // Step 2 end = pjumps.pop()
         if let end = pendingQuadruples.popLast() {
@@ -386,10 +427,13 @@ extension Helper {
         //printQuadruples()
     }
     
+    /**
+     Check if variable is an array
+     */
     func checkIfArray() -> Bool {
         
         let arrAddress = idAddresses.popLast()
-        //_ = idTypes.popLast()
+
         let size = getArraySize(address: arrAddress!)
         
         if size > 0 {
@@ -399,6 +443,9 @@ extension Helper {
         return false
     }
     
+    /**
+     Generate Verification quadruple with array size and index used
+     */
     func checkRangeforArrayExpresion(){
         
         let size = idAddresses[idAddresses.count-1]
@@ -406,9 +453,11 @@ extension Helper {
         let arrSize = getArraySize(address: arr)
         
         quadruples.append(Quadruple(leftOperand: arrSize, rightOperand: 0, oper: .VER, resultVar: size))
-        //printQuadruples()
     }
     
+    /**
+     Generate address for index of array
+     */
     func addSizeGaptoBaseAddress() -> Bool {
         
         let arrBaseDir = pendingArray.popLast()
@@ -419,8 +468,11 @@ extension Helper {
                 
         let targetArrayAddress = virtualMemory.localMemory.setInt(value: 99999)
         
+        // Add address with negative so we know it stores an address
         idAddresses.append(-1 * targetArrayAddress)
         idTypes.append(gapType!)
+        
+        // Generate quadruple with base dir negative to use as value
         quadruples.append(Quadruple(leftOperand: gap, rightOperand: -1 * arrBaseDir!, oper: .Sum, resultVar: targetArrayAddress))
         
         return true
