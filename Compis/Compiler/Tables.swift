@@ -211,7 +211,7 @@ extension Helper {
         
         for array in (funcTable["Corgi"]?.variables)! {
             if array.value.address == address{
-                return (array.value.arrSize)
+                return (array.value.arrSize) == nil ? 0 : (array.value.arrSize)
             }
         }
         

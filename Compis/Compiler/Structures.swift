@@ -156,9 +156,9 @@ struct Quadruple {
 extension String {
     func toBool() -> Bool? {
         switch self {
-        case "True", "true", "yes", "1":
+        case "True", "true", "yes", "0":
             return true
-        case "False", "false", "no", "0":
+        case "False", "false", "no", "1":
             return false
         default:
             return nil

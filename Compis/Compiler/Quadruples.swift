@@ -134,11 +134,7 @@ extension Helper {
     func generateGOTOquadruple(_ code:Int) {
         // Check if there is pending quadruples
         if let end = pendingQuadruples.popLast() {
-            if code == 0 {
-                quadruples[end].resultVar = quadruples.count + 1
-            } else {
-                quadruples[end].resultVar = quadruples.count + 1
-            }
+            quadruples[end].resultVar = quadruples.count + 1
         }
         
         // Generate GOTO Quadruple
@@ -303,9 +299,10 @@ extension Helper {
         
         // Check if there is return value in stack
         if (funcTable[functionName!]?.returnType)! != Type.Void && functionName != currentFunc {
-            let returnAddress = returnValues.popLast()
-            idAddresses.append(returnAddress!)
-            idTypes.append((funcTable[functionName!]?.returnType)!)
+            if let returnAddress = returnValues.popLast() {
+                idAddresses.append(returnAddress)
+                idTypes.append((funcTable[functionName!]?.returnType)!)
+            }
         }
         
         return true
@@ -402,7 +399,7 @@ extension Helper {
         return false
     }
     
-    func checkRangeforArrayExpresion() -> Void {
+    func checkRangeforArrayExpresion(){
         
         let size = idAddresses[idAddresses.count-1]
         let arr = pendingArray[pendingArray.count-1]

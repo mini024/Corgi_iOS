@@ -4,6 +4,7 @@
 #define YYERROR_VERBOSE 1
 
 int yylex(void);
+
 void yyerror(char *s);
 
 extern FILE *yyin;
@@ -29,7 +30,7 @@ extern int yylineno;
 %token IN;
 %token ELSE;
 %token WHILE;
-%token <bval> BOOLEAN;
+%token <strval> BOOLEAN;
 %token CASE_OR;
 %token CORGI;
 %token <strval> CORGIRUN;
@@ -43,6 +44,7 @@ extern int yylineno;
 %token RGT_PAR;
 %token SEMICOLON;
 %token EQUAL;
+%token COMMA;
 %token COM_OP;
 %token LOG_OP;
 %token LFT_BRA;
@@ -155,7 +157,7 @@ ID COLON TYPE{
 ;
 
 parameterAux:
-',' parameters
+COMMA parameters
 | /*epsilon*/
 ;
 
@@ -183,14 +185,19 @@ llamadaParametros:
 Megaexpresion {
     // Send param/ save param quadruple
     if (!generateParameterQuadrupleBlock(@"parametro")) {
-        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument with type doesn't exist, line %d \n", getLineNumber()]);
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type, line %d \n", getLineNumber()]);
     }
 } llamadaParametrosAux
 | /*epsilon*/
 ;
 
 llamadaParametrosAux:
-',' llamadaParametros
+COMMA Megaexpresion {
+    // Send param/ save param quadruple
+    if (!generateParameterQuadrupleBlock(@"parametro")) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify that argument exist and has right type, line %d \n", getLineNumber()]);
+    }
+} llamadaParametros
 | /*epsilon*/
 ;
 
@@ -231,10 +238,20 @@ ID {
 ;
 
 idAux:
-SLFT_BRA {checkIfArrayBlock();} exp {checkRangeforArrayExpresionBlock();} SRGT_BRA {addSizeGaptoBaseAddressBlock();}
+SLFT_BRA {
+    if (!checkIfArrayBlock()) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Variable is not an Array in line %d \n", getLineNumber()]);
+    }
+} exp {checkRangeforArrayExpresionBlock();} SRGT_BRA {
+    if (!addSizeGaptoBaseAddressBlock()) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Index in array should be an Integer line %d \n", getLineNumber()]);
+    }
+}
 | LFT_PAR Megaexpresion {
     // Send param/ save param quadruple
-    generateParameterQuadrupleBlock(@"parametro");
+    if (!generateParameterQuadrupleBlock(@"parametro")) {
+        ParseTestFailBlock([NSString stringWithFormat:@"Verify argument type, line %d \n", getLineNumber()]);
+    }
 } llamadaParametros RGT_PAR {
     //GoSub quadruple
     if (!generateGoSubQuadrupleBlock(@"llamada")) {
@@ -247,22 +264,11 @@ SLFT_BRA {checkIfArrayBlock();} exp {checkRangeforArrayExpresionBlock();} SRGT_B
 asignacion:
 id EQUAL {
     addOperatorToStackBlock(@"=");
-} asignation SEMICOLON
-;
-
-asignation:
-SLFT_BRA constante  asignations SRGT_BRA
-| Megaexpresion {
+} Megaexpresion {
     if (!checkNextOperatorBlock(@"assignation"))
     ParseTestFailBlock([NSString stringWithFormat:@"Operation not valid, check data types, line %d \n", getLineNumber()]);
-}
+} SEMICOLON
 ;
-
-asignations:
-',' constante asignations
-| /*epsilon*/
-;
-
 
 tipoAux: // ARRAYS
 SLFT_BRA INT SRGT_BRA {
@@ -277,8 +283,10 @@ INT {addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
 | STRING {
     addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");
 }
+| BOOLEAN {
+    addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Bool");
+}
 | id
-| BOOLEAN { addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Bool");}
 ;
 
 estatutos:
@@ -310,7 +318,7 @@ writeAux:
 
 // MARK: Conditionals
 condicion:
-CASE LFT_BRA expresion {
+CASE LFT_BRA Megaexpresion {
     generateGOTOFquadrupleBlock(0);
 } COLON estatutos {
     generateGOTOquadrupleBlock(0);
@@ -348,17 +356,12 @@ FOR ID {
     } else {
         ParseTestFailBlock([NSString stringWithFormat:@"Variable with name \"%s\" doesn't exist, line %d\n", $2, getLineNumber()]);
     }
-} IN exp {
-    //addIdToStackBlock([NSString stringWithFormat:@"%d", $5], @"Int");
-} FOR_RANGE exp {
-    //addIdToStackBlock([NSString stringWithFormat:@"%d", $8], @"Int");
-} BY {
+} IN exp FOR_RANGE exp BY {
     if (!generateLoopConditionQuadruplesBlock()) {
         ParseTestFailBlock([NSString stringWithFormat:@"Variable and Range must be Integers, line %d\n", getLineNumber()]);
     }
     generateGOTOFquadrupleBlock(0);
-} exp LFT_BRA estatutos {
-} RGT_BRA {
+} exp LFT_BRA estatutos RGT_BRA {
     if (!generateByQuadrupleBlock()) {
         ParseTestFailBlock([NSString stringWithFormat:@"By value must be an Integer, line %d\n", getLineNumber()]);
     }
@@ -442,8 +445,6 @@ PRODUCT {addOperatorToStackBlock(@"*");} termino
 
 factor:
 LFT_PAR {addOperatorToStackBlock(@"(");} expresion RGT_PAR {deleteParentesisFromStackBlock();}
-| SUM constante
-| SUBTRACTION constante
 | constante
 ;
 

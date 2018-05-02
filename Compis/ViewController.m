@@ -223,38 +223,65 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     };
     
     generateGOTOFquadrupleBlock = ^(int code) {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton generateGOTOFquadruple:code];
     };
     
     generateGOTOquadrupleBlock = ^(int code) {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton generateGOTOquadruple:code];
     };
     
     generateLoopConditionQuadruplesBlock = ^() {
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton generateLoopConditionQuadruples];
     };
     
     generateWhileConditionQuadrupleBlock = ^() {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton generateWhileConditionQuadruple];
     };
     
     generateByQuadrupleBlock = ^() {
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton generateByQuadruple];
     };
     
     fillEndConditionQuadrupleBlock = ^() {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton fillEndConditionQuadruple];
     };
     
     fillEndLoopQuadrupleBlock = ^() {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton fillEndLoopQuadruple];
     };
     
     generateWritequadrupleBlock = ^() {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton generateWriteQuadruple];
     };
     
     generateERAQuadrupleBlock = ^(NSString *name) {
+        if (self->_failed) {
+            return;
+        }
         [Helper.singleton generateERAQuadruple:name];
     };
     
@@ -278,26 +305,44 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     };
     
     generateParameterQuadrupleBlock = ^(NSString *name) {
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton generateParameterQuadruple];
     };
     
     checkIfArrayBlock = ^(){
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton checkIfArray];
     };
     
     checkRangeforArrayExpresionBlock = ^(){
-        return [Helper.singleton checkRangeforArrayExpresion];
+        if (self->_failed) {
+            return;
+        }
+        [Helper.singleton checkRangeforArrayExpresion];
     };
     
     addSizeGaptoBaseAddressBlock = ^(){
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton addSizeGaptoBaseAddress];
     };
     
     generateReturnBlock = ^() {
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton generateReturnQuadruple];
     };
     
     generateVoidReturnBlock = ^() {
+        if (self->_failed) {
+            return YES;
+        }
         return [Helper.singleton generateVoidReturnQuadruple];
     };
     

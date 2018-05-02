@@ -96,6 +96,11 @@ extension Helper {
             case .RETURN:
                 break
             case .VER:
+                if quadruple.leftOperand! > virtualMemory.getValueIn(address:quadruple.resultVar!).0 as! Int || quadruple.leftOperand! < 0 {
+                    ParseTestFailBlock("Index in array is out of bounds");
+                    quadrupleNumber = quadruples.count
+                    EndBlock();
+                }
                 break
             case .RET:
                 runReturn(address: quadruple.resultVar!, result: quadruple.leftOperand!);
@@ -384,7 +389,7 @@ extension Helper {
      Evaluates equal conditional and sets result in result Address.
      */
     func runEqual(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
-        let leftTuple = virtualMemory.getValueIn(address: leftAddress)
+        var leftTuple = virtualMemory.getValueIn(address: leftAddress)
         let rightTuple = virtualMemory.getValueIn(address: rightAddress)
         
         if leftTuple.1 == .Int && rightTuple.1 == .Int {
