@@ -123,6 +123,31 @@ corgiRun() {
 	}
 } 
 
+// Fibonacci Recursive
+
+corgi fibR;
+
+func fib(n : Int) -> Int {
+	var res:Int;
+	var temp:Int;
+
+	res = 0;
+	case {
+		n <= 1: res = n;
+		| else : 
+			res = fib(n-1);
+			temp = fib(n-2);
+			res = res + temp;
+	}
+	return res;
+}
+
+corgiRun() {
+  var f:Int;
+  f = fib(9);
+  write(f);
+}
+
 // Factorial 
 
 corgi testFactorial;
@@ -137,6 +162,30 @@ corgiRun() {
 	}
 	write(fact);
 } 
+
+// Factorial recursive
+
+corgi facR;
+        
+func fac(n : Int) -> Int {
+        var res:Int;
+        var temp:Int;
+        res = 0;
+
+        case {
+        		n <= 0: res = 1;
+       		 | else :
+        			res = fac(n-1);
+			res = n * res;
+        }
+        return res;
+}
+        
+corgiRun() {
+        var f:Int;
+        f = fac(9);
+        write(f);
+}
 
 // SORT - Bubble sort algorithm
 
