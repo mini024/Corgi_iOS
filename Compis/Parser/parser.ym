@@ -226,7 +226,7 @@ VAR ID COLON TYPE tipoAux {
 
 id:
 ID {
-    if (findVariableBlock([NSString stringWithFormat:@"%s", $1])) {
+    if (findVariableBlock([NSString stringWithFormat:@"%s", $1]) && !findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
         addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");
     } else if (findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
         // Generate ERA with id

@@ -8,9 +8,11 @@
 
 #import "SettingsTableViewController.h"
 #import "ModeTableViewCell.h"
+#import "WebViewController.h"
 
 @interface SettingsTableViewController ()
 @property NSArray* titles;
+@property NSString *selected;
 
 @end
 
@@ -19,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _titles = [NSArray arrayWithObjects: @"Documentation", @"About us", nil];
+    _titles = [NSArray arrayWithObjects: @"Documentation", @"Language Manual", @"Demo Video", nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -64,6 +66,14 @@
     
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        return indexPath;
+    }
+    
+    return nil;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return @"Display";
@@ -71,49 +81,30 @@
     return @"General";
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        _selected = _titles[indexPath.row];
+    }
+    
+    [self performSegueWithIdentifier:@"documentation" sender:self];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier  isEqual: @"documentation"] && [_selected isEqualToString:@"Documentation"]) {
+        WebViewController *destinationView = (WebViewController *) segue.destinationViewController;
+        destinationView.webLink = @"https://docs.google.com/document/d/18CwlcTPGstcXR2paHTkDZ-xnOpVWU-GQ4Rv9tyxyFcI/edit?usp=sharing";
+    } else if ([segue.identifier  isEqual: @"documentation"] && [_selected isEqualToString:@"Language Manual"]) {
+        WebViewController *destinationView = (WebViewController *) segue.destinationViewController;
+        destinationView.webLink = @"https://docs.google.com/document/d/1HlTYj911Bg2WraLhI8UeQP9tYgoCPf_TTbKJAjb8-mU/edit?usp=sharing";
+    } else if ([segue.identifier  isEqual: @"documentation"] && [_selected isEqualToString:@"Demo Video"]) {
+        WebViewController *destinationView = (WebViewController *) segue.destinationViewController;
+        destinationView.webLink = @"https://drive.google.com/file/d/1_Ca3jahJO9MP6ZLlAn1sn_RkFVMmkxnb/view?usp=sharing";
+    }
 }
-*/
+
 
 - (IBAction)modeChanged:(UISwitch*)sender {
     if (sender.isOn) {

@@ -231,6 +231,7 @@ extension Helper {
         
         quadruples.append(Quadruple(leftOperand: functionStartQuadruple, rightOperand: nil, oper: Operator(rawValue: 20)!, resultVar: nil))
         callingFunction.append(name)
+        operators.append(Operator.Par)
     }
     
     /**
@@ -275,30 +276,29 @@ extension Helper {
         quadruples.append(Quadruple(leftOperand: functionAddress, rightOperand: nil, oper: Operator(rawValue: 21)!, resultVar: nil))
         funcTable[functionName!]?.currentParameter = 0
         
-        // Create quadruple with RET operation to save return value in right address
-        if functionName == currentFunc {
-            switch funcTable[functionName!]?.returnType! {
+        // Create quadruple with = operation to save return value in local address
+        switch funcTable[functionName!]?.returnType! {
             case Type.Int?:
                 let address = virtualMemory.localMemory.setInt(value: 99999)
-                quadruples.append(Quadruple(leftOperand:functionAddress, rightOperand: nil, oper: Operator(rawValue: 27)!, resultVar: address))
+                quadruples.append(Quadruple(leftOperand:funcTable["Corgi"]?.variables[functionName!]?.address, rightOperand: nil, oper: Operator(rawValue: 15)!, resultVar: address))
                 idAddresses.append(address)
                 idTypes.append((funcTable[functionName!]?.returnType)!)
                 break
             case Type.Float?:
                 let address = virtualMemory.localMemory.setFloat(value: 99999.0)
-                quadruples.append(Quadruple(leftOperand:functionAddress, rightOperand: nil, oper: Operator(rawValue: 27)!, resultVar: address))
+                quadruples.append(Quadruple(leftOperand:funcTable["Corgi"]?.variables[functionName!]?.address, rightOperand: nil, oper: Operator(rawValue: 15)!, resultVar: address))
                 idAddresses.append(address)
                 idTypes.append((funcTable[functionName!]?.returnType)!)
                 break
             case Type.Bool?:
                 let address = virtualMemory.localMemory.setBool(value: true)
-                quadruples.append(Quadruple(leftOperand:functionAddress, rightOperand: nil, oper: Operator(rawValue: 27)!, resultVar: address))
+                quadruples.append(Quadruple(leftOperand:funcTable["Corgi"]?.variables[functionName!]?.address, rightOperand: nil, oper: Operator(rawValue: 15)!, resultVar: address))
                 idAddresses.append(address)
                 idTypes.append((funcTable[functionName!]?.returnType)!)
                 break
             case Type.String?:
                 let address = virtualMemory.localMemory.setString(value: "")
-                quadruples.append(Quadruple(leftOperand:functionAddress, rightOperand: nil, oper: Operator(rawValue: 27)!, resultVar:address))
+                quadruples.append(Quadruple(leftOperand:funcTable["Corgi"]?.variables[functionName!]?.address, rightOperand: nil, oper: Operator(rawValue: 15)!, resultVar:address))
                 idAddresses.append(address)
                 idTypes.append((funcTable[functionName!]?.returnType)!)
                 break
@@ -310,18 +310,11 @@ extension Helper {
                 print("No return type")
             case .some(.ERROR):
                 print("No return type")
-            }
-            return true
         }
         
-        // Check if there is return value in stack, if there is move it to idAddresses stack. This is used when there isn't recursion.
-        if (funcTable[functionName!]?.returnType)! != Type.Void && functionName != currentFunc {
-            if let returnAddress = returnValues.popLast() {
-                idAddresses.append(returnAddress)
-                idTypes.append((funcTable[functionName!]?.returnType)!)
-            }
+        if operators.last == Operator.Par {
+            _ = operators.popLast()
         }
-        
         return true
     }
     
@@ -374,14 +367,14 @@ extension Helper {
         // Check type of return type & value
         guard funcTable[currentFunc]?.returnType == valueType else {print("ERROR - Wrong return type"); return false}
         
-        // Save local return adddress in function table
+        // Save local return address in function table
         funcTable[currentFunc]?.returnAddress = valueAddress
     
         // Generate quadruple
-        quadruples.append(Quadruple(leftOperand: nil, rightOperand: nil, oper: Operator(rawValue: 25)!, resultVar: valueAddress))
+        quadruples.append(Quadruple(leftOperand: valueAddress, rightOperand: nil, oper: Operator(rawValue: 15)!, resultVar: funcTable["Corgi"]?.variables[currentFunc]?.address))
         
         // Add pending return value to stack
-        returnValues.append(valueAddress!)
+        // returnValues.append(valueAddress!)
         return true
     }
     

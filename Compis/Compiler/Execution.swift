@@ -89,11 +89,14 @@ extension Helper {
                 break
             case .ENDFUNC:
                 quadrupleNumber = virtualMemory.quadruplesStack.popLast()!
+                // Change memories
+                virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
                 break
             case .END:
                 EndBlock();
                 break
             case .RETURN:
+                
                 break
             case .VER:
                 if quadruple.leftOperand! < virtualMemory.getValueIn(address:quadruple.resultVar!).0 as! Int || quadruple.leftOperand! < 0 {
@@ -102,11 +105,6 @@ extension Helper {
                     EndBlock();
                 }
                 break
-            case .RET:
-                runReturn(address: quadruple.resultVar!, result: quadruple.leftOperand!);
-                // Change memories
-                virtualMemory.localMemory = virtualMemory.memoryStack.popLast()!
-                break;
             }
             quadrupleNumber += 1;
         }
@@ -194,9 +192,9 @@ extension Helper {
     }
     
     /**
-     Gets return value ans stores it in address of the local memory that called function.
+     Gets return value and stores it in address of the local memory that called function.
      */
-    func runReturn(address: Int, result: Int) {
+    func runRet(address: Int, result: Int) {
         // Return addresss value
         let value = virtualMemory.getValueIn(address: result)
         
@@ -387,17 +385,13 @@ extension Helper {
             return
         }
         
-//        let leftValue = leftTuple.0 as! Float
-//        let rightValue = rightTuple.0 as! Float
-//
-//        virtualMemory.setValueIn(address: resultAddress, result: leftValue <= rightValue)
     }
     
     /**
      Evaluates equal conditional and sets result in result Address.
      */
     func runEqual(leftAddress:Int, rightAddress:Int, resultAddress:Int) {
-        var leftTuple = virtualMemory.getValueIn(address: leftAddress)
+        let leftTuple = virtualMemory.getValueIn(address: leftAddress)
         let rightTuple = virtualMemory.getValueIn(address: rightAddress)
         
         if leftTuple.1 == .Int && rightTuple.1 == .Int {
