@@ -32,7 +32,7 @@ extension Helper {
     }
     
     /**
-     Adds fucntio to function table
+     Adds fucntion to function table
      @param id - function name
      */
     func addFunctionWith(_ id: String) {
@@ -41,12 +41,26 @@ extension Helper {
     }
     
     /**
-     Adds function return type
+     Adds function return type, create global variable to store return value
      @param id - function name
      @param type - function return type
      */
     func addFunctionReturnType(_ id: String, type: String) {
-        funcTable[id]?.returnType = stringToType(type: type)
+        let returnType = stringToType(type: type)
+        funcTable[id]?.returnType = returnType
+        
+        if (returnType != .Void) {
+            
+            // Change current function to create global variable
+            let funcName = currentFunc
+            currentFunc = "Corgi"
+            let address = createAddressForVariable(type: type)
+            funcTable["Corgi"]?.variables[id] = Variable(type: returnType, scope: .global, address: address, index: 0, arrSize: 0)
+            
+            // Change current function back to real function
+            currentFunc = funcName
+        }
+
     }
     
     /**

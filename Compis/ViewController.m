@@ -89,10 +89,6 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
     // Dispose of any resources that can be recreated.
 }
 
-- (void) setTextView {
-    
-}
-
 - (void) setCode {
     if (selectedProgram.code != nil) {
         codeTextView.text = selectedProgram.code;
@@ -403,6 +399,11 @@ NSString * const KEY_PROGRAM = @"SavedProgram";
 
 - (void)dismissKeyboard {
     [codeTextView resignFirstResponder];
+    self.codeTextView.contentSize = CGSizeMake(codeTextView.frame.size.width, codeTextView.contentSize.height - self.view.frame.size.height * 0.3);
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    textView.contentSize = CGSizeMake(textView.frame.size.width, textView.frame.size.height + self.view.frame.size.height * 0.3);
 }
 
 @end

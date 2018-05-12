@@ -51,7 +51,6 @@ enum Operator: Int, CustomStringConvertible{
     case END = 24
     case RETURN = 25
     case VER = 26
-    case RET = 27
     
     var description: String {
         switch self {
@@ -109,8 +108,6 @@ enum Operator: Int, CustomStringConvertible{
             return "RETURN"
         case .VER:
             return "VER"
-        case .RET:
-            return "RET"
         }
     }
 }

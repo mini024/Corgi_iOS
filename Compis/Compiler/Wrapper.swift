@@ -61,7 +61,7 @@ import UIKit
         guard operators[operators.count-1] != Operator.Par else {return "EMPTY"}
         return operators[operators.count-1].description
     }
-    
+        
     func stringToOperator(oper: String) -> Operator {
         switch oper {
         case "+":

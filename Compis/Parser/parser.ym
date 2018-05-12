@@ -25,6 +25,8 @@ extern int yylineno;
 // Tokens
 %token <fval> FLOAT;
 %token <ival> INT;
+%token <fval> NFLOAT;
+%token <ival> NINT;
 %token FOR;
 %token BY;
 %token IN;
@@ -226,7 +228,7 @@ VAR ID COLON TYPE tipoAux {
 
 id:
 ID {
-    if (findVariableBlock([NSString stringWithFormat:@"%s", $1])) {
+    if (findVariableBlock([NSString stringWithFormat:@"%s", $1]) && !findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
         addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"Variable");
     } else if (findFunctionBlock([NSString stringWithFormat:@"%s", $1])) {
         // Generate ERA with id
@@ -280,6 +282,10 @@ SLFT_BRA INT SRGT_BRA {
 constante:
 INT {addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");}
 | FLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
+| NINT {
+    addIdToStackBlock([NSString stringWithFormat:@"%d", $1], @"Int");
+}
+| NFLOAT { addIdToStackBlock([NSString stringWithFormat:@"%f", $1], @"Float");}
 | STRING {
     addIdToStackBlock([NSString stringWithFormat:@"%s", $1], @"String");
 }
